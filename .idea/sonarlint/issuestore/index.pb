@@ -6,10 +6,10 @@ L
 =
 lombok.config,8\2\823fe80d2650ec87c2614800da17ca3a55af96a9
 T
-$src/main/java/parse/DecoderDemo.java,d\f\dfa24a21f45ddb39ba6abf38da97d53c0f6e7396
-Z
-*src/main/java/parse/LiveTranscription.java,c\7\c7454bea87904adebe4c42b17a18641136a2d129
-T
 $src/test/java/parse/DecoderDemo.java,5\8\58b2dc850ea4569cba1a9f0a75613b44e597614f
 Z
 *src/test/java/parse/LiveTranscription.java,7\a\7a05644898c3e5dfc55ed60bf53a7f550694c4f6
+c
+3src/test/java/parse/OpenWebPageWithGeckoDriver.java,9\c\9cf6f1d810e4102991b95066350593d7ffeb65a7
+b
+2src/test/java/parse/OpenWebPageWithEdgeDriver.java,8\9\89b37ca3831e3ac3df57dbe589eea003c5bed7db
