@@ -42,7 +42,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.30</version>
+      <version>1.18.32</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -118,4 +118,10 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2/</url>
+    </repository>
+  </repositories>
 </project>

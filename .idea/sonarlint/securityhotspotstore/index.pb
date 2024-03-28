@@ -9,7 +9,3 @@ T
 $src/test/java/parse/DecoderDemo.java,5\8\58b2dc850ea4569cba1a9f0a75613b44e597614f
 Z
 *src/test/java/parse/LiveTranscription.java,7\a\7a05644898c3e5dfc55ed60bf53a7f550694c4f6
-c
-3src/test/java/parse/OpenWebPageWithGeckoDriver.java,9\c\9cf6f1d810e4102991b95066350593d7ffeb65a7
-b
-2src/test/java/parse/OpenWebPageWithEdgeDriver.java,8\9\89b37ca3831e3ac3df57dbe589eea003c5bed7db
