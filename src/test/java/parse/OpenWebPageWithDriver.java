@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.openqa.selenium.WebDriver;
 
 import lombok.Cleanup;
-import lombok.var;
+import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import util.WebDriverMaker;
 
