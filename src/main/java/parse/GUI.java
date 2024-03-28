@@ -1,48 +1,30 @@
 package parse;
 
-import org.apache.pivot.wtk.*;
-import org.apache.pivot.collections.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-import lombok.var;
-
-public class GUI implements Application {
-    private Window window = null;
-
-    @Override
-    public void startup(Display display, Map<String, String> properties) {
-        window = new Window();
-        window.setTitle("Apache Pivot Base");
-        window.setMaximized(true);
-
-        var label = new Label("Hello, Apache Pivot!");
-        window.setContent(label);
-
-        window.open(display);
-    }
+public class GUI extends Application {
 
     @Override
-    public boolean shutdown(boolean optional) {
-        if (window != null) {
-            window.close();
-        }
-        return false;
-    }
+    public void start(Stage primaryStage) {
+        Button btn = new Button();
+        btn.setText("Click here");
+        btn.setOnAction(event -> System.out.println("Free health insurance"));
 
-    @Override
-    public void suspend() {
-        // Implement any logic needed when the application is suspended
-    }
+        StackPane root = new StackPane();
+        root.getChildren().add(btn);
 
-    @Override
-    public void resume() {
-        // Implement any logic needed when the application is resumed
+        Scene scene = new Scene(root, 300, 250);
+
+        primaryStage.setTitle("Parse Pro");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
-        try {
-            DesktopApplicationContext.main(GUI.class, args);
-        } catch (Throwable err) {
-            err.printStackTrace();
-        }
+        launch(args);
     }
 }
