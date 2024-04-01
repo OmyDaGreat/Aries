@@ -52,4 +52,7 @@ public class LiveTranscription {
             logger.error("Error loading the model: " + e.getMessage());
         }
     }
+    
+
+
 }
