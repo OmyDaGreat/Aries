@@ -55,8 +55,7 @@ public class LiveTranscription {
                         String result = recognizer.getResult();
                         logger.debug(result);
                         // Parse and process the result
-                        JsonParser parser = new JsonParser();
-                        JsonObject jsonObject = parser.parse(result).getAsJsonObject();
+                        JsonObject jsonObject = JsonParser.parseString(result).getAsJsonObject();
                         String text = jsonObject.get("text").getAsString();
 
                         // Split the text into words
@@ -65,13 +64,13 @@ public class LiveTranscription {
                             if (!word.isEmpty()) {
                                 lastThreeWords.add(word);
                                 if (lastThreeWords.size() > 3) {
-                                    lastThreeWords.remove(0); // Keep only the last three words
+                                    lastThreeWords.removeFirst(); // Keep only the last three words
                                 }
                             }
                         }
 
                         // Print the last three words
-                     logger.debug(lastThreeWords);
+                        logger.debug(lastThreeWords);
                     }
                 }
             }
