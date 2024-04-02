@@ -1,5 +1,9 @@
 package parse;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.vosk.*;
 
 import lombok.Cleanup;
@@ -9,13 +13,15 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Log4j2
 public class LiveTranscription {
-    
+
     private static final AtomicBoolean running = new AtomicBoolean(true);
-    
+    private static final double ENERGY_THRESHOLD = 400; // Adjust based on your requirements
+
     public static void main(String[] args) {
 
         try {
@@ -30,6 +36,8 @@ public class LiveTranscription {
             line.open(format);
             line.start();
 
+            ArrayList<String> lastThreeWords = new ArrayList<>();
+
             // Transcribe audio
             byte[] buffer = new byte[4096];
             while (running.get()) { // Infinite
@@ -40,10 +48,31 @@ public class LiveTranscription {
                     short[] shorts = new short[bytesRead / 2];
                     byteBuffer.asShortBuffer().get(shorts);
 
-                    // Feed audio to Vosk
-                    recognizer.acceptWaveForm(shorts, bytesRead / 2);
-                    String result = recognizer.getResult();
-                    logger.debug(result);
+                    // Check if the audio is considered silent
+                    if (!isSilence(shorts)) {
+                        // Feed audio to Vosk
+                        recognizer.acceptWaveForm(shorts, bytesRead / 2);
+                        String result = recognizer.getResult();
+                        logger.debug(result);
+                        // Parse and process the result
+                        JsonParser parser = new JsonParser();
+                        JsonObject jsonObject = parser.parse(result).getAsJsonObject();
+                        String text = jsonObject.get("text").getAsString();
+
+                        // Split the text into words
+                        String[] words = text.split("\\s+");
+                        for (String word : words) {
+                            if (!word.isEmpty()) {
+                                lastThreeWords.add(word);
+                                if (lastThreeWords.size() > 3) {
+                                    lastThreeWords.remove(0); // Keep only the last three words
+                                }
+                            }
+                        }
+
+                        // Print the last three words
+                     logger.debug(lastThreeWords);
+                    }
                 }
             }
         } catch (LineUnavailableException e) {
@@ -52,7 +81,14 @@ public class LiveTranscription {
             logger.error("Error loading the model: " + e.getMessage());
         }
     }
-    
 
-
+    // Method to calculate the energy of the audio data
+    private static boolean isSilence(short[] audioData) {
+        double energy = 0.0;
+        for (short sample : audioData) {
+            energy += sample * sample;
+        }
+        energy /= audioData.length;
+        return energy < ENERGY_THRESHOLD;
+    }
 }

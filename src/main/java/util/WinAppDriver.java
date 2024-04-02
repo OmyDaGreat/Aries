@@ -10,12 +10,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class WinAppDriver {
-    public static void main(String[] args) {
+    public static void openApp(String capability) {
         try {
             // Set up the WebDriver to use WinAppDriver with W3C syntax
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("ms:experimental-webdriver", true);
-            capabilities.setCapability("app", "C:\\Windows\\System32\\notepad.exe");
+            capabilities.setCapability("app", "C:\\Windows\\System32\\notepad.exe"); //replace with arg capability later
 
             // Create a new instance of the RemoteWebDriver using the builder pattern
             WebDriver driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723"), capabilities);
