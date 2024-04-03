@@ -29,3 +29,7 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+L
+src/main/java/parse/gui.fxml,2\a\2a020baf102fdad4e0e65a822d5a5dcfb38f0c33
+V
+&src/main/java/parse/GUIController.java,5\e\5ed8f07feff540078d4bb3278e0a6192e27343f6
