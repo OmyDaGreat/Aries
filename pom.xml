@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-    <javafx.version>21</javafx.version> <!-- Corrected JavaFX version -->
+    <javafx.version>21.0.2</javafx.version> <!-- Corrected JavaFX version -->
   </properties>
 
   <dependencies>
@@ -76,17 +76,6 @@
       <version>2.10</version> <!-- Updated to the latest version -->
     </dependency>
     <dependency>
-      <groupId>org.apache.pivot</groupId>
-      <artifactId>pivot-core</artifactId>
-      <version>2.0.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pivot</groupId>
-      <artifactId>pivot-wtk-terra</artifactId>
-      <version>2.0.5</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>${javafx.version}</version>
@@ -97,10 +86,9 @@
       <version>${javafx.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jfxtras</groupId>
-      <artifactId>jmetro</artifactId>
-      <version>11.6.16</version>
-      <type>pom</type>
+      <groupId>io.github.palexdev</groupId>
+      <artifactId>materialfx</artifactId>
+      <version>11.17.0</version>
     </dependency>
     <!-- Froxty dependencies:
     <dependency>
