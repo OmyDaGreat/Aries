@@ -19,3 +19,13 @@ V
 .src/test/java/parse/OpenWebPageWithDriver.java,0\0\00b9275ee6ec77d9b0a712eae4944eda8e72256a
 [
 +src/test/java/parse/WinAppDriverTester.java,f\e\fe3bf0c79595cf115db8d4973432052bc168e141
+L
+src/main/java/parse/GUI.java,9\8\980a7a417de8730ebc24d6aa2b6073ff84d48579
+N
+src/main/java/module-info.java,1\c\1c89a5491fbfda3fb050196d6a239f20200296e7
+\
+,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e

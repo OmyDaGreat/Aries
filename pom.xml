@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-    <javafx.version>17</javafx.version> <!-- Corrected JavaFX version -->
+    <javafx.version>21</javafx.version> <!-- Corrected JavaFX version -->
   </properties>
 
   <dependencies>
@@ -48,24 +48,18 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>3.8.1</version>
+      <version>4.19.1</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.15</version>
+      <version>1.16.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.14.0</version>
     </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.9</version> <!-- Use the latest version available -->
-    </dependency>
-
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
@@ -79,7 +73,7 @@
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.8.9</version> <!-- Updated to the latest version -->
+      <version>2.10</version> <!-- Updated to the latest version -->
     </dependency>
     <dependency>
       <groupId>org.apache.pivot</groupId>
@@ -102,57 +96,30 @@
       <artifactId>javafx-fxml</artifactId>
       <version>${javafx.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.jfxtras</groupId>
+      <artifactId>jmetro</artifactId>
+      <version>11.6.16</version>
+      <type>pom</type>
+    </dependency>
+    <!-- Froxty dependencies:
+    <dependency>
+      <groupId>com.github.iAmGio</groupId>
+      <artifactId>froxty</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+    -->
   </dependencies>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.4</version>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>shade</goal>
-              </goals>
-              <configuration>
-                <transformers>
-                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>parse.GUI</mainClass>
-                    <manifestEntries>
-                      <Add-Exports>javafx.controls/javafx.controls=ALL-UNNAMED</Add-Exports>
-                      <Add-Exports>javafx.fxml/javafx.fxml=ALL-UNNAMED</Add-Exports>
-                      <!-- Add other JavaFX modules as needed -->
-                    </manifestEntries>
-                  </transformer>
-                </transformers>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <executions>
-          <execution>
-            <id>default-cli</id>
-            <configuration>
-              <mainClass>parse.GUI</mainClass> <!-- Corrected main class -->
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
   <repositories>
     <repository>
       <id>central</id>
       <url>https://repo.maven.apache.org/maven2/</url>
     </repository>
+    <!-- For Froxty
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+    -->
   </repositories>
 </project>
