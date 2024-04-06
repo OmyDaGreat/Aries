@@ -1,29 +1,56 @@
 package parse;
 
-import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialOceanicTheme;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
 
 @Log4j2
-public class GUI extends Application {
-    @Override
-    public void start(@NonNull Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui.fxml"));
-        Parent root = loader.load();
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Parse Pro");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class GUI {
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> {
+			try {
+				UIManager.setLookAndFeel(new MaterialLookAndFeel());
+			} catch (UnsupportedLookAndFeelException e) {
+				throw new util.UnsupportedLookAndFeelException(e);
+			}
+			MaterialLookAndFeel.changeTheme(new MaterialOceanicTheme());
+			// Create the main frame
+			JFrame frame = new JFrame("Parse Pro");
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			frame.setSize(300, 250);
+			frame.setLocationRelativeTo(null); // Center the frame on the screen
+			
+			// Create and add the main panel
+			JPanel panel = new JPanel(new MigLayout("wrap")); // Use MigLayout with wrap 2
+			frame.add(panel);
+			
+			// Create components: text field, button, and message label
+			JTextField userInput = new JTextField(20);
+			JButton btn = new JButton("Click here");
+			JTextArea messageLabel = new JTextArea("");
+			messageLabel.setLineWrap(true); // Enable line wrapping
+			messageLabel.setWrapStyleWord(true); // Wrap at word boundaries
+			messageLabel.setEditable(false); // Make the text area read-only
+			messageLabel.setOpaque(false); // Make the text area transparent
+			messageLabel.setFocusable(false); // Disable focus to prevent the text area from being editable
+			
+			// Add action listener to the button
+			btn.addActionListener(e -> {
+				String input = userInput.getText();
+				messageLabel.setText("You entered: " + input);
+				logger.info("Free health insurance"); // Log a message
+			});
+			
+			// Add components to the panel using MigLayout constraints
+			panel.add(userInput, "span, growx"); // Span the text field across the panel and allow it to grow in width
+			panel.add(btn, "span, align center"); // Span the button across the panel and center it
+			panel.add(messageLabel, "span, growx"); // Span the message label across the panel and allow it to grow in width
+			
+			// Make the frame visible
+			frame.setVisible(true);
+		});
+	}
 }

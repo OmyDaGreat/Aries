@@ -1,13 +1,12 @@
 module parse {
-	requires javafx.controls;
-	requires javafx.fxml;
 	requires static lombok;
 	requires org.apache.logging.log4j;
 	requires org.seleniumhq.selenium.chrome_driver;
 	requires org.seleniumhq.selenium.edge_driver;
 	requires org.seleniumhq.selenium.firefox_driver;
-	requires MaterialFX;
+	requires java.desktop;
+	requires io.github.vincenzopalazzo.materialuiswing;
+	requires com.miglayout.swing;
 	
-	opens parse to javafx.fxml;
 	exports parse;
 }
