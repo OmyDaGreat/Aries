@@ -1,5 +1,8 @@
 package parse;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
 import java.util.Scanner;
 
 import org.openqa.selenium.WebDriver;
@@ -12,13 +15,7 @@ import util.WebDriverMaker;
 
 @Log4j2
 public class OpenWebPageWithDriver {
-    public static void main(String[] args) {
-        @Cleanup var scanner = new Scanner(System.in);
-        logger.info("Enter your os, arch, and browser:");
-        var stuff = scanner.nextLine();
-        
-        WebDriver driver = new WebDriverMaker(stuff).getDriver();
-        
-        driver.get("https://www.example.com");
+    public static void main(String[] args) throws IOException {
+        Desktop.getDesktop().browse(URI.create("https://imgur.com/a/kBPQWWd"));
     }
 }
