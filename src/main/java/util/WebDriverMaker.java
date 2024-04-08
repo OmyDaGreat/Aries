@@ -1,8 +1,5 @@
 package util;
 
-import lombok.Cleanup;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -10,9 +7,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import lombok.Getter;
 
-import java.util.Scanner;
-
-@Log4j2
 @Getter
 public class WebDriverMaker {
     private final Platform platform;
