@@ -6,6 +6,7 @@ import mdlaf.themes.MaterialOceanicTheme;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Log4j2
 public class GUI {
@@ -38,10 +39,11 @@ public class GUI {
 			messageLabel.setFocusable(false); // Disable focus to prevent the text area from being editable
 			
 			// Add action listener to the button
+			AtomicReference<String> msg = new AtomicReference<>("");
 			btn.addActionListener(e -> {
 				String input = userInput.getText();
-				messageLabel.setText("You entered: " + input);
-				logger.info("Free health insurance"); // Log a message
+				msg.set(msg.get() + "You entered: " + input + "\n");
+				messageLabel.setText(msg.get());
 			});
 			
 			// Add components to the panel using MigLayout constraints
