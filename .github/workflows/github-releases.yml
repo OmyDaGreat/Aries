@@ -40,3 +40,4 @@ jobs:
           draft: false
           prerelease: false
           path: target/ParsePro.jar
+          
