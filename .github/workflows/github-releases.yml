@@ -1,4 +1,4 @@
-name: Maven Release
+name: GitHub Release
 
 on:
   push:
