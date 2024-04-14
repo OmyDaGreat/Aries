@@ -1,22 +1,39 @@
 name: github-releases
-run-name: I hope this releases in github
-on:
-    push:
-        branches:
-            - main
+on: [push]
 jobs:
-    github-releases:
-        runs-on: windows-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-            - name: Create Release
-              id: create_release
-              uses: actions/create-release@v1
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                tag_name: ${{ github.ref }}
-                release_name: Release ${{ github.ref }}
-                draft: false
-                prerelease: false
+  build-projects:
+    name: Build project
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install NPM dependencies
+        run: npm install
+      - name: Build project assets
+        run: npm run build
+      - name: Upload static site content
+        uses: actions/upload-artifact@v3
+        with:
+          name: static-site
+          path: .next/
+  github-releases:
+    name: Create GitHub Release
+    runs-on: windows-latest
+    needs: build-projects
+    steps:
+    - name: DownLoad artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: static-site
+    - name: Archive site content
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: site.zip
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_nane: ${{ github.run_number }}
+        release_name: Release ${{ github.run_number }}
+
