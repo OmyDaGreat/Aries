@@ -39,4 +39,4 @@ jobs:
             This release includes the latest changes.
           draft: false
           prerelease: false
-          path: target/your-artifact-name.jar
+          path: target/ParsePro.jar
