@@ -28,17 +28,13 @@ jobs:
           signing_key: ${{ secrets.SIGNING_KEY }}
           signing_password: ${{ secrets.SIGNING_PASSWORD }}
 
-      - name: Extract tag name
-        id: extract_tag
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
-
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.extract_tag.outputs.tag }}
-          release_name: Release ${{ steps.extract_tag.outputs.tag }}
+          tag_name: ${GITHUB_REF##*/}
+          release_name: Release ${GITHUB_REF##*/}
           body: |
             This release includes the latest changes.
           draft: false
