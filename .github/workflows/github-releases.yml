@@ -20,7 +20,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Maven Release
-        uses: qcastel/github-actions-maven-release@v1
+        uses: qcastel/github-actions-maven-release@v1.12.41
         with:
           maven_project_path: '.'
           maven_options: '-DskipTests'
