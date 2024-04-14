@@ -1,7 +1,7 @@
 package parse;
 
 import util.WinAppDriver;
-public class WinAppDriverTester {
+public class WinAppDriverTesting {
 
     public static void main(String[] args) throws InterruptedException {
         // Call the openApp method from WinAppDriver
