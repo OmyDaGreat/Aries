@@ -31,3 +31,15 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 g
 7src/main/java/util/UnsupportedLookAndFeelException.java,e\0\e02d5ef1dea834885c0dd30e0e6e7e09cbf1d10e
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+B
+.gitpod.Dockerfile,0\9\09856d0a48229fa98219a833cee9652afc005c9c
+;
+.gitpod.yml,d\b\db770177f8d41ee439a664061a4b93e4609fd2e8
+c
+3src/main/java/util/UnsupportedBrowserException.java,7\d\7def8210533a0c6145a9660fdfc701d43d6a2274
+A
+.github/workflows,9\3\93d7c4b8379b044a4f4d044d632200ac9ae24251
+U
+%.github/workflows/github-releases.yml,1\b\1bd3f4fb86d7fa9866ffdbef1de847f919a1d447
