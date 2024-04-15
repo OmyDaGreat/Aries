@@ -28,6 +28,12 @@ jobs:
           signing_key: ${{ secrets.SIGNING_KEY }}
           signing_password: ${{ secrets.SIGNING_PASSWORD }}
 
+      - name: Upload JAR to Release Assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: JAR
+          path: target/*.jar
+
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -39,41 +45,13 @@ jobs:
           draft: false
           prerelease: true
 
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3
+      - name: Upload JAR to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          java-version: '21'
-          distribution: 'adopt'
-          cache: 'maven'
-      - name: Build with Maven
-        run: mvn clean package -DskipTests
-      - run: mkdir staging && mv target/yb-workload-sim.jar target/yb-workload-sim-${{ env.build-number }}.jar && cp target/*.jar staging
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Package
-          path: staging
-          retention-days: 1
-      - uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: "${{ secrets.YOUR-GITHUB-TOKEN }}"
-          automatic_release_tag: "${{ github.run_number }}"
-          title: "Automated Build ${{ github.run_number }}"
-          prerelease: true
-          files: staging/*.jar
-
-
-
-
-
-#      - name: Upload JAR to Release
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: ./target/ParseButPro-1.1.jar
-#          asset_name: ParsePro.jar
-#          asset_content_type: application/java-archive
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./target/ParseButPro-1.1.jar
+          asset_name: ParsePro.jar
+          asset_content_type: application/java-archive
 
