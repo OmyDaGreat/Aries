@@ -33,9 +33,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: main
-          release_name: Release "Latest Release"
+          tag_name: master
+          release_name: Latest Release
           draft: false
-          prerelease: false
+          prerelease: true
 
 
