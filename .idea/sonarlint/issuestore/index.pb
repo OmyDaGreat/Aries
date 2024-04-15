@@ -17,8 +17,6 @@ V
 &src/main/java/util/WebDriverMaker.java,3\3\335c623a304d4db87ab168abb405a52db84b6cd6
 ^
 .src/test/java/parse/OpenWebPageWithDriver.java,0\0\00b9275ee6ec77d9b0a712eae4944eda8e72256a
-[
-+src/test/java/parse/WinAppDriverTester.java,f\e\fe3bf0c79595cf115db8d4973432052bc168e141
 L
 src/main/java/parse/GUI.java,9\8\980a7a417de8730ebc24d6aa2b6073ff84d48579
 N
