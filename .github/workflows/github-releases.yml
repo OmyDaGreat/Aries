@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.ver }}
-          release_name: ${{ env.ver }}
+          release_name: Release ${{ env.ver }}
           draft: false
           prerelease: false
 
