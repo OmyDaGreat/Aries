@@ -28,37 +28,14 @@ jobs:
           signing_key: ${{ secrets.SIGNING_KEY }}
           signing_password: ${{ secrets.SIGNING_PASSWORD }}
 
-      - name: Check if release exists
-        id: check_release
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const tag_name = context.ref.replace('refs/tags/', '');
-            try {
-              const release = await github.rest.repos.getReleaseByTag({
-                owner,
-                repo,
-                tag: tag_name
-              });
-              return release.data.id;
-            } catch (error) {
-              if (error.status === 404) {
-                return false;
-              }
-              throw error;
-            }
-
       - name: Create GitHub Release
-        if: steps.check_release.outputs.result == 'false'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name}}
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            This release includes the latest changes.
-          draft: false
-          prerelease: false
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --generate-notes
 
