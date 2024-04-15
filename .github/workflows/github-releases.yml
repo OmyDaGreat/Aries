@@ -33,8 +33,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: master
-          release_name: Latest Release v0.1
+          tag_name: "build-${{ github.run_number }}"
+          release_name: "Release v0.${{ github.run_number }}"
           draft: false
           prerelease: true
 
