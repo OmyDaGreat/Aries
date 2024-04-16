@@ -89,6 +89,13 @@
       <artifactId>miglayout-swing</artifactId>
       <version>11.3</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.2gis.winium</groupId>
+      <artifactId>winium-elements-desktop</artifactId>
+      <version>0.2.0-1</version>
+      <scope>compile</scope>
+    </dependency>
+
   </dependencies>
 
   <repositories>

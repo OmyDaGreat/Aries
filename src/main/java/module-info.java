@@ -7,6 +7,7 @@ module parse {
 	requires java.desktop;
 	requires io.github.vincenzopalazzo.materialuiswing;
 	requires com.miglayout.swing;
-	
-	exports parse;
+    requires winium.webdriver;
+
+    exports parse;
 }
