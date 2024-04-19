@@ -32,6 +32,9 @@ jobs:
       - name: clean maven
         run: mvn clean
 
+      - name: get missing files
+        run: mvn clean install
+
       - name: Build JAR
         working-directory: ./
         run: mvn -B package
