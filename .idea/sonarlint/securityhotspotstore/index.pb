@@ -11,8 +11,6 @@ Z
 *src/test/java/parse/LiveTranscription.java,7\a\7a05644898c3e5dfc55ed60bf53a7f550694c4f6
 P
  src/main/java/util/Platform.java,d\a\dac2c088d5c62149a014ed3a8b59ba806186e02a
-T
-$src/main/java/util/WinAppDriver.java,a\b\abe977a5e0e7098ada487a3ca4a0f6416119cc7f
 V
 &src/main/java/util/WebDriverMaker.java,3\3\335c623a304d4db87ab168abb405a52db84b6cd6
 ^

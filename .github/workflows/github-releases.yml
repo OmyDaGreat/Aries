@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: JAR
-          path: ParseButPro/target/.jar
+          path: home/runner/.m2/repository/parse/ParseButPro/1.1/ParseButPro-1.1.jar
 
       - name: Create GitHub Release
         id: create_release
