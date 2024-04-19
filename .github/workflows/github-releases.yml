@@ -32,6 +32,7 @@ jobs:
         run: mvn clean
 
       - name: Build JAR
+        working-directory: ./
         run: mvn -B package
 
       - name: Upload JAR to Release Assets
