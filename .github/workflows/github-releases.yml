@@ -20,14 +20,14 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      - name: Maven Release
-        uses: qcastel/github-actions-maven-release@v1.12.41
-        with:
-          maven_project_path: '.'
-          maven_options: '-DskipTests'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          signing_key: ${{ secrets.SIGNING_KEY }}
-          signing_password: ${{ secrets.SIGNING_PASSWORD }}
+#      - name: Maven Release
+#        uses: qcastel/github-actions-maven-release@v1.12.41
+#        with:
+#          maven_project_path: '.'
+#          maven_options: '-DskipTests'
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          signing_key: ${{ secrets.SIGNING_KEY }}
+#          signing_password: ${{ secrets.SIGNING_PASSWORD }}
 
       - name: clean maven
         run: mvn clean
