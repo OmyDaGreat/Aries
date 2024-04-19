@@ -18,6 +18,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'adopt'
+          cache: maven
 
       - name: Maven Release
         uses: qcastel/github-actions-maven-release@v1.12.41
