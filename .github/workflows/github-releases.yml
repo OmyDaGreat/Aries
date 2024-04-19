@@ -28,6 +28,9 @@ jobs:
           signing_key: ${{ secrets.SIGNING_KEY }}
           signing_password: ${{ secrets.SIGNING_PASSWORD }}
 
+      - name: clean maven
+        run: mvn clean
+
       - name: Build JAR
         run: mvn -B package
 
