@@ -28,6 +28,9 @@ jobs:
           signing_key: ${{ secrets.SIGNING_KEY }}
           signing_password: ${{ secrets.SIGNING_PASSWORD }}
 
+      - name: Build JAR
+        run: mvn -B package
+
       - name: Upload JAR to Release Assets
         uses: actions/upload-artifact@v3
         with:
