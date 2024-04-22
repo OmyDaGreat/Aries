@@ -34,7 +34,7 @@ public class LiveTranscription {
             line.open(format);
             line.start();
 
-            ArrayList<String> lastThreeWords = new ArrayList<>();
+            ArrayList<String> lastWords = new ArrayList<>();
 
             // Transcribe audio
             byte[] buffer = new byte[4096];
@@ -60,15 +60,15 @@ public class LiveTranscription {
                         String[] words = text.split("\\s+");
                         for (String word : words) {
                             if (!word.isEmpty()) {
-                                lastThreeWords.add(word);
-                                if (lastThreeWords.size() > 3) {
-                                    lastThreeWords.removeFirst(); // Keep only the last three words
+                                lastWords.add(word);
+                                if (lastWords.size() > 5) {
+                                    lastWords.removeFirst(); // Keep only the last three words
                                 }
                             }
                         }
 
                         // Print the last three words
-                        logger.debug(lastThreeWords);
+                        logger.debug(lastWords);
                     }
                 }
             }

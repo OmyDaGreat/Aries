@@ -17,8 +17,6 @@ V
 .src/test/java/parse/OpenWebPageWithDriver.java,0\0\00b9275ee6ec77d9b0a712eae4944eda8e72256a
 L
 src/main/java/parse/GUI.java,9\8\980a7a417de8730ebc24d6aa2b6073ff84d48579
-N
-src/main/java/module-info.java,1\c\1c89a5491fbfda3fb050196d6a239f20200296e7
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
 S
