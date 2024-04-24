@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class LiveTranscription {
 
     private static final AtomicBoolean running = new AtomicBoolean(true);
-    private static final double ENERGY_THRESHOLD = 400; // Adjust based on your requirements
+    private static final double ENERGY_THRESHOLD = 16000; // Adjust based on your requirements. Make it higher if you don't want it to pick up quieter speech
 
     public static void main(String[] args) {
 
