@@ -44,6 +44,7 @@ public class GUI {
 				String input = userInput.getText();
 				msg.set(msg.get() + "You entered: " + input + "\n");
 				messageLabel.setText(msg.get());
+				userInput.setText("");
 			});
 			
 			// Add components to the panel using MigLayout constraints
@@ -53,6 +54,12 @@ public class GUI {
 			
 			// Make the frame visible
 			frame.setVisible(true);
+			
+			// Make button work on enter
+			frame.getRootPane().setDefaultButton(btn);
+
+			// Log
+			log.info("Check it out.");
 		});
 	}
 }

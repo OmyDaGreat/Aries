@@ -3,6 +3,9 @@ package util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class RunPythonScript {
     public static void main(String[] args) {
         try {
@@ -28,7 +31,7 @@ public class RunPythonScript {
             // Close the input stream
             stdInput.close();
 
-            System.out.println("Done.");
+            log.info("Done.");
         } catch (Exception e) {
             e.printStackTrace();
         }
