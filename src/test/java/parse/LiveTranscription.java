@@ -51,7 +51,7 @@ public class LiveTranscription {
                         // Feed audio to Vosk
                         recognizer.acceptWaveForm(shorts, bytesRead / 2);
                         String result = recognizer.getResult();
-                        logger.debug(result);
+                        log.debug(result);
                         // Parse and process the result
                         JsonObject jsonObject = JsonParser.parseString(result).getAsJsonObject();
                         String text = jsonObject.get("text").getAsString();
@@ -68,14 +68,14 @@ public class LiveTranscription {
                         }
 
                         // Print the last three words
-                        logger.debug(lastWords);
+                        log.debug(lastWords);
                     }
                 }
             }
         } catch (LineUnavailableException e) {
-            logger.error("Error accessing the microphone: " + e.getMessage());
+            log.error("Error accessing the microphone: " + e.getMessage());
         } catch (IOException e) {
-            logger.error("Error loading the model: " + e.getMessage());
+            log.error("Error loading the model: " + e.getMessage());
         }
     }
 

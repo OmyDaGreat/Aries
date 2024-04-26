@@ -31,15 +31,15 @@ public class DecoderDemo {
             byte[] b = new byte[4096];
             while ((nbytes = ais.read(b)) >= 0) {
                 if (recognizer.acceptWaveForm(b, nbytes)) {
-                    logger.info(recognizer.getResult());
+                    log.info(recognizer.getResult());
                 } else {
-                    logger.info(recognizer.getPartialResult());
+                    log.info(recognizer.getPartialResult());
                 }
             }
 
-            logger.info(recognizer.getFinalResult());
+            log.info(recognizer.getFinalResult());
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 }
