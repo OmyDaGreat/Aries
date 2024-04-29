@@ -3,22 +3,27 @@ package parse;
 import ai.rev.speechtotext.RevAiWebSocketListener;
 import ai.rev.speechtotext.StreamingClient;
 import ai.rev.speechtotext.models.streaming.*;
+import lombok.Cleanup;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.Response;
 import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 
 import javax.sound.sampled.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 @Log4j2
 public class RevAiStreaming {
 	
 	private static final String ACCESS_TOKEN = "026oWNQohGMo-O91YeDeWdRzgFlcHU0OwizYCxJ0v8JA1uyJmdVLtw5MNtCFWleWlShsMG6LtFVisTyNzj4V471APkZ5U";
+	private volatile boolean stopStreaming = false;
 	
 	public void streamFromMicrophone() throws InterruptedException, LineUnavailableException {
 		// Configure the streaming content type
-		StreamingClient streamingClient = getStreamingClient(ACCESS_TOKEN);
+		@Cleanup StreamingClient streamingClient = getStreamingClient(ACCESS_TOKEN);
 		
 		// Configure audio format
 		AudioFormat format = new AudioFormat(16000, 16, 1, true, false);
@@ -30,30 +35,40 @@ public class RevAiStreaming {
 		}
 		
 		// Open the line with the specified format
-		TargetDataLine line = (TargetDataLine) AudioSystem.getLine(info);
+		@Cleanup TargetDataLine line = (TargetDataLine) AudioSystem.getLine(info);
 		line.open();
 		line.start();
 		
 		// Set the number of bytes to send in each message
-		int chunk = 8000;
+		int chunk = 4000;
 		byte[] buffer = new byte[chunk];
 		
-		// Stream the audio in the configured chunk size
-		while (true) {
+		// Start a new thread to listen for keyboard input
+		Thread keyboardListener = new Thread(() -> {
+			try {
+				while (!stopStreaming) {
+					// Check for the Space key press
+					if (System.in.available() > 0) {
+						int key = System.in.read();
+						if (key == ' ') {
+							stopStreaming = true;
+						}
+					}
+					Thread.sleep(100); // Sleep to reduce CPU usage
+				}
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		});
+		keyboardListener.start();
+		
+		while (!stopStreaming) {
 			int bytesRead = line.read(buffer, 0, chunk);
 			if (bytesRead == -1) break;
-			
 			streamingClient.sendAudioData(ByteString.of(ByteBuffer.wrap(buffer, 0, bytesRead)));
 		}
 		
-		// Wait to make sure all responses are received
-		Thread.sleep(5000);
-		
-		// Close the WebSocket
-		streamingClient.close();
-		
-		// Close the line
-		line.close();
+		System.exit(0);
 	}
 	
 	private static @NotNull StreamingClient getStreamingClient(String accessToken) {
