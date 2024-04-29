@@ -10,8 +10,6 @@ import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 
 import javax.sound.sampled.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
