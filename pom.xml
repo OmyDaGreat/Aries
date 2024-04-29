@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>parse</groupId>
-  <artifactId>ParseButPro</artifactId>
   <version>1.1</version>
   <packaging>jar</packaging>
 
+  <groupId>parse</groupId>
+  <artifactId>ParseButPro</artifactId>
   <name>ParseButPro</name>
   <url>https://maven.apache.org</url>
 
@@ -19,8 +19,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.yourMother:ParseButPro</groupId>
-        <artifactId>parse-it-gui:ParseButPro</artifactId>
+        <groupId>parse</groupId>
+        <artifactId>ParseButPro</artifactId>
         <configuration>
           <archive>
             <manifest>
