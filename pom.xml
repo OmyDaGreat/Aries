@@ -19,8 +19,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>yourMother</groupId>
-        <artifactId>ParseButPro</artifactId>
+        <groupId>org.yourMother:ParseButPro</groupId>
+        <artifactId>parse-it-gui:ParseButPro</artifactId>
         <configuration>
           <archive>
             <manifest>
