@@ -112,7 +112,11 @@
       <version>0.2.0-1</version>
       <scope>compile</scope>
     </dependency>
-
+    <dependency>
+      <groupId>ai.rev.speechtotext</groupId>
+      <artifactId>revai-java-sdk-speechtotext</artifactId>
+      <version>1.4.0</version>
+    </dependency>
   </dependencies>
 
   <repositories>
