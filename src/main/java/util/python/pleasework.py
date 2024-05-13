@@ -2,7 +2,7 @@ import pywinauto
 from pywinauto.application import Application
 import time
 # Start Notepad
-app = Application(backend="uia").start("notepad.exe")
+app = Application(backend="uia").start("Notepad.exe")
 
 # Now you can interact with Notepad, for example, type some text
 app.UntitledNotepad.Edit.type_keys("Hello, this is a sample text for python automation", with_spaces=True)

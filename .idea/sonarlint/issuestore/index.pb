@@ -42,3 +42,7 @@ W
 'src/test/java/parse/RevAiStreaming.java,9\5\95d06e8ffeb149029dd6b04cdac74b13325098c4
 U
 %src/test/java/parse/RevAiTesting.java,2\3\236b4ad8b35828db3d0163a5764723cd5f72f802
+W
+'src/main/java/util/RunPythonScript.java,7\2\720f8b9193038321495e26556a400f03309cd653
+W
+'src/main/java/util/python/pleasework.py,0\6\06e48690266ed5f8eab2463ab3d65cc93c0c5b95

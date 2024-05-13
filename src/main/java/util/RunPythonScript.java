@@ -22,7 +22,7 @@ public class RunPythonScript {
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String s;
             while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
+                log.info(s);
             }
 
             // Wait for the process to complete
@@ -34,6 +34,7 @@ public class RunPythonScript {
             log.info("Done.");
         } catch (Exception e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 }
