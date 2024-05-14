@@ -10,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 @Log4j2
@@ -23,13 +22,15 @@ public class LinuxNotepad {
             Robot r = new Robot();
             r.delay(1000);
             r.mouseMove(screenWidth/2, screenHeight/2);
-            r.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-            r.sendKeys("help i'm stuck in the matrix!");
-            r.keyPress(KeyEvent.VK_ENTER);
-            r.keyRelease(KeyEvent.VK_ENTER);
-            r.sendKeys("wait, is this just a temporary simulation?");
+            r.leftClick();
+            r.type("Help, i'm stuck in the matrix!");
+            r.enter();
+            r.type("Wait, is this only a temporary simulation?");
+            r.keyPress(KeyEvent.VK_CONTROL);
+            r.type(KeyEvent.VK_S);
+            r.keyRelease(KeyEvent.VK_CONTROL);
             log.info("Exited with code: " + process.waitFor());
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
