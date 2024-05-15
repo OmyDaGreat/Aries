@@ -1,0 +1,6 @@
+
+ˆ	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(ÃÔ÷ı8Õ¶ıÎ÷1J$3575210c-1c9e-42bf-b7b2-171e025f0ecc
+¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ş‰Ûõüÿÿÿÿ8¬·ıÎ÷1J$bf812c06-2be0-455b-a01b-c35bdbef97f9
+¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ş‰Ûõüÿÿÿÿ8¬·ıÎ÷1J$6a08cdfe-9e74-476b-b304-faeb785deebf
+r
+java:S1659"*Declare "screenHeight" on a separate line.(Ş‰Ûõüÿÿÿÿ8­·ıÎ÷1J$71c46291-daea-4f0c-afa8-327af7a4d023

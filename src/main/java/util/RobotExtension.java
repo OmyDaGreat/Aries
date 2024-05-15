@@ -19,6 +19,7 @@ public class RobotExtension {
     static {
         special.put('?', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH));
         special.put('!', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1));
+        special.put(':', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON));
     }
 
     public static Robot type(Robot robot, String keys) {
@@ -28,13 +29,18 @@ public class RobotExtension {
                 throw new RuntimeException(
                     "Key code not found for character '" + c + "'");
             } else if(special.containsKey(c)) {
-                robot.keyPress(special.get(c).get(0));
-                robot.keyPress(special.get(c).get(1));
-                robot.keyRelease(special.get(c).get(1));
-                robot.keyRelease(special.get(c).get(0));
+                for (int i = 0; i < special.get(c).size(); i++) {
+                    robot.keyPress(special.get(c).get(i));
+                }
+                for (int i = special.get(c).size() - 1; i >= 0; i--) {
+                    robot.keyRelease(special.get(c).get(i));
+                }
+            } else if(Character.isUpperCase(c)) {
+                robot.keyPress(KeyEvent.VK_SHIFT);
+                type(robot, keyCode);
+                robot.keyRelease(KeyEvent.VK_SHIFT);
             } else {
-                robot.keyPress(keyCode);
-                robot.keyRelease(keyCode);
+                type(robot, keyCode);
             }
         }
         return robot;
@@ -55,8 +61,23 @@ public class RobotExtension {
         return robot;
     }
     public static Robot enter(Robot robot) {
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
+        type(robot, KeyEvent.VK_ENTER);
+        return robot;
+    }
+    public static Robot tab(Robot robot) {
+        type(robot, KeyEvent.VK_TAB);
+        return robot;
+    }
+    public static Robot control(Robot robot, int i) {
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        type(robot, i);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        return robot;
+    }
+    public static Robot shift(Robot robot, int i) {
+        robot.keyPress(KeyEvent.VK_SHIFT);
+        type(robot, i);
+        robot.keyRelease(KeyEvent.VK_SHIFT);
         return robot;
     }
 }

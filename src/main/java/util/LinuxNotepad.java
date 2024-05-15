@@ -29,7 +29,7 @@ public class LinuxNotepad {
             r.keyPress(KeyEvent.VK_CONTROL);
             r.type(KeyEvent.VK_S);
             r.keyRelease(KeyEvent.VK_CONTROL);
-            log.info("Exited with code: " + process.waitFor());
+	        log.info("Exited with code: {}", process.waitFor());
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
