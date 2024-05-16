@@ -23,14 +23,13 @@ public class LinuxNotepad {
             r.delay(1000);
             r.mouseMove(screenWidth/2, screenHeight/2);
             r.leftClick();
-            r.type("Help, i'm stuck in the matrix!");
+            r.type("Help, i'm stuck in the matrix~");
             r.enter();
             r.type("Wait, is this only a temporary simulation?");
             r.keyPress(KeyEvent.VK_CONTROL);
             r.type(KeyEvent.VK_S);
             r.keyRelease(KeyEvent.VK_CONTROL);
 	        log.info("Exited with code: {}", process.waitFor());
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

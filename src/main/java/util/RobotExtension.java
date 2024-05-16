@@ -20,6 +20,8 @@ public class RobotExtension {
         special.put('?', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH));
         special.put('!', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1));
         special.put(':', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON));
+        special.put('"', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE));
+        special.put('~', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE));
     }
 
     public static Robot type(Robot robot, String keys) {
