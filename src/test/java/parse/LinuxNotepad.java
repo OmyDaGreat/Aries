@@ -1,4 +1,4 @@
-package util;
+package parse;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import static util.RobotExtension.screenWidth;
 
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.log4j.Log4j2;
+import util.RobotExtension;
 
 import java.awt.AWTException;
 import java.awt.Robot;
