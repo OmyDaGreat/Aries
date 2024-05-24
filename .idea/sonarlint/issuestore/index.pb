@@ -42,13 +42,7 @@ W
 'src/test/java/parse/RevAiStreaming.java,9\5\95d06e8ffeb149029dd6b04cdac74b13325098c4
 U
 %src/test/java/parse/RevAiTesting.java,2\3\236b4ad8b35828db3d0163a5764723cd5f72f802
-W
-'src/main/java/util/RunPythonScript.java,7\2\720f8b9193038321495e26556a400f03309cd653
-W
-'src/main/java/util/python/pleasework.py,0\6\06e48690266ed5f8eab2463ab3d65cc93c0c5b95
 V
 &src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
-T
-$src/main/java/util/LinuxNotepad.java,4\7\47421abf5e7477e69fcbb3a9bd92c44ed6aa31c3
-R
-"src/main/java/util/WinNotepad.java,d\d\dd614ec143d283e0d24d6d42d5ca9a4f70076f04
+<
+logs/app.log,1\9\19551365d5d85d08cf06f31af46de9860d5f5240
