@@ -33,22 +33,14 @@ A
 .github/workflows,9\3\93d7c4b8379b044a4f4d044d632200ac9ae24251
 U
 %.github/workflows/github-releases.yml,1\b\1bd3f4fb86d7fa9866ffdbef1de847f919a1d447
-U
-%src/test/java/parse/RobotTesting.java,f\6\f60bcdeaf74300abe01563ac7367efd6d90aaf82
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-W
-'src/test/java/parse/RevAiStreaming.java,9\5\95d06e8ffeb149029dd6b04cdac74b13325098c4
-U
-%src/test/java/parse/RevAiTesting.java,2\3\236b4ad8b35828db3d0163a5764723cd5f72f802
 V
 &src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
 <
 logs/app.log,1\9\19551365d5d85d08cf06f31af46de9860d5f5240
 X
 (src/test/java/parse/TranscriberDemo.java,2\a\2a64a9be52d38be1d0a71dfe0ddacb1caf479e3d
-@
-requirements.txt,1\9\19359a61ae2446b51b549167b014da2fcf265768
 b
 2src/test/java/parse/LiveMicrophoneTranscriber.java,9\a\9aac3b3bda101b2959a579f7ecf80674e9adf0ae
