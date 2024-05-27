@@ -46,3 +46,9 @@ V
 &src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
 <
 logs/app.log,1\9\19551365d5d85d08cf06f31af46de9860d5f5240
+X
+(src/test/java/parse/TranscriberDemo.java,2\a\2a64a9be52d38be1d0a71dfe0ddacb1caf479e3d
+@
+requirements.txt,1\9\19359a61ae2446b51b549167b014da2fcf265768
+b
+2src/test/java/parse/LiveMicrophoneTranscriber.java,9\a\9aac3b3bda101b2959a579f7ecf80674e9adf0ae

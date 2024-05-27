@@ -14,6 +14,7 @@
       </option>
       <option name="IGNORE_FIELDS_USED_IN_MULTIPLE_METHODS" value="true" />
     </inspection_tool>
+    <inspection_tool class="PackageUpdate" enabled="true" level="TEXT ATTRIBUTES" enabled_by_default="true" editorAttributes="REASSIGNED_LOCAL_VARIABLE_ATTRIBUTES" />
     <inspection_tool class="SameParameterValue" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ThrowablePrintStackTrace" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="unused" enabled="false" level="WARNING" enabled_by_default="false" checkParameterExcludingHierarchy="false">
