@@ -36,10 +36,6 @@ U
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-V
-&src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
-<
-logs/app.log,1\9\19551365d5d85d08cf06f31af46de9860d5f5240
 X
 (src/test/java/parse/TranscriberDemo.java,2\a\2a64a9be52d38be1d0a71dfe0ddacb1caf479e3d
 b
