@@ -3,9 +3,11 @@ package parse;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import edu.cmu.sphinx.api.SpeechResult;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 
+@Log4j2
 public class LiveMicrophoneTranscriber {
 
     private LiveSpeechRecognizer recognizer;
@@ -23,7 +25,7 @@ public class LiveMicrophoneTranscriber {
         recognizer.startRecognition(true); // true indicates continuous recognition
         SpeechResult result;
         while ((result = recognizer.getResult()) != null) {
-            System.out.println("Hypothesis: " + result.getHypothesis());
+	        log.info("Hypothesis: {}", result.getHypothesis());
         }
         recognizer.stopRecognition(); // Stop recognition when done
     }

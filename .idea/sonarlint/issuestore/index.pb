@@ -40,3 +40,9 @@ X
 (src/test/java/parse/TranscriberDemo.java,2\a\2a64a9be52d38be1d0a71dfe0ddacb1caf479e3d
 b
 2src/test/java/parse/LiveMicrophoneTranscriber.java,9\a\9aac3b3bda101b2959a579f7ecf80674e9adf0ae
+U
+%src/test/java/parse/LinuxNotepad.java,b\d\bdf0eba7619e3db55b30df07b4c129047ebe6f97
+S
+#src/test/java/parse/WinNotepad.java,3\d\3d5bfedea56f2b38c73c596017c420db46dc6657
+V
+&src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078

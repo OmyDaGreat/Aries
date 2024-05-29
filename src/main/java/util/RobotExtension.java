@@ -8,20 +8,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RobotExtension {
     public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width, screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
     
-    private static final Map<Character, List<Integer>> special = new HashMap<>();
+    private static final Map<Character, IntArrayList> special = new HashMap<>();
 
     static {
-        special.put('?', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH));
-        special.put('!', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1));
-        special.put(':', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON));
-        special.put('"', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE));
-        special.put('~', List.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE));
+        special.put('?', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH));
+        special.put('!', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1));
+        special.put(':', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON));
+        special.put('"', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE));
+        special.put('~', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE));
     }
 
     public static Robot type(Robot robot, String keys) {

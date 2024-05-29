@@ -7,7 +7,9 @@ import java.io.InputStream;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.SpeechResult;
 import edu.cmu.sphinx.api.StreamSpeechRecognizer;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class TranscriberDemo {
 
     public static void main(String[] args) throws Exception {
@@ -24,7 +26,7 @@ public class TranscriberDemo {
 	    recognizer.startRecognition(stream);
 		SpeechResult result;
 	    while ((result = recognizer.getResult()) != null) {
-		    System.out.format("Hypothesis: %s\n", result.getHypothesis());
+		    log.info("Hypothesis: {}", result.getHypothesis());
 		}
 		recognizer.stopRecognition();
     }

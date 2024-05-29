@@ -105,6 +105,11 @@
       <artifactId>sphinx4-data</artifactId>
       <version>5prealpha-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>it.unimi.dsi</groupId>
+      <artifactId>fastutil</artifactId>
+      <version>8.5.13</version>
+    </dependency>
   </dependencies>
 
   <repositories>

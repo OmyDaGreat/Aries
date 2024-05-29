@@ -5,11 +5,14 @@ import lombok.extern.log4j.Log4j2;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 @Log4j2
 public class GUI {
-	public static void main(String[] args) throws IOException {
+	static final String trayIconPath = "https://docs.oracle.com/javase%2Ftutorial%2F/uiswing/examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif";
+	public static void main(String[] args) throws IOException, URISyntaxException {
 		//Check the SystemTray is supported
 		if (!SystemTray.isSupported()) {
 			log.info("SystemTray is not supported");
@@ -17,7 +20,7 @@ public class GUI {
 		}
 		final PopupMenu popup = new PopupMenu();
 		Image image = null;
-		final URL trayIconUrl = new URL("https://docs.oracle.com/javase%2Ftutorial%2F/uiswing/examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif");
+		final URL trayIconUrl = new URI(trayIconPath).toURL();
 		image = ImageIO.read(trayIconUrl);
 		final TrayIcon trayIcon =
 				new TrayIcon(image, "tray icon");
