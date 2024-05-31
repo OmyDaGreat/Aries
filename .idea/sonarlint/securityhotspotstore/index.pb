@@ -46,11 +46,5 @@ S
 #src/test/java/parse/WinNotepad.java,3\d\3d5bfedea56f2b38c73c596017c420db46dc6657
 V
 &src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
-U
-%src/test/java/parse/TrayIconDemo.java,2\7\2778c201025fe9b67fa3fa4cabe58e06fabd4cf7
-U
-%src/main/java/parse/TrayIconDemo.java,3\7\373f4e4a320c44bc48c4af90e384fa9d9de7ad08
-Q
-!src/main/java/parse/TrayIcon.java,5\6\564de4797b84bb2e643f206852d23bb474ca9bef
 S
 #src/main/java/parse/SystemTray.java,f\3\f33941b9b943c4f2d4ab4018c692f81f9b79fa4b

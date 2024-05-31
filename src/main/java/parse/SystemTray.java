@@ -16,7 +16,7 @@ import javax.swing.*;
 @Log4j2
 @UtilityClass
 public class SystemTray {
-    public static void main(String[] args) {
+    public static void run() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");

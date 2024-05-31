@@ -58,7 +58,7 @@ public class GUI {
 			// Make button work on enter
 			frame.getRootPane().setDefaultButton(btn);
 			
-			SystemTray.main(new String[0]);
+			SystemTray.run();
 			
 			// Log
 			log.info("Check it out.");
