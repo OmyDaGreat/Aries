@@ -1,1 +1,16 @@
-21:43:51.987 [main] INFO  parse.App - Hello world!
+21:58:17.252 [main] INFO  parse.App - Hello world!
+21:58:30.853 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: 
+21:58:50.378 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: right
+21:58:54.769 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: a
+21:59:25.799 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: 
+21:59:44.119 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: but
+21:59:52.044 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: oh
+21:59:56.928 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: 
+22:01:01.212 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: huh
+22:01:02.677 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: mm
+22:01:05.629 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: how did that
+22:01:06.545 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: fun
+22:01:08.687 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: that
+22:01:12.585 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: and
+22:01:16.061 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: what he did
+22:01:18.377 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: a bit
