@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -13,7 +12,8 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RobotExtension {
-    public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width, screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+    public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    public static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
     
     private static final Map<Character, IntArrayList> special = new HashMap<>();
 
@@ -29,14 +29,14 @@ public class RobotExtension {
         for (char c : keys.toCharArray()) {
             int keyCode = KeyEvent.getExtendedKeyCodeForChar(c);
             if (KeyEvent.CHAR_UNDEFINED == keyCode) {
-                throw new RuntimeException(
+                throw new IllegalArgumentException(
                     "Key code not found for character '" + c + "'");
             } else if(special.containsKey(c)) {
                 for (int i = 0; i < special.get(c).size(); i++) {
-                    robot.keyPress(special.get(c).get(i));
+                    robot.keyPress(special.get(c).getInt(i));
                 }
                 for (int i = special.get(c).size() - 1; i >= 0; i--) {
-                    robot.keyRelease(special.get(c).get(i));
+                    robot.keyRelease(special.get(c).getInt(i));
                 }
             } else if(Character.isUpperCase(c)) {
                 robot.keyPress(KeyEvent.VK_SHIFT);

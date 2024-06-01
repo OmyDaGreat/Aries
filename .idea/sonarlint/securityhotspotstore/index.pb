@@ -9,8 +9,6 @@ P
  src/main/java/util/Platform.java,d\a\dac2c088d5c62149a014ed3a8b59ba806186e02a
 V
 &src/main/java/util/WebDriverMaker.java,3\3\335c623a304d4db87ab168abb405a52db84b6cd6
-^
-.src/test/java/parse/OpenWebPageWithDriver.java,0\0\00b9275ee6ec77d9b0a712eae4944eda8e72256a
 L
 src/main/java/parse/GUI.java,9\8\980a7a417de8730ebc24d6aa2b6073ff84d48579
 \
@@ -36,8 +34,6 @@ U
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 X
 (src/test/java/parse/TranscriberDemo.java,2\a\2a64a9be52d38be1d0a71dfe0ddacb1caf479e3d
-b
-2src/test/java/parse/LiveMicrophoneTranscriber.java,9\a\9aac3b3bda101b2959a579f7ecf80674e9adf0ae
 U
 %src/test/java/parse/LinuxNotepad.java,b\d\bdf0eba7619e3db55b30df07b4c129047ebe6f97
 S
@@ -48,3 +44,7 @@ W
 'src/test/java/parse/GetLookAndFeel.java,5\f\5f246efa724c0aca6e4e2c7fbb18189e52cd51ab
 W
 'src/main/java/parse/SystemTrayIcon.java,a\d\ad72366500e7f468bc6c6a3e0538a22f594f19ac
+a
+1src/main/java/util/LiveMicrophoneTranscriber.java,2\e\2e8ec60084b287f092ae0a7c6c5ab291f4a2f496
+P
+ src/main/java/util/OpenPage.java,b\a\baa264af7c9e60e8e281274b755b493d1b62c97f

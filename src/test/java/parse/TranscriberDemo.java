@@ -1,6 +1,5 @@
 package parse;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -21,7 +20,7 @@ public class TranscriberDemo {
         configuration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
 
 		StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(configuration);
-		InputStream stream = new FileInputStream(new File("src/main/resources/gettysburg.wav"));
+		InputStream stream = new FileInputStream("src/main/resources/gettysburg.wav");
 	
 	    recognizer.startRecognition(stream);
 		SpeechResult result;
