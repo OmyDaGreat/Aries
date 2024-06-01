@@ -15,16 +15,16 @@ import javax.swing.*;
 
 @Log4j2
 @UtilityClass
-public class SystemTray {
+public class SystemTrayIcon {
     public static void run() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
             //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
         } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException |
                  ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
         SwingUtilities.invokeLater(() -> {
             try {
                 createAndShowGUI();
@@ -36,16 +36,15 @@ public class SystemTray {
 
     static void createAndShowGUI() throws IOException, URISyntaxException {
         //Check the SystemTray support
-        if (!java.awt.SystemTray.isSupported()) {
+        if (!SystemTray.isSupported()) {
             log.error("SystemTray is not supported");
             return;
         }
         final PopupMenu popup = new PopupMenu();
         final URL trayIconUrl = new URI("https://docs.oracle.com/javase%2Ftutorial%2F/uiswing/examples/misc/TrayIconDemoProject/src/misc/images/bulb.gif").toURL();
         Image image = ImageIO.read(trayIconUrl);
-        final java.awt.TrayIcon trayIcon =
-                new java.awt.TrayIcon(image, "tray icon");
-        final java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+        final TrayIcon trayIcon = new TrayIcon(image, "tray icon");
+        final SystemTray tray = SystemTray.getSystemTray();
 
         // Create a popup menu components
         MenuItem aboutItem = new MenuItem("About");
@@ -55,7 +54,7 @@ public class SystemTray {
         MenuItem errorItem = new MenuItem("Error");
         MenuItem warningItem = new MenuItem("Warn");
         MenuItem infoItem = new MenuItem("Info");
-        MenuItem noneItem = new MenuItem("Debug");
+        MenuItem debugItem = new MenuItem("Debug");
         MenuItem exitItem = new MenuItem("Exit");
 
         //Add components to popup menu
@@ -68,7 +67,7 @@ public class SystemTray {
         displayMenu.add(errorItem);
         displayMenu.add(warningItem);
         displayMenu.add(infoItem);
-        displayMenu.add(noneItem);
+        displayMenu.add(debugItem);
         popup.add(exitItem);
 
         trayIcon.setPopupMenu(popup);
@@ -102,19 +101,19 @@ public class SystemTray {
             switch (item.getLabel()) {
                 case "Error":
                     trayIcon.displayMessage("Sun TrayIcon Demo",
-                            "This is an error message", TrayIcon.MessageType.ERROR);
+                            "This is an error message", java.awt.TrayIcon.MessageType.ERROR);
                     break;
                 case "Warning":
                     trayIcon.displayMessage("Sun TrayIcon Demo",
-                            "This is a warning message", TrayIcon.MessageType.WARNING);
+                            "This is a warning message", java.awt.TrayIcon.MessageType.WARNING);
                     break;
                 case "Info":
                     trayIcon.displayMessage("Sun TrayIcon Demo",
-                            "This is an info message", TrayIcon.MessageType.INFO);
+                            "This is an info message", java.awt.TrayIcon.MessageType.INFO);
                     break;
                 default:
                     trayIcon.displayMessage("Sun TrayIcon Demo",
-                            "This is an ordinary message", TrayIcon.MessageType.NONE);
+                            "This is an ordinary message", java.awt.TrayIcon.MessageType.NONE);
                     break;
             }
         };
@@ -122,7 +121,7 @@ public class SystemTray {
         errorItem.addActionListener(listener);
         warningItem.addActionListener(listener);
         infoItem.addActionListener(listener);
-        noneItem.addActionListener(listener);
+        debugItem.addActionListener(listener);
 
         exitItem.addActionListener(e -> {
             tray.remove(trayIcon);
@@ -132,7 +131,7 @@ public class SystemTray {
 
     //Obtain the image URL
     public static Image createImage(String path, String description) {
-        URL imageURL = SystemTray.class.getResource(path);
+        URL imageURL = SystemTrayIcon.class.getResource(path);
 
         if (imageURL == null) {
 	        log.error("Resource not found: {}", path);

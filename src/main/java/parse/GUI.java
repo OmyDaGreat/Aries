@@ -1,34 +1,33 @@
 package parse;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialOceanicTheme;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.util.concurrent.atomic.AtomicReference;
 
+@UtilityClass
 @Log4j2
 public class GUI {
-	public static void main(String[] args) {
+	public static void run() {
 		SwingUtilities.invokeLater(() -> {
 			try {
 				UIManager.setLookAndFeel(new MaterialLookAndFeel());
 			} catch (UnsupportedLookAndFeelException e) {
-				throw new util.UnsupportedLookAndFeelException(e);
+				e.printStackTrace();
 			}
 			MaterialLookAndFeel.changeTheme(new MaterialOceanicTheme());
-			// Create the main frame
+			
 			JFrame frame = new JFrame("Parse Pro");
 			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			frame.setSize(300, 250);
-			frame.setLocationRelativeTo(null); // Center the frame on the screen
+			frame.setLocationRelativeTo(null);
 			
-			// Create and add the main panel
-			JPanel panel = new JPanel(new MigLayout("wrap")); // Use MigLayout with wrap 2
+			JPanel panel = new JPanel(new MigLayout("wrap"));
 			frame.add(panel);
 			
-			// Create components: text field, button, and message label
 			JTextField userInput = new JTextField(20);
 			JButton btn = new JButton("Click here");
 			JTextArea messageLabel = new JTextArea("");
@@ -38,7 +37,6 @@ public class GUI {
 			messageLabel.setOpaque(false); // Make the text area transparent
 			messageLabel.setFocusable(false); // Disable focus to prevent the text area from being editable
 			
-			// Add action listener to the button
 			StringBuilder msg = new StringBuilder();
 			btn.addActionListener(e -> {
 				String input = userInput.getText();
@@ -58,10 +56,7 @@ public class GUI {
 			// Make button work on enter
 			frame.getRootPane().setDefaultButton(btn);
 			
-			SystemTray.run();
-			
-			// Log
-			log.info("Check it out.");
+			SystemTrayIcon.run();
 		});
 	}
 }

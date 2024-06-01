@@ -19,8 +19,6 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
-g
-7src/main/java/util/UnsupportedLookAndFeelException.java,e\0\e02d5ef1dea834885c0dd30e0e6e7e09cbf1d10e
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 B
@@ -46,5 +44,7 @@ S
 #src/test/java/parse/WinNotepad.java,3\d\3d5bfedea56f2b38c73c596017c420db46dc6657
 V
 &src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
-S
-#src/main/java/parse/SystemTray.java,f\3\f33941b9b943c4f2d4ab4018c692f81f9b79fa4b
+W
+'src/test/java/parse/GetLookAndFeel.java,5\f\5f246efa724c0aca6e4e2c7fbb18189e52cd51ab
+W
+'src/main/java/parse/SystemTrayIcon.java,a\d\ad72366500e7f468bc6c6a3e0538a22f594f19ac
