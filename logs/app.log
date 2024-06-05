@@ -1,16 +1,15 @@
-21:58:17.252 [main] INFO  parse.App - Hello world!
-21:58:30.853 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: 
-21:58:50.378 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: right
-21:58:54.769 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: a
-21:59:25.799 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: 
-21:59:44.119 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: but
-21:59:52.044 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: oh
-21:59:56.928 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: 
-22:01:01.212 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: huh
-22:01:02.677 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: mm
-22:01:05.629 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: how did that
-22:01:06.545 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: fun
-22:01:08.687 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: that
-22:01:12.585 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: and
-22:01:16.061 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: what he did
-22:01:18.377 [Thread-1] INFO  util.LiveMicrophoneTranscriber - Hypothesis: a bit
+14:53:52.379 [main] INFO  util.LiveMic - Hypothesis: the weapon
+14:53:57.894 [main] INFO  util.LiveMic - Hypothesis: and
+14:54:03.883 [main] INFO  util.LiveMic - Hypothesis: the fifth
+14:54:09.388 [main] INFO  util.LiveMic - Hypothesis: 
+14:54:12.387 [main] INFO  util.LiveMic - Hypothesis: and
+14:54:19.356 [main] INFO  util.LiveMic - Hypothesis: up up
+14:54:23.856 [main] INFO  util.LiveMic - Hypothesis: pope
+14:54:31.423 [main] INFO  util.LiveMic - Hypothesis: open
+14:54:31.423 [main] DEBUG util.LiveMic - Someone needs help!
+14:54:36.753 [main] INFO  util.LiveMic - Hypothesis: h.
+14:54:40.408 [main] INFO  util.LiveMic - Hypothesis: page
+14:54:40.408 [main] DEBUG util.LiveMic - Page is open!
+14:54:51.027 [main] INFO  util.LiveMic - Hypothesis: note that
+14:54:55.302 [main] INFO  util.LiveMic - Hypothesis: note that if
+14:55:00.435 [main] INFO  util.LiveMic - Hypothesis: note that

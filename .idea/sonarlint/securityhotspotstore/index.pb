@@ -32,8 +32,6 @@ U
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-X
-(src/test/java/parse/TranscriberDemo.java,2\a\2a64a9be52d38be1d0a71dfe0ddacb1caf479e3d
 U
 %src/test/java/parse/LinuxNotepad.java,b\d\bdf0eba7619e3db55b30df07b4c129047ebe6f97
 S
@@ -44,7 +42,13 @@ W
 'src/test/java/parse/GetLookAndFeel.java,5\f\5f246efa724c0aca6e4e2c7fbb18189e52cd51ab
 W
 'src/main/java/parse/SystemTrayIcon.java,a\d\ad72366500e7f468bc6c6a3e0538a22f594f19ac
-a
-1src/main/java/util/LiveMicrophoneTranscriber.java,2\e\2e8ec60084b287f092ae0a7c6c5ab291f4a2f496
 P
  src/main/java/util/OpenPage.java,b\a\baa264af7c9e60e8e281274b755b493d1b62c97f
+T
+$src/test/java/parse/liveMicDemo.java,5\8\58119cf4e9cedfc641f1b54af9036f3161f0ad4b
+O
+src/main/java/util/LiveMic.java,2\9\29b35dbbb75a9de1d51c603217ec53542b799643
+T
+$src/test/java/parse/LiveMicDemo.java,7\0\70467d851a0ead72d59747b6319c8eac6e4b424c
+W
+'src/main/java/util/StringExtension.java,b\0\b0b5934708bd865cfa01c83442d9bb7d46d70699
