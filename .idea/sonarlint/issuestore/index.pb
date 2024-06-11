@@ -32,10 +32,6 @@ U
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-U
-%src/test/java/parse/LinuxNotepad.java,b\d\bdf0eba7619e3db55b30df07b4c129047ebe6f97
-S
-#src/test/java/parse/WinNotepad.java,3\d\3d5bfedea56f2b38c73c596017c420db46dc6657
 V
 &src/main/java/util/RobotExtension.java,2\5\25d1f09136d0c3353102730f41a9cd299da0b078
 W
@@ -52,3 +48,9 @@ T
 $src/test/java/parse/LiveMicDemo.java,7\0\70467d851a0ead72d59747b6319c8eac6e4b424c
 W
 'src/main/java/util/StringExtension.java,b\0\b0b5934708bd865cfa01c83442d9bb7d46d70699
+O
+src/main/java/util/Secrets.java,4\b\4be2b9538952dbf2b8bdbba0cdfc996f1999f5ef
+S
+#src/test/java/parse/GeminiTest.java,2\6\26f74d2e7f9d1356a627ca6b1cdaf7bdb24cdc3e
+Q
+!src/test/java/parse/GeminiTest.kt,6\7\679f61c8ec2e8832fe7dd16a2f0ae6262bc917cd

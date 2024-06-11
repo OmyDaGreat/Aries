@@ -30,3 +30,6 @@ target/
 
 ### Log Files ###
 *.log
+
+### Secrets ###
+Secrets.java
