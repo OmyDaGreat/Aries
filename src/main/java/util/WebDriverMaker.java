@@ -12,7 +12,7 @@ public class WebDriverMaker {
   private final WebDriver driver;
 
   public WebDriverMaker(String stuff) {
-    this.platform = Platform.detectPlatform(stuff);
+    this.platform = Platform.detectPlatform();
     switch (platform) {
       case WINDOWS_X64_CHROME:
         System.setProperty(

@@ -38,24 +38,16 @@ W
 'src/main/java/parse/SystemTrayIcon.java,a\d\ad72366500e7f468bc6c6a3e0538a22f594f19ac
 P
  src/main/java/util/OpenPage.java,b\a\baa264af7c9e60e8e281274b755b493d1b62c97f
-O
-src/main/java/util/LiveMic.java,2\9\29b35dbbb75a9de1d51c603217ec53542b799643
 W
 'src/main/java/util/StringExtension.java,b\0\b0b5934708bd865cfa01c83442d9bb7d46d70699
 O
 src/main/java/util/Secrets.java,4\b\4be2b9538952dbf2b8bdbba0cdfc996f1999f5ef
-S
-#src/test/java/parse/JythonTest.java,b\a\ba4db7cfcf23f2abfb65b92b68b80e443b1b18f8
-Q
-!src/test/java/parse/PyScript.java,1\7\17028db5a646d8b100a84318f56c70ca4aac9a25
 P
  src/main/java/util/PyScript.java,8\7\87635f76b574f14dca272915a687840ab763f5bf
 S
 #src/main/java/util/FilePrinter.java,5\8\58331115776ca266643a4326ff7cb7cdb1313a42
 N
 src/main/java/util/pypkg/ai.py,3\1\31a1c7db932fe5c0a59ddf74fed024f644eb5e99
->
-src/prompt.txt,0\5\053b96339c763f720184ace2a64829d20f381249
 :
 
 output.txt,a\d\adbe6c7d3c0d8b19ecd492bec9532c13a6e1c9ad

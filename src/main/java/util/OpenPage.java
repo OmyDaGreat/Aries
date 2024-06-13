@@ -1,10 +1,9 @@
 package util;
 
-import lombok.experimental.UtilityClass;
-
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class OpenPage {
