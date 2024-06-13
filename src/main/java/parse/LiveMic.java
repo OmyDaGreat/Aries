@@ -1,15 +1,17 @@
-package util;
+package parse;
 
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import edu.cmu.sphinx.api.SpeechResult;
 import java.awt.*;
+import java.io.FileWriter;
 import java.io.IOException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import util.*;
 
 @Getter
 @Setter
@@ -31,18 +33,29 @@ public class LiveMic {
       log.info("Hypothesis: {}", hypothesis);
       if (hypothesis.contains("open")) {
         log.debug("Someone needs help!");
-        allFalse();
+        setAll(false);
         keyword = true;
       }
-      if (hypothesis.contains("notepad", "note that") && keyword) {
+      if (hypothesis.contains("notepad", "note that") && keyword && !isOpenNotepad) {
         log.debug("Notepad is open!");
         WinNotepad.open();
         isOpenNotepad = true;
       }
-      if (hypothesis.contains("page") && keyword) {
+      if (hypothesis.contains("page") && keyword && !isOpenPage) {
         log.debug("Page is open!");
         OpenPage.open("https://imgur.com/a/kBPQWWd");
         isOpenPage = true;
+      }
+      if (!isAllTrue()) {
+        FileWriter writer = new FileWriter("prompt.txt");
+        writer.write(hypothesis);
+        writer.close();
+        PyScript.run();
+        FilePrinter.print("output.txt");
+      }
+      if (hypothesis.contains("stop")) {
+        log.debug("Stopping!");
+        System.exit(0);
       }
     }
     recognizer.stopRecognition();
@@ -56,9 +69,13 @@ public class LiveMic {
     return configuration;
   }
 
-  private void allFalse() {
-    keyword = false;
-    isOpenPage = false;
-    isOpenNotepad = false;
+  private void setAll(boolean b) {
+    keyword = b;
+    isOpenPage = b;
+    isOpenNotepad = b;
+  }
+
+  private boolean isAllTrue() {
+    return keyword && isOpenPage && isOpenNotepad;
   }
 }

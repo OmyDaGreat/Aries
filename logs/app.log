@@ -1,15 +1,105 @@
-14:53:52.379 [main] INFO  util.LiveMic - Hypothesis: the weapon
-14:53:57.894 [main] INFO  util.LiveMic - Hypothesis: and
-14:54:03.883 [main] INFO  util.LiveMic - Hypothesis: the fifth
-14:54:09.388 [main] INFO  util.LiveMic - Hypothesis: 
-14:54:12.387 [main] INFO  util.LiveMic - Hypothesis: and
-14:54:19.356 [main] INFO  util.LiveMic - Hypothesis: up up
-14:54:23.856 [main] INFO  util.LiveMic - Hypothesis: pope
-14:54:31.423 [main] INFO  util.LiveMic - Hypothesis: open
-14:54:31.423 [main] DEBUG util.LiveMic - Someone needs help!
-14:54:36.753 [main] INFO  util.LiveMic - Hypothesis: h.
-14:54:40.408 [main] INFO  util.LiveMic - Hypothesis: page
-14:54:40.408 [main] DEBUG util.LiveMic - Page is open!
-14:54:51.027 [main] INFO  util.LiveMic - Hypothesis: note that
-14:54:55.302 [main] INFO  util.LiveMic - Hypothesis: note that if
-14:55:00.435 [main] INFO  util.LiveMic - Hypothesis: note that
+21:04:34.504 [main] INFO  parse.App - Hello world!
+21:04:41.297 [Thread-1] INFO  parse.LiveMic - Hypothesis: hello
+21:04:43.414 [Thread-1] INFO  util.PyScript - Response written to output.txt
+21:04:43.495 [Thread-1] ERROR util.PyScript - Process finished with exit code: 0
+21:04:43.496 [Thread-1] INFO  util.FilePrinter - Hey there, I'm here to help you out with writing. Just ask me anything, and I'll do my best to answer it.
+21:04:59.218 [Thread-1] INFO  parse.LiveMic - Hypothesis: palm
+21:05:06.658 [Thread-1] INFO  util.PyScript - Response written to output.txt
+21:05:06.782 [Thread-1] ERROR util.PyScript - Process finished with exit code: 0
+21:05:06.782 [Thread-1] INFO  util.FilePrinter - **Palm Trees**
+
+**Characteristics:**
+
+* **Scientific name:** Arecaceae family
+* **Type:** Monocotyledonous flowering plants
+* **Habitat:** Tropical and subtropical regions
+* **Growth form:** Woody stems with large, fan-shaped or feathery leaves
+
+**Morphology:**
+
+* **Stems:** Single or multiple, columnar or branched, often woody
+* **Leaves:** Compound, palmate (fan-shaped) or pinnate (feathery)
+* **Flowers:** Small, often clustered in inflorescences beneath the leaves
+* **Fruit:** Drupes or berries, typically single-seeded
+
+**Species Diversity:**
+
+There are over 2,600 species of palm trees, including:
+
+* **Coconut palm (Cocos nucifera):** Edible fruit, used for oil and coconut milk
+* **Date palm (Phoenix dactylifera):** Edible fruit, commonly dried and sold as dates
+* **Royal palm (Roystonea regia):** Ornamental tree, popular in landscaping
+* **Palmyra palm (Borassus flabellifer):** Multiple uses, including food, construction, and medicinal purposes
+
+**Ecological Significance:**
+
+* Provide food and shelter for animals
+* Help regulate the water cycle
+* Enhance soil stability and prevent erosion
+* Create habitats for various organisms
+
+**Economic Importance:**
+
+* **Food:** Coconuts, dates, and palmyra fruits
+* **Construction:** Wood, thatch, and leaves
+* **Landscaping:** Ornamental plants and shade trees
+* **Oil:** Palm oil, used in food, cosmetics, and industry
+
+**Cultural Significance:**
+
+* Symbol of tropical landscapes
+* Often associated with relaxation and vacation
+* Used in religious ceremonies and decorations
+
+**Threats:**
+
+* Habitat loss and degradation
+* Overexploitation
+* Invasive pests and diseases
+* Climate change
+
+**Conservation:**
+
+* Protecting and restoring palm habitats
+* Sustainable harvesting practices
+* Research on disease resistance and pest control
+21:05:22.468 [Thread-1] INFO  parse.LiveMic - Hypothesis: what to feed off
+21:05:28.962 [Thread-1] INFO  util.PyScript - Response written to output.txt
+21:05:29.083 [Thread-1] ERROR util.PyScript - Process finished with exit code: 0
+21:05:29.083 [Thread-1] INFO  util.FilePrinter - * **Fruits and vegetables.** Fresh fruits and vegetables are packed with nutrients and antioxidants, which are essential for good health. Aim to eat at least five servings of fruits and vegetables each day.
+* **Whole grains.** Whole grains are a good source of fiber, which can help you feel full and satisfied. They also contain vitamins, minerals, and antioxidants. Aim to eat at least three servings of whole grains each day.
+* **Lean protein.** Lean protein is essential for building and repairing tissues. It can also help you feel full and satisfied. Aim to eat at least one serving of lean protein each day.
+* **Low-fat dairy products.** Low-fat dairy products are a good source of calcium, protein, and vitamin D. Aim to eat at least one serving of low-fat dairy each day.
+* **Healthy fats.** Healthy fats are essential for good health. They can help to lower cholesterol levels, reduce inflammation, and improve brain function. Aim to eat at least one serving of healthy fats each day.
+
+Here are some specific examples of foods that you can eat off:
+
+* **Fruits:** apples, bananas, berries, grapes, oranges, pears, watermelon
+* **Vegetables:** broccoli, carrots, celery, cucumbers, leafy greens, onions, peppers, tomatoes
+* **Whole grains:** brown rice, oatmeal, quinoa, whole-wheat bread, whole-wheat pasta
+* **Lean protein:** chicken, fish, beans, lentils, tofu
+* **Low-fat dairy products:** milk, yogurt, cheese
+* **Healthy fats:** avocados, nuts, seeds, olive oil
+21:05:37.207 [Thread-1] INFO  parse.LiveMic - Hypothesis: 
+21:05:38.303 [Thread-1] INFO  util.PyScript - Traceback (most recent call last):
+21:05:38.303 [Thread-1] INFO  util.PyScript -   File "C:\Users\ruchi\IdeaProjects\ParseButPro\src\main\java\util\pypkg\ai.py", line 12, in <module>
+21:05:38.303 [Thread-1] INFO  util.PyScript -     response = model.generate_content(PROMPT)
+21:05:38.304 [Thread-1] INFO  util.PyScript -                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21:05:38.304 [Thread-1] INFO  util.PyScript -   File "C:\Python312\Lib\site-packages\google\generativeai\generative_models.py", line 234, in generate_content
+21:05:38.351 [Thread-1] INFO  util.PyScript -     raise TypeError("contents must not be empty")
+21:05:38.351 [Thread-1] INFO  util.PyScript - TypeError: contents must not be empty
+21:05:38.452 [Thread-1] ERROR util.PyScript - Process finished with exit code: 1
+21:05:38.452 [Thread-1] INFO  util.FilePrinter - * **Fruits and vegetables.** Fresh fruits and vegetables are packed with nutrients and antioxidants, which are essential for good health. Aim to eat at least five servings of fruits and vegetables each day.
+* **Whole grains.** Whole grains are a good source of fiber, which can help you feel full and satisfied. They also contain vitamins, minerals, and antioxidants. Aim to eat at least three servings of whole grains each day.
+* **Lean protein.** Lean protein is essential for building and repairing tissues. It can also help you feel full and satisfied. Aim to eat at least one serving of lean protein each day.
+* **Low-fat dairy products.** Low-fat dairy products are a good source of calcium, protein, and vitamin D. Aim to eat at least one serving of low-fat dairy each day.
+* **Healthy fats.** Healthy fats are essential for good health. They can help to lower cholesterol levels, reduce inflammation, and improve brain function. Aim to eat at least one serving of healthy fats each day.
+
+Here are some specific examples of foods that you can eat off:
+
+* **Fruits:** apples, bananas, berries, grapes, oranges, pears, watermelon
+* **Vegetables:** broccoli, carrots, celery, cucumbers, leafy greens, onions, peppers, tomatoes
+* **Whole grains:** brown rice, oatmeal, quinoa, whole-wheat bread, whole-wheat pasta
+* **Lean protein:** chicken, fish, beans, lentils, tofu
+* **Low-fat dairy products:** milk, yogurt, cheese
+* **Healthy fats:** avocados, nuts, seeds, olive oil

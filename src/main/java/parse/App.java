@@ -3,7 +3,6 @@ package parse;
 import java.awt.*;
 import java.io.IOException;
 import lombok.extern.log4j.Log4j2;
-import util.LiveMic;
 
 @Log4j2
 public class App {
@@ -11,22 +10,12 @@ public class App {
   public static void main(String[] args) throws InterruptedException {
     log.info("Hello world!");
 
-    // Create and start the GUI thread
-    Thread guiThread =
-        new Thread(
-            () -> {
-              try {
-                GUI.run();
-              } catch (Exception e) {
-                log.error("Error starting the GUI", e);
-              }
-            });
+    Thread guiThread = getGUIThread();
     guiThread.start();
 
-    // Create and start the LiveMicrophoneTranscriber thread
-      Thread transcriberThread = getTranscriberThread();
-      
-      // Wait for the threads to finish
+    Thread transcriberThread = getTranscriberThread();
+    transcriberThread.start();
+
     try {
       transcriberThread.join();
       guiThread.join();
@@ -37,22 +26,30 @@ public class App {
 
     log.info("Application finished.");
   }
-    
-    private static Thread getTranscriberThread() {
-        Thread transcriberThread =
-            new Thread(
-                () -> {
-                  try {
-                    LiveMic.startRecognition();
-                  } catch (IOException | AWTException e) {
-                    log.error("Error starting the transcriber", e);
-                  } catch (InterruptedException e) {
-                    log.error("Interrupted while waiting for the transcriber to finish", e);
-                    e.printStackTrace();
-                    Thread.currentThread().interrupt();
-                  }
-                });
-        transcriberThread.start();
-        return transcriberThread;
-    }
+
+  private static Thread getGUIThread() {
+    return new Thread(
+        () -> {
+          try {
+            GUI.run();
+          } catch (Exception e) {
+            log.error("Error starting the GUI", e);
+          }
+        });
+  }
+
+  private static Thread getTranscriberThread() {
+    return new Thread(
+        () -> {
+          try {
+            LiveMic.startRecognition();
+          } catch (IOException | AWTException e) {
+            log.error("Error starting the transcriber", e);
+          } catch (InterruptedException e) {
+            log.error("Interrupted while waiting for the transcriber to finish", e);
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
+          }
+        });
+  }
 }

@@ -46,9 +46,18 @@ O
 src/main/java/util/Secrets.java,4\b\4be2b9538952dbf2b8bdbba0cdfc996f1999f5ef
 S
 #src/test/java/parse/JythonTest.java,b\a\ba4db7cfcf23f2abfb65b92b68b80e443b1b18f8
-T
-$src/test/java/jythonPack/__init__.py,d\d\dd99e3d365862a2abebdee9b8fc7a5033a2b870f
-R
-"src/test/java/jythonPack/aiTest.py,f\3\f31e58e808e66c5372abb074b48e411354eba6e1
+Q
+!src/test/java/parse/PyScript.java,1\7\17028db5a646d8b100a84318f56c70ca4aac9a25
+P
+ src/main/java/util/PyScript.java,8\7\87635f76b574f14dca272915a687840ab763f5bf
 S
-#src/test/java/jythonPack/Secrets.py,4\d\4d044ed5f19844fc55df27054cdbd4d4791c29fd
+#src/main/java/util/FilePrinter.java,5\8\58331115776ca266643a4326ff7cb7cdb1313a42
+N
+src/main/java/util/pypkg/ai.py,3\1\31a1c7db932fe5c0a59ddf74fed024f644eb5e99
+>
+src/prompt.txt,0\5\053b96339c763f720184ace2a64829d20f381249
+:
+
+output.txt,a\d\adbe6c7d3c0d8b19ecd492bec9532c13a6e1c9ad
+P
+ src/main/java/parse/LiveMic.java,5\6\567e744f77fa8697333b240c3bf3be2b93b097b4
