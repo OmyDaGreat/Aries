@@ -7,8 +7,6 @@ L
 lombok.config,8\2\823fe80d2650ec87c2614800da17ca3a55af96a9
 P
  src/main/java/util/Platform.java,d\a\dac2c088d5c62149a014ed3a8b59ba806186e02a
-V
-&src/main/java/util/WebDriverMaker.java,3\3\335c623a304d4db87ab168abb405a52db84b6cd6
 L
 src/main/java/parse/GUI.java,9\8\980a7a417de8730ebc24d6aa2b6073ff84d48579
 \
@@ -23,8 +21,6 @@ B
 .gitpod.Dockerfile,0\9\09856d0a48229fa98219a833cee9652afc005c9c
 ;
 .gitpod.yml,d\b\db770177f8d41ee439a664061a4b93e4609fd2e8
-c
-3src/main/java/util/UnsupportedBrowserException.java,7\d\7def8210533a0c6145a9660fdfc701d43d6a2274
 A
 .github/workflows,9\3\93d7c4b8379b044a4f4d044d632200ac9ae24251
 U
@@ -53,3 +49,5 @@ N
 output.txt,a\d\adbe6c7d3c0d8b19ecd492bec9532c13a6e1c9ad
 P
  src/main/java/parse/LiveMic.java,5\6\567e744f77fa8697333b240c3bf3be2b93b097b4
+?
+ParseButPro.iml,3\4\342cefad3bff22553f4bbdea0dfd207d4dc73c1f
