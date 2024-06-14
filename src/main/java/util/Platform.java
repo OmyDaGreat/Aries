@@ -1,27 +1,30 @@
 package util;
 
 import lombok.Getter;
+import org.apache.commons.lang3.SystemUtils;
 
 @Getter
 public enum Platform {
-  WINDOWS11,
-  WINDOWS10,
-  WINDOWS7,
-  LINUX,
-  MACOSX,
-  UNKNOWN;
+  WINDOWS("Windows"),
+  LINUX("Linux"),
+  MAC("Mac"),
+  UNKNOWN("Unknown");
+
+  final String fullName;
+  final String displayName;
+
+  Platform(String displayName) {
+    this.displayName = displayName;
+    fullName = System.getProperty("os.name");
+  }
 
   public static Platform detectPlatform() {
-    if(System.getProperty("os.name").contains("Windows 11")) {
-      return WINDOWS11;
-    } else if(System.getProperty("os.name").contains("Windows 10")) {
-      return WINDOWS10;
-    } else if(System.getProperty("os.name").contains("Windows 7")) {
-      return WINDOWS7;
-    } else if(System.getProperty("os.name").contains("Linux")) {
+    if (SystemUtils.IS_OS_WINDOWS) {
+      return WINDOWS;
+    } else if (SystemUtils.IS_OS_LINUX) {
       return LINUX;
-    } else if(System.getProperty("os.name").contains("Mac OS X")) {
-      return MACOSX;
+    } else if (SystemUtils.IS_OS_MAC) {
+      return MAC;
     }
     return UNKNOWN;
   }
