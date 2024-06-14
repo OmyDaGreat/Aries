@@ -1,14 +1,15 @@
 package util;
 
-import lombok.experimental.ExtensionMethod;
-import lombok.extern.log4j.Log4j2;
-
-import java.awt.*;
-import java.io.IOException;
-
 import static util.RobotExtension.screenHeight;
 import static util.RobotExtension.screenWidth;
 
+import java.awt.*;
+import java.io.IOException;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
+import lombok.extern.log4j.Log4j2;
+
+@UtilityClass
 @Log4j2
 @ExtensionMethod({RobotExtension.class})
 public class LinuxNotepad {

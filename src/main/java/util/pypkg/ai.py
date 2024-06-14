@@ -6,7 +6,7 @@ from Secrets import get
 with open("prompt.txt", "r") as prompt_file:
     PROMPT = prompt_file.read().strip()
 
-MODEL = 'gemini-pro'
+MODEL = 'gemini-1.5-flash'
 genai.configure(api_key=get('gemini'))
 model = genai.GenerativeModel(MODEL)
 response = model.generate_content(PROMPT)

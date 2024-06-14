@@ -1,13 +1,12 @@
 package util;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
-import lombok.experimental.UtilityClass;
-
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RobotExtension {
@@ -30,7 +29,7 @@ public class RobotExtension {
 			if (KeyEvent.CHAR_UNDEFINED == keyCode) {
 				throw new IllegalArgumentException(
 						"Key code not found for character '" + c + "'");
-			} else if (special.containsKey(c)) {
+      } else if (special.containsKey(c)) {
 				for (int i = 0; i < special.get(c).size(); i++) {
 					robot.keyPress(special.get(c).getInt(i));
 				}

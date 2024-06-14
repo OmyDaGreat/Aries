@@ -51,3 +51,11 @@ P
  src/main/java/parse/LiveMic.java,5\6\567e744f77fa8697333b240c3bf3be2b93b097b4
 ?
 ParseButPro.iml,3\4\342cefad3bff22553f4bbdea0dfd207d4dc73c1f
+T
+$src/main/java/util/LinuxNotepad.java,4\7\47421abf5e7477e69fcbb3a9bd92c44ed6aa31c3
+R
+"src/main/java/util/WinNotepad.java,d\d\dd614ec143d283e0d24d6d42d5ca9a4f70076f04
+W
+'src/test/java/parse/GetLookAndFeel.java,5\f\5f246efa724c0aca6e4e2c7fbb18189e52cd51ab
+T
+$src/test/java/parse/LiveMicDemo.java,7\0\70467d851a0ead72d59747b6319c8eac6e4b424c

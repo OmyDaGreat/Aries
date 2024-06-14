@@ -1,15 +1,16 @@
 package util;
 
-import lombok.experimental.ExtensionMethod;
-import lombok.extern.log4j.Log4j2;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
+import lombok.extern.log4j.Log4j2;
 
+@UtilityClass
 @Log4j2
 @ExtensionMethod({RobotExtension.class})
 public class WinNotepad {
