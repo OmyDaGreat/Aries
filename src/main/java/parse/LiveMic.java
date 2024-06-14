@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import util.*;
 
 @Getter
@@ -46,7 +47,7 @@ public class LiveMic {
         OpenPage.open("https://imgur.com/a/kBPQWWd");
         isOpenPage = true;
       }
-      if (!isAllTrue()) {
+      if (!isAllTrue() && !StringUtils.isBlank(hypothesis)) {
         FileWriter writer = new FileWriter("prompt.txt");
         writer.write(hypothesis);
         writer.close();
