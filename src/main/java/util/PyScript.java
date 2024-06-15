@@ -20,8 +20,6 @@ public class PyScript {
     while ((line = reader.readLine()) != null) {
       log.info(line);
     }
-
-    int exitCode = process.waitFor();
-    log.debug("Python finished with exit code: {}", exitCode);
+    process.waitFor();
   }
 }

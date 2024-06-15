@@ -15,7 +15,7 @@ public class FilePrinter {
     Path filePath = Paths.get(fileName);
     try {
       String fileContent = Files.readString(filePath);
-      log.info(fileContent);
+      log.info("\n\n{}", fileContent);
     } catch (IOException e) {
       log.error("Failed to read file: {}", e.getMessage());
     }
