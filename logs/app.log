@@ -1,13 +1,3 @@
-18:48:04.297 [main] INFO  parse.App - Hello world!
-18:48:06.082 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
-18:48:06.089 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
-18:48:11.260 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
-18:48:16.722 [Thread-1] INFO  parse.LiveMic - Hello.
-
-18:48:19.191 [Thread-1] INFO  util.PyScript - Response written to output.txt
-18:48:19.283 [Thread-1] DEBUG util.PyScript - Python finished with exit code: 0
-18:48:19.284 [Thread-1] INFO  util.FilePrinter - Hello! 
-
-How can I help you today? 
-
-18:48:19.284 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+08:08:47.252 [main] INFO  parse.App - Hello world!
+08:08:48.918 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
+08:08:48.924 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:

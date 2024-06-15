@@ -1,6 +1,6 @@
 import google.generativeai as genai
 
-from Secrets import get
+from Keys import get
 
 # Read the prompt from the file
 with open("prompt.txt", "r") as prompt_file:

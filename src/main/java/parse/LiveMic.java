@@ -27,13 +27,19 @@ public class LiveMic {
   private boolean keyword = false;
   private boolean isOpenPage = false;
   private boolean isOpenNotepad = false;
-  
-  public void startRecognition() throws LeopardException, IOException, InterruptedException, AWTException {
-    Leopard leopard = new Leopard.Builder().setAccessKey(Secrets.get("pico")).setModelPath("src/main/resources/leopard.pv").setEnableAutomaticPunctuation(true).build();
+
+  public void startRecognition()
+      throws LeopardException, IOException, InterruptedException, AWTException {
+    Leopard leopard =
+        new Leopard.Builder()
+            .setAccessKey(Keys.get("pico"))
+            .setModelPath("src/main/resources/leopard.pv")
+            .setEnableAutomaticPunctuation(true)
+            .build();
     log.debug("Leopard version: {}", leopard.getVersion());
     Recorder recorder = null;
     Scanner scanner = new Scanner(System.in);
-    
+
     LeopardTranscript transcript = null;
     while (System.in.available() == 0) {
       if (recorder != null) {
@@ -44,12 +50,13 @@ public class LiveMic {
           // Waiting until the recorder is finished
         }
         short[] pcm = recorder.getPCM();
-        
+
         transcript = leopard.process(pcm);
         log.info("{}\n", transcript.getTranscriptString());
         setAll(false);
         process(transcript.getTranscriptString());
         recorder = null;
+        log.info("Ready...");
       } else {
         log.info(">>> Press 'ENTER' to start:");
         scanner.nextLine();
@@ -59,8 +66,9 @@ public class LiveMic {
     }
     leopard.delete();
   }
-  
-  private static void process(String string) throws AWTException, IOException, InterruptedException {
+
+  private static void process(String string)
+      throws AWTException, IOException, InterruptedException {
     Preconditions.checkState(!StringUtils.isBlank(string), "Hypothesis cannot be blank");
     if (string.toLowerCase().contains("stop")) {
       log.debug("Stopping!");
@@ -103,7 +111,7 @@ class Recorder extends Thread {
   private TargetDataLine micDataLine = null;
   private boolean stop = false;
   private ArrayList<Short> pcmBuffer = null;
-  
+
   public Recorder(int audioDeviceIndex) {
     AudioFormat format = new AudioFormat(16000f, 16, 1, true, false);
     DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, format);
@@ -113,49 +121,46 @@ class Recorder extends Thread {
       dataLine.open(format);
     } catch (LineUnavailableException e) {
       System.err.println(
-            "Failed to get a valid capture device. Use --show_audio_devices to "
-                  + "show available capture devices and their indices");
+          "Failed to get a valid capture device. Use --show_audio_devices to show available capture devices and their indices");
       System.exit(1);
       return;
     }
-    
+
     this.micDataLine = dataLine;
     this.stop = false;
     this.pcmBuffer = new ArrayList<>();
   }
-  
+
   private static TargetDataLine getDefaultCaptureDevice(DataLine.Info dataLineInfo)
-        throws LineUnavailableException {
+      throws LineUnavailableException {
     if (!AudioSystem.isLineSupported(dataLineInfo)) {
       throw new LineUnavailableException(
-            "Default capture device does not support the audio "
-                  + "format required by Picovoice (16kHz, 16-bit, linearly-encoded, single-channel PCM).");
+          "Default capture device does not support the audio format required by Picovoice (16kHz, 16-bit, linearly-encoded, single-channel PCM).");
     }
-    
+
     return (TargetDataLine) AudioSystem.getLine(dataLineInfo);
   }
-  
+
   private static TargetDataLine getAudioDevice(int deviceIndex, DataLine.Info dataLineInfo)
-        throws LineUnavailableException {
+      throws LineUnavailableException {
     if (deviceIndex >= 0) {
       try {
         Mixer.Info mixerInfo = AudioSystem.getMixerInfo()[deviceIndex];
         Mixer mixer = AudioSystem.getMixer(mixerInfo);
-        
+
         if (mixer.isLineSupported(dataLineInfo)) {
           return (TargetDataLine) mixer.getLine(dataLineInfo);
         } else {
           System.err.printf(
-                "Audio capture device at index %s does not support the audio format required by "
-                      + "Picovoice. Using default capture device.",
-                deviceIndex);
+              "Audio capture device at index %s does not support the audio format required by Picovoice. Using default capture device.",
+              deviceIndex);
         }
       } catch (Exception e) {
         System.err.printf(
-              "No capture device found at index %s. Using default capture device.", deviceIndex);
+            "No capture device found at index %s. Using default capture device.", deviceIndex);
       }
     }
-    
+
     // use default capture device if we couldn't get the one requested
     return getDefaultCaptureDevice(dataLineInfo);
   }
@@ -163,11 +168,11 @@ class Recorder extends Thread {
   @Override
   public void run() {
     micDataLine.start();
-    
+
     ByteBuffer captureBuffer = ByteBuffer.allocate(512);
     captureBuffer.order(ByteOrder.LITTLE_ENDIAN);
     short[] shortBuffer = new short[256];
-    
+
     while (!stop) {
       micDataLine.read(captureBuffer.array(), 0, captureBuffer.capacity());
       captureBuffer.asShortBuffer().get(shortBuffer);
@@ -176,11 +181,11 @@ class Recorder extends Thread {
       }
     }
   }
-  
+
   public void end() {
     this.stop = true;
   }
-  
+
   public short[] getPCM() {
     short[] pcm = new short[this.pcmBuffer.size()];
     for (int i = 0; i < this.pcmBuffer.size(); ++i) {

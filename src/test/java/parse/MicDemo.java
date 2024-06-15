@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.sound.sampled.*;
 import org.apache.commons.cli.*;
-import util.Secrets;
+import util.Keys;
 
 class Recorder extends Thread {
   private TargetDataLine micDataLine = null;
@@ -226,7 +226,7 @@ public class MicDemo {
       return;
     }
 
-    String accessKey = Secrets.get("pico");
+    String accessKey = Keys.get("pico");
     String modelPath = cmd.getOptionValue("model_path");
     String libraryPath = cmd.getOptionValue("library_path");
     boolean enableAutomaticPunctuation = !cmd.hasOption("disable_automatic_punctuation");

@@ -30,7 +30,3 @@ target/
 
 ### Log Files ###
 *.log
-
-### Secrets ###
-Secrets.java
-Secrets.py
