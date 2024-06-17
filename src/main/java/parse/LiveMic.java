@@ -184,7 +184,12 @@ class Recorder extends Thread {
 
   public void end() {
     this.stop = true;
+    // Close the micDataLine to release resources
+    if (micDataLine != null) {
+      micDataLine.close();
+    }
   }
+
 
   public short[] getPCM() {
     short[] pcm = new short[this.pcmBuffer.size()];

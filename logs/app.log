@@ -1,15 +1,27 @@
-11:44:39.579 [main] INFO  parse.App - Hello world!
-11:44:41.602 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
-11:44:41.608 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
-11:44:45.299 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
-11:44:47.783 [Thread-1] INFO  parse.LiveMic - No.
+12:09:59.693 [main] INFO  parse.App - Hello world!
+12:10:01.543 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
+12:10:01.551 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+12:10:03.986 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+12:10:07.853 [Thread-1] INFO  parse.LiveMic - Hello.
 
-11:44:47.894 [Thread-1] INFO  util.PyScript - Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Manage App Execution Aliases.
-11:44:47.899 [Thread-1] INFO  util.FilePrinter - 
+12:10:07.943 [Thread-1] INFO  util.PyScript - Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Manage App Execution Aliases.
+12:10:07.947 [Thread-1] INFO  util.FilePrinter - 
 
 Hello! 
 
 How can I help you today? 
 
-11:44:47.899 [Thread-1] INFO  parse.LiveMic - Ready...
-11:44:47.899 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+12:10:07.947 [Thread-1] INFO  parse.LiveMic - Ready...
+12:10:07.947 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+12:10:13.297 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+12:10:16.682 [Thread-1] INFO  parse.LiveMic - Hello.
+
+12:10:16.759 [Thread-1] INFO  util.PyScript - Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Manage App Execution Aliases.
+12:10:16.763 [Thread-1] INFO  util.FilePrinter - 
+
+Hello! 
+
+How can I help you today? 
+
+12:10:16.763 [Thread-1] INFO  parse.LiveMic - Ready...
+12:10:16.764 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
