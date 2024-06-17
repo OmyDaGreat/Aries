@@ -11,7 +11,7 @@ public class Keys {
     if (Objects.equals(key, "gemini")) {
       return "AIzaSyAylywSkfIpglOjxkRKsVd_VZS_h5J-rao";
     } else if(Objects.equals(key, "pico")){
-      return "1xP2gVkGyADXxDV5GzlCfJP7GH1c0EktDUpv7TwTMlnkd6+Z1Vs/EA==";
+      return "u2IdJ5z7zacX5h5uWJLL01HWeeIjvgFDFBdW+JOiFedkL2MiPpwB1w==";
     }
     return null;
   }

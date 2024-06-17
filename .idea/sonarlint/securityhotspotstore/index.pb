@@ -36,8 +36,6 @@ P
  src/main/java/util/OpenPage.java,b\a\baa264af7c9e60e8e281274b755b493d1b62c97f
 W
 'src/main/java/util/StringExtension.java,b\0\b0b5934708bd865cfa01c83442d9bb7d46d70699
-O
-src/main/java/util/Secrets.java,4\b\4be2b9538952dbf2b8bdbba0cdfc996f1999f5ef
 P
  src/main/java/util/PyScript.java,8\7\87635f76b574f14dca272915a687840ab763f5bf
 S
@@ -49,8 +47,6 @@ N
 output.txt,a\d\adbe6c7d3c0d8b19ecd492bec9532c13a6e1c9ad
 P
  src/main/java/parse/LiveMic.java,5\6\567e744f77fa8697333b240c3bf3be2b93b097b4
-?
-ParseButPro.iml,3\4\342cefad3bff22553f4bbdea0dfd207d4dc73c1f
 T
 $src/main/java/util/LinuxNotepad.java,4\7\47421abf5e7477e69fcbb3a9bd92c44ed6aa31c3
 R

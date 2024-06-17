@@ -1,3 +1,15 @@
-08:08:47.252 [main] INFO  parse.App - Hello world!
-08:08:48.918 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
-08:08:48.924 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+11:44:39.579 [main] INFO  parse.App - Hello world!
+11:44:41.602 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
+11:44:41.608 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+11:44:45.299 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+11:44:47.783 [Thread-1] INFO  parse.LiveMic - No.
+
+11:44:47.894 [Thread-1] INFO  util.PyScript - Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Manage App Execution Aliases.
+11:44:47.899 [Thread-1] INFO  util.FilePrinter - 
+
+Hello! 
+
+How can I help you today? 
+
+11:44:47.899 [Thread-1] INFO  parse.LiveMic - Ready...
+11:44:47.899 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
