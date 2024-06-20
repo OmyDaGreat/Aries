@@ -60,7 +60,7 @@ public class LiveMic {
       } else {
         log.info(">>> Press 'ENTER' to start:");
         scanner.nextLine();
-        recorder = new Recorder(0);
+        recorder = new Recorder(-1);
         recorder.start();
       }
     }
@@ -87,7 +87,7 @@ public class LiveMic {
       log.debug("Page is open!");
       OpenPage.open("https://imgur.com/a/kBPQWWd");
     }
-    if (!isAllTrue()) {
+    if (!isAllFalse()) {
       FileWriter writer = new FileWriter("prompt.txt");
       writer.write(string);
       writer.close();
@@ -102,8 +102,8 @@ public class LiveMic {
     isOpenNotepad = b;
   }
 
-  private boolean isAllTrue() {
-    return keyword && isOpenPage && isOpenNotepad;
+  private boolean isAllFalse() {
+    return !keyword && !isOpenPage && !isOpenNotepad;
   }
 }
 

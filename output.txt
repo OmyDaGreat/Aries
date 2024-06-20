@@ -1,3 +1,7 @@
-Hello! 
+Please provide me with more context! I need to know what page you'd like me to open. For example:
 
-How can I help you today? 
+* **"Open the Wikipedia page for the Eiffel Tower."**
+* **"Open the first page of the book 'Pride and Prejudice'."** 
+* **"Open the website for Google."** 
+
+Once you tell me what page you want to open, I can help you find it. 
