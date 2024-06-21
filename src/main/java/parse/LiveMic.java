@@ -46,6 +46,7 @@ public class LiveMic {
         log.info(">>> Recording ... Press 'ENTER' to stop:");
         scanner.nextLine();
         recorder.end();
+        recorder.join();
         while (recorder.isAlive()) {
           // Waiting until the recorder is finished
         }

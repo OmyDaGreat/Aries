@@ -5,8 +5,6 @@ L
 src/main/java/parse/App.java,c\4\c4cd2ba89e0c1b222802d293f24da50e926e3596
 =
 lombok.config,8\2\823fe80d2650ec87c2614800da17ca3a55af96a9
-P
- src/main/java/util/Platform.java,d\a\dac2c088d5c62149a014ed3a8b59ba806186e02a
 L
 src/main/java/parse/GUI.java,9\8\980a7a417de8730ebc24d6aa2b6073ff84d48579
 \
@@ -53,11 +51,13 @@ R
 "src/main/java/util/WinNotepad.java,d\d\dd614ec143d283e0d24d6d42d5ca9a4f70076f04
 W
 'src/test/java/parse/GetLookAndFeel.java,5\f\5f246efa724c0aca6e4e2c7fbb18189e52cd51ab
-T
-$src/test/java/parse/LiveMicDemo.java,7\0\70467d851a0ead72d59747b6319c8eac6e4b424c
+N
+src/main/java/util/Platform.kt,b\c\bc581b19b5ea223094e52502ee81753ae96dc161
+J
+src/main/java/util/Keys.kt,1\5\15df504a497c8a2d5d5e01a7148deb5888012fd7
+U
+%src/test/java/parse/ShowProperties.kt,e\8\e8dbba1f8388442c984c06c715c1f2f834eac492
+R
+"src/test/java/parse/LiveMicDemo.kt,7\3\73998efba78f719a15326a25928f151231250b89
 V
-&src/main/java/util/ShowProperties.java,2\0\20236c9eabc0d75092679c182ca85d3e0ba1b2a0
-P
- src/test/java/parse/MicDemo.java,3\7\3750d768a7f27364381a8605f41224d54db5ea6c
-L
-src/main/java/util/Keys.java,8\8\8833c206c3381a11764d8f643bc04a975a6eb031
+&src/main/java/util/SwingExtension.java,5\c\5cf31e5d8c7396bc96c3fc7450043742c17f2451
