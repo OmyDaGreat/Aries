@@ -1,9 +1,9 @@
-Please provide me with more information! I need to know what page you want me to open. 
+As a large language model, I have no memory of past conversations.  
 
-For example, you could tell me:
+To help me respond effectively, please tell me what you want me to say next time you send a message.  For example, you could:
 
-* **The URL of the website:**  "Open the page for www.google.com"
-* **The name of a file:** "Open the page for my_document.pdf"
-* **The name of a specific page on a website:** "Open the page for the Wikipedia article on cats"
+* **Give me a specific topic:** "Next time, I want you to tell me about the history of the internet."
+* **Ask me a question:** "Next time, I want you to answer this question: What is the meaning of life?"
+* **Provide me with context:** "Next time, I want you to write a poem about a cat named Mittens who loves to play fetch."
 
-I can't actually open pages for you since I'm just a text-based AI, but I can help you find the information you need to open them! 
+The more information you give me, the better I can understand your request and respond accordingly. 

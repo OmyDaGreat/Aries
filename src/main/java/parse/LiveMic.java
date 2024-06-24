@@ -10,6 +10,8 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.sound.sampled.*;
+
+import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.ExtensionMethod;
@@ -29,7 +31,7 @@ public class LiveMic {
   private boolean isOpenNotepad = false;
 
   public void startRecognition()
-      throws LeopardException, IOException, InterruptedException, AWTException {
+      throws LeopardException, IOException, InterruptedException, AWTException, SpeechEngineCreationException {
     Leopard leopard =
         new Leopard.Builder()
             .setAccessKey(Keys.get("pico"))
@@ -51,7 +53,6 @@ public class LiveMic {
           // Waiting until the recorder is finished
         }
         short[] pcm = recorder.getPCM();
-
         transcript = leopard.process(pcm);
         log.info("{}\n", transcript.getTranscriptString());
         setAll(false);
@@ -69,7 +70,7 @@ public class LiveMic {
   }
 
   private static void process(String string)
-      throws AWTException, IOException, InterruptedException {
+      throws AWTException, IOException, InterruptedException, SpeechEngineCreationException {
     Preconditions.checkState(!StringUtils.isBlank(string), "Hypothesis cannot be blank");
     if (string.toLowerCase().contains("stop")) {
       log.debug("Stopping!");
@@ -88,15 +89,20 @@ public class LiveMic {
       log.debug("Page is open!");
       OpenPage.open("https://imgur.com/a/kBPQWWd");
     }
-    if (!isAllFalse()) {
-      FileWriter writer = new FileWriter("prompt.txt");
-      writer.write(string);
-      writer.close();
-      PyScript.run();
-      FilePrinter.print("output.txt");
+    if (isAllFalse()) {
+      gemini(string);
+      NativeTTS.ttsFromFile("output.txt");
     }
   }
-
+  
+  private static void gemini(String string) throws IOException, InterruptedException {
+    try (FileWriter writer = new FileWriter("prompt.txt")) {
+      writer.write(string);
+    }
+    PyScript.run();
+    FilePrinter.print("output.txt");
+  }
+  
   private void setAll(boolean b) {
     keyword = b;
     isOpenPage = b;
@@ -190,7 +196,6 @@ class Recorder extends Thread {
       micDataLine.close();
     }
   }
-
 
   public short[] getPCM() {
     short[] pcm = new short[this.pcmBuffer.size()];

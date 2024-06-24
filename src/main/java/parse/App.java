@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.IOException;
 
 import ai.picovoice.leopard.LeopardException;
+import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -45,7 +46,7 @@ public class App {
         () -> {
           try {
             LiveMic.startRecognition();
-          } catch (IOException | AWTException | LeopardException e) {
+          } catch (IOException | AWTException | LeopardException | SpeechEngineCreationException e) {
             log.error("Error starting the transcriber", e);
           } catch (InterruptedException e) {
             log.error("Interrupted while waiting for the transcriber to finish", e);
