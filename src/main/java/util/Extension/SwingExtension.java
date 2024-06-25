@@ -1,4 +1,4 @@
-package util;
+package util.Extension;
 
 import javax.swing.*;
 import lombok.experimental.UtilityClass;

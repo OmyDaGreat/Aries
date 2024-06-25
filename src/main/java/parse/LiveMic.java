@@ -19,6 +19,8 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import util.*;
+import util.Extension.StringExtension;
+import util.Notepad.WinNotepad;
 
 @Getter
 @Setter
@@ -42,7 +44,7 @@ public class LiveMic {
     Recorder recorder = null;
     Scanner scanner = new Scanner(System.in);
 
-    LeopardTranscript transcript = null;
+    LeopardTranscript transcript;
     while (System.in.available() == 0) {
       if (recorder != null) {
         log.info(">>> Recording ... Press 'ENTER' to stop:");

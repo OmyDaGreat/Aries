@@ -1,13 +1,14 @@
-package util;
+package util.Notepad;
 
-import static util.RobotExtension.screenHeight;
-import static util.RobotExtension.screenWidth;
+import static util.Extension.RobotExtension.screenHeight;
+import static util.Extension.RobotExtension.screenWidth;
 
 import java.awt.*;
 import java.io.IOException;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import util.Extension.RobotExtension;
 
 @UtilityClass
 @Log4j2

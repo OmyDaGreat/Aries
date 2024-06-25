@@ -1,4 +1,4 @@
-package util;
+package util.Notepad;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import util.Extension.RobotExtension;
 
 @UtilityClass
 @Log4j2
