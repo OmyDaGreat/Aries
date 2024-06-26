@@ -2,4 +2,4 @@
 
 ### Dictation-controlled computer actions.
 
-#### Om Gupta, Colin Thai, Aizen Cuan, and Rishi Mishra
+#### Om Gupta, Colin Thai, Rishi Mishra, and Theodore Vang

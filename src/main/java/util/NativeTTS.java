@@ -1,7 +1,7 @@
 package util;
 
-import io.github.jonelo.jAdapterForNativeTTS.engines.*;
-import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+import util.jAdapterForNativeTTS.engines.*;
+import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class NativeTTS {
     if (voice == null) {
       log.error("Voice has not been found by the voice preferences {}%n", voicePreferences);
       voice = voices.getFirst();
-      System.out.printf("Using \"%s\" instead.%n", voice);
+      log.info("Using \"{}\" instead.%n", voice);
     }
 
     speechEngine.setVoice(voice.getName());

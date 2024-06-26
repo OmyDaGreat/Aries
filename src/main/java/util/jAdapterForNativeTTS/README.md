@@ -1,0 +1,1 @@
+# Imported from https://jonelo.github.io/jAdapterForNativeTTS/

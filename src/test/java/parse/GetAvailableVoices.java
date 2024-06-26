@@ -1,7 +1,7 @@
 package parse;
 
-import io.github.jonelo.jAdapterForNativeTTS.engines.*;
-import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+import util.jAdapterForNativeTTS.engines.*;
+import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import java.util.List;
 
 public class GetAvailableVoices {

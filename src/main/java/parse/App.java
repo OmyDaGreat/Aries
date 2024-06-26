@@ -4,8 +4,8 @@ import java.awt.*;
 import java.io.IOException;
 
 import ai.picovoice.leopard.LeopardException;
-import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import lombok.extern.log4j.Log4j2;
+import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 
 @Log4j2
 public class App {

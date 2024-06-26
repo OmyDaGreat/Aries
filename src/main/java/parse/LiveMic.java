@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 import javax.sound.sampled.*;
 
-import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.ExtensionMethod;
@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import util.*;
 import util.Extension.StringExtension;
 import util.Notepad.WinNotepad;
+import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 
 @Getter
 @Setter
@@ -51,9 +52,6 @@ public class LiveMic {
         scanner.nextLine();
         recorder.end();
         recorder.join();
-        while (recorder.isAlive()) {
-          // Waiting until the recorder is finished
-        }
         short[] pcm = recorder.getPCM();
         transcript = leopard.process(pcm);
         log.info("{}\n", transcript.getTranscriptString());
@@ -116,6 +114,7 @@ public class LiveMic {
   }
 }
 
+@Log4j2
 class Recorder extends Thread {
   private TargetDataLine micDataLine = null;
   private boolean stop = false;
@@ -129,7 +128,7 @@ class Recorder extends Thread {
       dataLine = getAudioDevice(audioDeviceIndex, dataLineInfo);
       dataLine.open(format);
     } catch (LineUnavailableException e) {
-      System.err.println(
+      log.error(
           "Failed to get a valid capture device. Use --show_audio_devices to show available capture devices and their indices");
       System.exit(1);
       return;
@@ -160,13 +159,13 @@ class Recorder extends Thread {
         if (mixer.isLineSupported(dataLineInfo)) {
           return (TargetDataLine) mixer.getLine(dataLineInfo);
         } else {
-          System.err.printf(
-              "Audio capture device at index %s does not support the audio format required by Picovoice. Using default capture device.",
-              deviceIndex);
+          log.error(
+              "Audio capture device at index {} does not support the audio format required by Picovoice. Using default capture device.",
+                  Optional.of(deviceIndex));
         }
       } catch (Exception e) {
-        System.err.printf(
-            "No capture device found at index %s. Using default capture device.", deviceIndex);
+        log.error(
+            "No capture device found at index {}. Using default capture device.", Optional.of(deviceIndex));
       }
     }
 
