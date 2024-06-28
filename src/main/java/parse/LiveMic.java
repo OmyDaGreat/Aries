@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import util.*;
 import util.Extension.StringExtension;
-import util.Notepad.WinNotepad;
+import util.Notepad.NotepadProcessor;
 import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 
 @Getter
@@ -83,7 +83,9 @@ public class LiveMic {
     }
     if (string.toLowerCase().contains("notepad", "note that") && keyword && !isOpenNotepad) {
       log.debug("Notepad is open!");
-      WinNotepad.open();
+      NotepadProcessor n = new NotepadProcessor();
+      n.openNotepad();
+      // TODO: Implement user's words
     }
     if (string.toLowerCase().contains("page") && keyword && !isOpenPage) {
       log.debug("Page is open!");

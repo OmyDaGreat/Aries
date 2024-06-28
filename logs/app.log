@@ -1,4 +1,0 @@
-19:59:43.429 [main] INFO  parse.GetLookAndFeel - javax.swing.plaf.metal.MetalLookAndFeel
-19:59:43.432 [main] INFO  parse.GetLookAndFeel - javax.swing.plaf.nimbus.NimbusLookAndFeel
-19:59:43.432 [main] INFO  parse.GetLookAndFeel - com.sun.java.swing.plaf.motif.MotifLookAndFeel
-19:59:43.432 [main] INFO  parse.GetLookAndFeel - com.sun.java.swing.plaf.gtk.GTKLookAndFeel

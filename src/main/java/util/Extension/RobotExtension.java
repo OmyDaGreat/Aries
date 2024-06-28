@@ -29,7 +29,7 @@ public class RobotExtension {
 			if (KeyEvent.CHAR_UNDEFINED == keyCode) {
 				throw new IllegalArgumentException(
 						"Key code not found for character '" + c + "'");
-      } else if (special.containsKey(c)) {
+      		} else if (special.containsKey(c)) {
 				for (int i = 0; i < special.get(c).size(); i++) {
 					robot.keyPress(special.get(c).getInt(i));
 				}
