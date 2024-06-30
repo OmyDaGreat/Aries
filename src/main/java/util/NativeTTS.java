@@ -12,11 +12,11 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @UtilityClass
 public class NativeTTS {
+  VoicePreferences voicePreferences = new VoicePreferences();
   public static void tts(String text) throws SpeechEngineCreationException, IOException {
     SpeechEngine speechEngine = SpeechEngineNative.getInstance();
     List<Voice> voices = speechEngine.getAvailableVoices();
 
-    VoicePreferences voicePreferences = new VoicePreferences();
     voicePreferences.setLanguage("en");
     voicePreferences.setCountry("US");
     voicePreferences.setGender(VoicePreferences.Gender.MALE);
@@ -32,6 +32,17 @@ public class NativeTTS {
     speechEngine.say(text);
   }
 
+  public static void voiceLanguage(String text) throws SpeechEngineCreationException, IOException {
+    voicePreferences.setLanguage(text);
+  }
+
+  public static void voiceCountry(String text) throws SpeechEngineCreationException, IOException {
+    voicePreferences.setCountry(text);
+  }
+
+  public static void voiceGender(String text) throws SpeechEngineCreationException, IOException {
+    voicePreferences.setGender(VoicePreferences.Gender.MALE);
+  }
   public static void ttsFromFile(String filePath)
       throws SpeechEngineCreationException, IOException {
     StringBuilder contentBuilder = new StringBuilder();

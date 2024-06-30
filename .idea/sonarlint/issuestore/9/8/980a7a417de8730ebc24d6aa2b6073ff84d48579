@@ -1,0 +1,14 @@
+
+g	java:S1125"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2
+g	java:S1127"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2
+g	java:S112C"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2
+g	java:S112E"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2
+{
+java:S2293."YReplace the type specification in this constructor call with the diamond operator ("<>").(Ñ­ˆÿüÿÿÿÿ8ıöØÛ†2
+v
+java:S2293<"YReplace the type specification in this constructor call with the diamond operator ("<>").(Œú­Ğ8ıöØÛ†2
+m	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïùŸ¾8ıöØÛ†2
+a
+java:S21476"DCombine this catch with the one at line 52, which has the same body.(Ãôş•8†÷ØÛ†2
+a
+java:S2147D"DCombine this catch with the one at line 66, which has the same body.(Ãôş•8ˆ÷ØÛ†2
