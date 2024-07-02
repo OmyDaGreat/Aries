@@ -64,6 +64,17 @@
 			<artifactId>log4j-api</artifactId>
 			<version>2.23.1</version>
 		</dependency>
+		<dependency>
+  			<groupId>com.tagtraum</groupId>
+			<artifactId>japlscript-runtime</artifactId>
+  			<version>1.2.0</version>
+		</dependency>
+    	<dependency>
+        	<groupId>com.tagtraum</groupId>
+        	<artifactId>japlscript-generator</artifactId>
+        	<!-- the generator is not necessary during runtime -->
+        	<scope>provided</scope>
+    	</dependency>
 	</dependencies>
 
 	<repositories>
