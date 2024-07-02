@@ -1,0 +1,5 @@
+16:24:10.501 [main] INFO  parse.App - Hello world!
+16:24:12.510 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
+16:24:12.515 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+16:24:12.987 [AWT-EventQueue-0] INFO  parse.GUI - es
+16:24:15.367 [AWT-EventQueue-0] INFO  parse.GUI - es

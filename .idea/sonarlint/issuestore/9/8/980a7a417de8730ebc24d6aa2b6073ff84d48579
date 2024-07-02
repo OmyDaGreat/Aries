@@ -1,0 +1,14 @@
+
+“	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïùŸ¾8ıöØÛ†2J$08ad2878-5149-4d81-8202-516338f6db97
+¡
+java:S2293-"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ñ­ˆÿüÿÿÿÿ8ıöØÛ†2J$9215a4ed-1b9c-4d03-b1e3-7ba9ef798c40
+œ
+java:S2293;"YReplace the type specification in this constructor call with the diamond operator ("<>").(Œú­Ğ8ıöØÛ†2J$9d399066-e445-4f3c-9ba6-9165cb7a29ec
+	java:S1124"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2J$d707299e-8359-4f8b-816e-09bb3dbfc0ef
+	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2J$d0d8609e-9a40-4e32-b201-a01f7ef95210
+	java:S112B"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2J$21923b57-3961-4a9a-a1b8-358ae6e52da3
+	java:S112D"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8üöØÛ†2J$a62672d1-19fd-4b5e-aabd-48c83593a43d
+‡
+java:S21475"DCombine this catch with the one at line 51, which has the same body.(Ãôş•8†÷ØÛ†2J$116edf10-2c14-42fd-b1e9-809640783bf8
+‡
+java:S2147C"DCombine this catch with the one at line 65, which has the same body.(Ãôş•8ˆ÷ØÛ†2J$bd4e6ada-d01f-475d-bf24-96384357df76
