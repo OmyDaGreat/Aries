@@ -2,24 +2,45 @@ package util.Notepad;
 
 import java.io.IOException;
 
-public class MacNotepad {
+public class MacNotepad implements Notepad {
 
     public void openNotepad() {
         try {
-            // Assuming you meant to execute an AppleScript command or script file
-            // Replace "/path/to/your/script.scpt" with the actual path to your AppleScript file
-            // If you indeed have an AppleScript executable script to open the Notes app or similar
             String scriptPath = "src/main/resources/openNotepad.scpt"; // Adjusted for a typical script extension
-            // String scriptPath = "/Users/rishthewizard/Documents/GitHub/ParseButPro/src/main/resources/openNotepad.scpt"; // Adjusted for a typical script extension
+            // String scriptPath = "C:/Users/rishthewizard/Documents/GitHub/ParseButPro/src/main/resources/openNotepad.scpt"; // Adjusted for a typical script extension
             ProcessBuilder pb = new ProcessBuilder("osascript", scriptPath);
             pb.start().waitFor(); // Execute the script and wait for it to finish
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
-    public static void main(String[] args) {
-        MacNotepad notepad = new MacNotepad();
-        notepad.openNotepad();
+    public void writeText(String text) {
+        // TODO: Implement this method
+    }
+
+    public void deleteText() {
+        // TODO: Implement this method
+    }
+
+    public void addNewLine() {
+        // TODO: Implement this method
+    }
+
+    public void saveFileAs(String name) {
+        // TODO: Implement this method
+    }
+
+    public void openNewFile() {
+        // TODO: Implement this method
+    }
+
+    public void closeFile() {
+        // TODO: Implement this method
+    }
+
+    public void closeNotepad() {
+        // TODO: Implement this method
     }
 }
