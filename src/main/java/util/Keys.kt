@@ -1,34 +1,51 @@
 package util
 
 import lombok.Cleanup
+import org.apache.logging.log4j.LogManager
 import java.sql.*
+import java.util.Properties
 
 object Keys {
+    private val log = LogManager.getLogger(Keys::class.java)
+    private lateinit var props: Properties
+
+    init {
+        loadProperties()
+    }
+
+    private fun loadProperties() {
+        try {
+            val resourceStream = javaClass.classLoader.getResourceAsStream("db.properties")
+            if (resourceStream != null) {
+                props = Properties().apply {
+                    load(resourceStream)
+                }
+                props.forEach { key, value -> log.debug("{}: {}", key, value) }
+            } else {
+                log.debug("db.properties file not found")
+            }
+        } catch (e: Exception) {
+            log.debug("Error loading db.properties: ${e.message}")
+        }
+    }
+
     private const val JDBC_DRIVER = "com.mysql.cj.jdbc.Driver"
-    private const val DB_URL = "jdbc:mysql://2V2PSw5K9bbz49c.root:KeUs2CyBbV9Wxom3@gateway01.us-east-1.prod.aws.tidbcloud.com:4000/ParseButPro?sslMode=VERIFY_IDENTITY"
 
     @Throws(SQLException::class)
     @JvmStatic
     fun get(key: String): String? {
         @Cleanup val connection: Connection?
-        @Cleanup val statement: Statement?
+        @Cleanup val preparedStatement: PreparedStatement?
         @Cleanup val resultSet: ResultSet?
 
         try {
-            // Register JDBC driver
             Class.forName(JDBC_DRIVER)
 
-            // Open a connection
-            connection = DriverManager.getConnection(DB_URL)
-
-            // Create a statement
-            statement = connection.createStatement()
-
-            // Build the query
-            val sql = "SELECT apikey FROM apikeys WHERE service = '$key'"
-
-            // Execute the query
-            resultSet = statement.executeQuery(sql)
+            connection = DriverManager.getConnection(props.getProperty("DB_URL1") + props.getProperty("PASSWORD") + props.getProperty("DB_URL2"))
+            val sql = "SELECT apikey FROM apikeys WHERE service = ?"
+            preparedStatement = connection.prepareStatement(sql)
+            preparedStatement.setString(1, key)
+            resultSet = preparedStatement.executeQuery()
 
             return if (resultSet.next()) {
                 resultSet.getString("apikey")

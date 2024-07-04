@@ -1,24 +1,36 @@
-12:04:50.456 [main] INFO  parse.App - Hello world!
-12:04:52.205 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
-12:04:52.209 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
-12:04:53.495 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
-12:04:56.098 [Thread-1] INFO  parse.LiveMic - Right up.
+14:27:20.368 [main] INFO  parse.App - Hello world!
+14:27:20.382 [Thread-1] DEBUG util.Keys - PASSWORD: KeUs2CyBbV9Wxom3
+14:27:20.382 [Thread-1] DEBUG util.Keys - DB_URL1: jdbc:mysql://2V2PSw5K9bbz49c.root:
+14:27:20.382 [Thread-1] DEBUG util.Keys - DB_URL2: @gateway01.us-east-1.prod.aws.tidbcloud.com:4000/ParseButPro?sslMode=VERIFY_IDENTITY
+14:27:23.078 [Thread-1] DEBUG parse.LiveMic - Leopard version: 2.0.0
+14:27:23.082 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+14:27:25.131 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+14:27:29.402 [Thread-1] INFO  parse.LiveMic - Mouse right up.
 
-12:04:56.130 [Thread-1] INFO  util.PyScript - Traceback (most recent call last):
-12:04:56.131 [Thread-1] INFO  util.PyScript -   File "C:\Users\Malefic\Documents\Competitive\ParseButPro\src\main\java\util\pypkg\ai.py", line 1, in <module>
-12:04:56.131 [Thread-1] INFO  util.PyScript -     import google.generativeai as genai
-12:04:56.131 [Thread-1] INFO  util.PyScript - ModuleNotFoundError: No module named 'google'
-12:04:56.134 [Thread-1] INFO  util.FilePrinter - 
+14:27:29.410 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "Mouse"
+14:27:29.411 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "Mouse"
+14:27:29.412 [Thread-1] INFO  parse.LiveMic - Ready...
+14:27:29.412 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+14:27:33.807 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+14:27:36.244 [Thread-1] INFO  parse.LiveMic - The mouse left down.
 
-As a large language model, I have no memory of past conversations.  
+14:27:36.244 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "The"
+14:27:36.244 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "mouse"
+14:27:36.245 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "The"
+14:27:36.245 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "mouse"
+14:27:36.246 [Thread-1] INFO  parse.LiveMic - Ready...
+14:27:36.246 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+14:27:41.199 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+14:27:44.045 [Thread-1] INFO  parse.LiveMic - Mouse right up up.
 
-To help me respond effectively, please tell me what you want me to say next time you send a message.  For example, you could:
+14:27:44.045 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "Mouse"
+14:27:44.046 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "Mouse"
+14:27:44.047 [Thread-1] INFO  parse.LiveMic - Ready...
+14:27:44.047 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+14:27:46.489 [Thread-1] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+14:27:48.096 [Thread-1] INFO  parse.LiveMic - Mouse down.
 
-* **Give me a specific topic:** "Next time, I want you to tell me about the history of the internet."
-* **Ask me a question:** "Next time, I want you to answer this question: What is the meaning of life?"
-* **Provide me with context:** "Next time, I want you to write a poem about a cat named Mittens who loves to play fetch."
-
-The more information you give me, the better I can understand your request and respond accordingly. 
-
-12:04:56.324 [Thread-1] INFO  parse.LiveMic - Ready...
-12:04:56.324 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+14:27:48.096 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "Mouse"
+14:27:48.096 [Thread-1] DEBUG util.Extension.RobotExtension - Invalid direction: "Mouse"
+14:27:48.097 [Thread-1] INFO  parse.LiveMic - Ready...
+14:27:48.097 [Thread-1] INFO  parse.LiveMic - >>> Press 'ENTER' to start:

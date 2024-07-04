@@ -21,10 +21,10 @@ public class RobotExtension {
 	private static final Map<String, TriConsumer<Integer, Integer, Robot>> directionActions = new HashMap<>();
 	
 	static {
-		directionActions.put("up", (x, y, robot) -> robot.mouseMove(x, y - 100));
-		directionActions.put("down", (x, y, robot) -> robot.mouseMove(x, y + 100));
-		directionActions.put("left", (x, y, robot) -> robot.mouseMove(x - 100, y));
-		directionActions.put("right", (x, y, robot) -> robot.mouseMove(x + 100, y));
+		directionActions.put("up", (x, y, robot) -> robot.mouseMove(x, y - 50));
+		directionActions.put("down", (x, y, robot) -> robot.mouseMove(x, y + 50));
+		directionActions.put("left", (x, y, robot) -> robot.mouseMove(x - 50, y));
+		directionActions.put("right", (x, y, robot) -> robot.mouseMove(x + 50, y));
 		special.put('?', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH));
 		special.put('!', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1));
 		special.put(':', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON));
