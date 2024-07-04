@@ -19,6 +19,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import util.*;
+import util.Extension.RobotExtension;
 import util.Extension.StringExtension;
 import util.Notepad.NotepadProcessor;
 import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
@@ -27,11 +28,12 @@ import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationExceptio
 @Setter
 @UtilityClass
 @Log4j2
-@ExtensionMethod(StringExtension.class)
+@ExtensionMethod({StringExtension.class, RobotExtension.class})
 public class LiveMic {
   private boolean keyword = false;
   private boolean isOpenPage = false;
   private boolean isOpenNotepad = false;
+  private boolean mouseMove = false;
 
   public void startRecognition()
       throws LeopardException, IOException, InterruptedException, AWTException, SpeechEngineCreationException {
@@ -73,16 +75,13 @@ public class LiveMic {
       throws AWTException, IOException, InterruptedException, SpeechEngineCreationException {
     Preconditions.checkState(!StringUtils.isBlank(string), "Hypothesis cannot be blank");
     if (string.toLowerCase().contains("stop")) {
-      log.debug("Stopping!");
       System.exit(0);
     }
     if (string.toLowerCase().contains("open")) {
-      log.debug("Someone needs help!");
       setAll(false);
       keyword = true;
     }
     if (string.toLowerCase().contains("notepad", "note that") && keyword && !isOpenNotepad) {
-      log.debug("Notepad is open!");
       NotepadProcessor n = new NotepadProcessor();
       n.openNotepad();
       // TODO: Implement user's words
@@ -90,6 +89,12 @@ public class LiveMic {
     if (string.toLowerCase().contains("page") && keyword && !isOpenPage) {
       log.debug("Page is open!");
       OpenPage.open("https://imgur.com/a/kBPQWWd");
+    }
+    if (string.toLowerCase().contains("mouse")) {
+      setAll(false);
+      mouseMove = true;
+      new Robot().mouseMoveString(string.replace(".","").trim());
+      new Robot().mouseMoveString(string.replace(".","").trim());
     }
     if (isAllFalse()) {
       gemini(string);
@@ -109,10 +114,11 @@ public class LiveMic {
     keyword = b;
     isOpenPage = b;
     isOpenNotepad = b;
+    mouseMove = b;
   }
 
   private boolean isAllFalse() {
-    return !keyword && !isOpenPage && !isOpenNotepad;
+    return !keyword && !isOpenPage && !isOpenNotepad && !mouseMove;
   }
 }
 

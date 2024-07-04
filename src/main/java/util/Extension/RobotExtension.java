@@ -6,16 +6,25 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.experimental.UtilityClass;
 
+import lombok.experimental.UtilityClass;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.function.TriConsumer;
+
+@Log4j2
 @UtilityClass
 public class RobotExtension {
 	public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 	public static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 	
 	private static final Map<Character, IntArrayList> special = new HashMap<>();
+	private static final Map<String, TriConsumer<Integer, Integer, Robot>> directionActions = new HashMap<>();
 	
 	static {
+		directionActions.put("up", (x, y, robot) -> robot.mouseMove(x, y - 100));
+		directionActions.put("down", (x, y, robot) -> robot.mouseMove(x, y + 100));
+		directionActions.put("left", (x, y, robot) -> robot.mouseMove(x - 100, y));
+		directionActions.put("right", (x, y, robot) -> robot.mouseMove(x + 100, y));
 		special.put('?', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH));
 		special.put('!', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1));
 		special.put(':', IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON));
@@ -91,6 +100,21 @@ public class RobotExtension {
 	
 	public static Robot save(Robot robot) {
 		control(robot, KeyEvent.VK_S);
+		return robot;
+	}
+
+	public static Robot mouseMoveString(Robot robot, String direction) {
+		String[] split = direction.split(" ");
+		for (String dir : split) {
+			int x = MouseInfo.getPointerInfo().getLocation().x;
+			int y = MouseInfo.getPointerInfo().getLocation().y;
+			TriConsumer<Integer, Integer, Robot> action = directionActions.get(dir);
+			if (action != null) {
+				action.accept(x, y, robot);
+			} else {
+              log.debug("Invalid direction: \"{}\"", dir);
+			}
+		}
 		return robot;
 	}
 }
