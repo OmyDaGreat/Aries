@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class LiveMic {
   private boolean mouseMove = false;
 
   public void startRecognition()
-      throws LeopardException, IOException, InterruptedException, AWTException, SpeechEngineCreationException {
+          throws LeopardException, IOException, InterruptedException, AWTException, SpeechEngineCreationException, SQLException {
     Leopard leopard =
         new Leopard.Builder()
             .setAccessKey(Keys.get("pico"))

@@ -2,6 +2,7 @@ package parse;
 
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import ai.picovoice.leopard.LeopardException;
 import lombok.extern.log4j.Log4j2;
@@ -52,6 +53,8 @@ public class App {
             log.error("Interrupted while waiting for the transcriber to finish", e);
             e.printStackTrace();
             Thread.currentThread().interrupt();
+          } catch (SQLException e) {
+            log.error("Error getting the api keys", e);
           }
         });
   }
