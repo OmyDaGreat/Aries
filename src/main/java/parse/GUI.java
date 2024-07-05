@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import util.extension.SwingExtension;
 import util.extension.SwingExtension.JComponentConstraints;
 import util.NativeTTS;
-import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 
 import java.io.IOException;
 import java.util.Objects;
