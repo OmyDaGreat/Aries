@@ -1,7 +1,7 @@
 package util;
 
-import util.jAdapterForNativeTTS.engines.*;
-import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+import io.github.jonelo.tts.engines.*;
+import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @UtilityClass
 public class NativeTTS {
-  // Holds user preferences for voice settings
   VoicePreferences voicePreferences = new VoicePreferences();
 
   /**
@@ -50,33 +49,28 @@ public class NativeTTS {
    * Sets the language preference for the voice.
    *
    * @param text The language code (e.g., "en" for English).
-   * @throws SpeechEngineCreationException If there is an error creating the speech engine.
    * @throws IOException If there is an input/output error.
    */
-  public static void voiceLanguage(String text) throws SpeechEngineCreationException, IOException {
+  public static void voiceLanguage(String text) throws IOException {
     voicePreferences.setLanguage(text);
   }
 
   /**
    * Sets the country preference for the voice.
    *
-   * @param text The country code (e.g., "US" for the United States).
-   * @throws SpeechEngineCreationException If there is an error creating the speech engine.
-   * @throws IOException If there is an input/output error.
+   * @param country The country code (e.g., "US" for the United States).
    */
-  public static void voiceCountry(String text) throws SpeechEngineCreationException, IOException {
-    voicePreferences.setCountry(text);
+  public static void voiceCountry(String country) {
+    voicePreferences.setCountry(country);
   }
 
   /**
    * Sets the gender preference for the voice.
    *
-   * @param text The gender ("MALE" or "FEMALE").
-   * @throws SpeechEngineCreationException If there is an error creating the speech engine.
-   * @throws IOException If there is an input/output error.
+   * @param gender The gender (Enum from {@link VoicePreferences}).
    */
-  public static void voiceGender(String text) throws SpeechEngineCreationException, IOException {
-    voicePreferences.setGender(VoicePreferences.Gender.MALE);
+  public static void voiceGender(VoicePreferences.Gender gender) {
+    voicePreferences.setGender(gender);
   }
 
   /**

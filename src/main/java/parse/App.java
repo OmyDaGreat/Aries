@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import ai.picovoice.leopard.LeopardException;
 import lombok.extern.log4j.Log4j2;
-import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 
 @Log4j2
 public class App {

@@ -23,7 +23,7 @@ import util.*;
 import util.extension.RobotExtension;
 import util.extension.StringExtension;
 import util.notepad.NotepadProcessor;
-import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 
 import static util.FilePrinterKt.printFileContents;
 
