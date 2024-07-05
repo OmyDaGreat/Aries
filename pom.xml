@@ -90,6 +90,11 @@
 			<artifactId>jAdapterForNativeTTS</artifactId>
 			<version>0.12.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-coroutines-core</artifactId>
+			<version>1.9.0-RC</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

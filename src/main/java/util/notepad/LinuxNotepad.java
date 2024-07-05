@@ -1,7 +1,7 @@
 package util.notepad;
 
-import static util.extension.RobotExtension.screenHeight;
-import static util.extension.RobotExtension.screenWidth;
+import static util.extension.RobotUtils.screenHeight;
+import static util.extension.RobotUtils.screenWidth;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,10 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.log4j.Log4j2;
-import util.extension.RobotExtension;
+import util.extension.RobotUtils;
 
 @Log4j2
-@ExtensionMethod({RobotExtension.class})
+@ExtensionMethod({RobotUtils.class})
 public class LinuxNotepad implements Notepad {
 	public static final String home = System.getProperty("user.home") + File.separator + "ParseButPro";
 	private Robot r;

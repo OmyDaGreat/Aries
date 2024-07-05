@@ -1,20 +1,16 @@
 package util
 
-import lombok.Getter
 import org.apache.commons.lang3.SystemUtils
 
 /**
  * Enum representing different platforms on which the application can run.
  * Provides utility methods to detect the current operating system.
  */
-@Getter
-enum class Platform(val displayName: String) {
-    WINDOWS("Windows"), // Represents the Windows operating system
-    LINUX("Linux"), // Represents the Linux operating system
-    MAC("Mac"), // Represents the macOS operating system
-    UNKNOWN("Unknown"); // Represents an unknown operating system
-
-    val fullName: String = System.getProperty("os.name") // The full name of the operating system
+enum class Platform {
+    WINDOWS, // Represents the Windows operating system
+    LINUX, // Represents the Linux operating system
+    MAC, // Represents the macOS operating system
+    UNKNOWN; // Represents an unknown operating system
 
     companion object {
         /**

@@ -14,9 +14,9 @@ import util.NativeTTS;
 import java.io.IOException;
 import java.util.Objects;
 
-@ExtensionMethod(SwingExtension.class)
-@UtilityClass
 @Log4j2
+@UtilityClass
+@ExtensionMethod(SwingExtension.class)
 public class GUI {
   public static void run() {
     SwingUtilities.invokeLater(GUI::getGUI);

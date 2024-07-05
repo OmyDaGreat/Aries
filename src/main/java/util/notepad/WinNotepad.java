@@ -8,10 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.log4j.Log4j2;
-import util.extension.RobotExtension;
+import util.extension.RobotUtils;
 
 @Log4j2
-@ExtensionMethod({RobotExtension.class})
+@ExtensionMethod({RobotUtils.class})
 public class WinNotepad implements Notepad {
 	public static final String home = System.getProperty("user.home") + File.separator + "ParseButPro";
 	private Robot r;
