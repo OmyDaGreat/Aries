@@ -1,4 +1,4 @@
-package util.Notepad;
+package util.notepad;
 
 import lombok.extern.log4j.Log4j2;
 import util.Platform;

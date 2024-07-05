@@ -1,4 +1,4 @@
-package util.Notepad;
+package util.notepad;
 
 import java.awt.*;
 import java.io.IOException;

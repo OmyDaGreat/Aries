@@ -20,10 +20,12 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import util.*;
-import util.Extension.RobotExtension;
-import util.Extension.StringExtension;
-import util.Notepad.NotepadProcessor;
+import util.extension.RobotExtension;
+import util.extension.StringExtension;
+import util.notepad.NotepadProcessor;
 import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
+
+import static util.FilePrinterKt.printFileContents;
 
 @Getter
 @Setter
@@ -35,6 +37,7 @@ public class LiveMic {
   private boolean isOpenPage = false;
   private boolean isOpenNotepad = false;
   private boolean mouseMove = false;
+  private boolean type = false;
 
   public void startRecognition()
           throws LeopardException, IOException, InterruptedException, AWTException, SpeechEngineCreationException, SQLException {
@@ -58,7 +61,6 @@ public class LiveMic {
         short[] pcm = recorder.getPCM();
         transcript = leopard.process(pcm);
         log.info("{}\n", transcript.getTranscriptString());
-        setAll(false);
         process(transcript.getTranscriptString());
         recorder = null;
         log.info("Ready...");
@@ -72,33 +74,23 @@ public class LiveMic {
     leopard.delete();
   }
 
-  private static void process(String string)
+  private static void process(String input)
       throws AWTException, IOException, InterruptedException, SpeechEngineCreationException {
-    Preconditions.checkState(!StringUtils.isBlank(string), "Hypothesis cannot be blank");
-    if (string.toLowerCase().contains("stop")) {
-      System.exit(0);
-    }
-    if (string.toLowerCase().contains("open")) {
-      setAll(false);
-      keyword = true;
-    }
-    if (string.toLowerCase().contains("notepad", "note that") && keyword && !isOpenNotepad) {
+    Preconditions.checkState(!StringUtils.isBlank(input), "Hypothesis cannot be blank");
+    if (input.trueContains("write special")) {
+      // TODO: Implement special characters
+    } else if (input.trueContains("write")) {
+      new Robot().type(input.replace("write", "").trim());
+    } else if (input.trueContains("mouse")) {
+      new Robot().mouseMoveString(input.replace(".","").trim());
+    } else if (input.trueContains("notepad")) {
       NotepadProcessor n = new NotepadProcessor();
       n.openNotepad();
-      // TODO: Implement user's words
-    }
-    if (string.toLowerCase().contains("page") && keyword && !isOpenPage) {
-      log.debug("Page is open!");
-      OpenPage.open("https://imgur.com/a/kBPQWWd");
-    }
-    if (string.toLowerCase().contains("mouse")) {
-      setAll(false);
-      mouseMove = true;
-      new Robot().mouseMoveString(string.replace(".","").trim());
-      new Robot().mouseMoveString(string.replace(".","").trim());
-    }
-    if (isAllFalse()) {
-      gemini(string);
+    } else if (input.trueContains("browse")) {
+      OpenPage.open("https://google.com");
+      // TODO: Implement browsing
+    } else {
+      gemini(input);
       NativeTTS.ttsFromFile("output.txt");
     }
   }
@@ -108,18 +100,7 @@ public class LiveMic {
       writer.write(string);
     }
     PyScript.run();
-    FilePrinter.print("output.txt");
-  }
-  
-  private void setAll(boolean b) {
-    keyword = b;
-    isOpenPage = b;
-    isOpenNotepad = b;
-    mouseMove = b;
-  }
-
-  private boolean isAllFalse() {
-    return !keyword && !isOpenPage && !isOpenNotepad && !mouseMove;
+    printFileContents("output.txt");
   }
 }
 

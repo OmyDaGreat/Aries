@@ -1,11 +1,5 @@
 package parse
 
-import lombok.experimental.UtilityClass
+import org.apache.logging.log4j.LogManager
 
-@UtilityClass
-internal object ShowProperties {
-    @JvmStatic
-    fun main(args: Array<String>) {
-        System.getProperties().list(System.out)
-    }
-}
+fun main() = System.getProperties().forEach { (prop, value) -> LogManager.getLogger().info("$prop=$value") }

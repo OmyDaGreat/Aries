@@ -7,8 +7,8 @@ import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-import util.Extension.SwingExtension;
-import util.Extension.SwingExtension.JComponentConstraints;
+import util.extension.SwingExtension;
+import util.extension.SwingExtension.JComponentConstraints;
 import util.NativeTTS;
 import util.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 

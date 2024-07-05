@@ -5,14 +5,25 @@ import org.apache.logging.log4j.LogManager
 import java.sql.*
 import java.util.Properties
 
+/**
+ * Singleton object for managing API keys stored in a database.
+ * It provides functionality to load database properties and retrieve API keys by service name.
+ */
 object Keys {
     private val log = LogManager.getLogger(Keys::class.java)
     private lateinit var props: Properties
 
+    /**
+     * Initializes the Keys object by loading database connection properties.
+     */
     init {
         loadProperties()
     }
 
+    /**
+     * Loads database connection properties from the `db.properties` file.
+     * Logs an error if the properties file cannot be found or loaded.
+     */
     private fun loadProperties() {
         try {
             val resourceStream = javaClass.classLoader.getResourceAsStream("db.properties")
@@ -20,17 +31,23 @@ object Keys {
                 props = Properties().apply {
                     load(resourceStream)
                 }
-                props.forEach { key, value -> log.debug("{}: {}", key, value) }
             } else {
-                log.debug("db.properties file not found")
+                log.error("db.properties file not found")
             }
         } catch (e: Exception) {
-            log.debug("Error loading db.properties: ${e.message}")
+            log.error("Error loading db.properties: ${e.message}")
         }
     }
 
     private const val JDBC_DRIVER = "com.mysql.cj.jdbc.Driver"
 
+    /**
+     * Retrieves an API key for a given service from the database.
+     *
+     * @param key The name of the service for which the API key is requested.
+     * @return The API key as a String if found, null otherwise.
+     * @throws SQLException If there is an issue with the database connection or query execution.
+     */
     @Throws(SQLException::class)
     @JvmStatic
     fun get(key: String): String? {
