@@ -10,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import util.extension.SwingExtension;
 import util.extension.SwingExtension.JComponentConstraints;
 import util.NativeTTS;
-import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -42,30 +41,26 @@ public class GUI {
 
     String[] languages = { "en","es", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
 
-    final JComboBox<String> cbLanguage = new JComboBox<String>(languages);
+    final JComboBox<String> cbLanguage = new JComboBox<>(languages);
     cbLanguage.setBounds(50, 50, 80, 20);
     cbLanguage.addActionListener(e -> {
         try {
             NativeTTS.voiceLanguage(Objects.requireNonNull(cbLanguage.getSelectedItem()).toString());
           log.info(cbLanguage.getSelectedItem());
-        } catch (SpeechEngineCreationException ex) {
-            throw new RuntimeException(ex);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+          log.error("Couldn't set the voice language", ex);
         }
     });
 
     String[] Countrys = { "US","es", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
-    final JComboBox<String> cbCountry = new JComboBox<String>(Countrys);
+    final JComboBox<String> cbCountry = new JComboBox<>(Countrys);
     cbCountry.setBounds(150, 50, 80, 20);
     cbCountry.addActionListener(e -> {
       try {
         NativeTTS.voiceLanguage(Objects.requireNonNull(cbCountry.getSelectedItem()).toString());
         log.info(cbCountry.getSelectedItem());
-      } catch (SpeechEngineCreationException ex) {
-        throw new RuntimeException(ex);
       } catch (IOException ex) {
-        throw new RuntimeException(ex);
+        log.error("Couldn't set the voice country", ex);
       }
     });
 
