@@ -3,10 +3,8 @@ package parse
 import ai.picovoice.leopard.Leopard
 import ai.picovoice.leopard.LeopardException
 import ai.picovoice.leopard.LeopardTranscript
-import com.google.common.base.Preconditions
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
 import lombok.experimental.ExtensionMethod
-import org.apache.commons.lang3.StringUtils
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.Keys.get
@@ -30,7 +28,7 @@ class LiveMic {
     val log: Logger = LogManager.getLogger()
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
-      Preconditions.checkState(!StringUtils.isBlank(input), "Hypothesis cannot be blank")
+      check(input.isNotBlank()) { "Hypothesis cannot be blank" }
       when {
         input.trueContains("write special") -> {
           // TODO: Implement special characters
@@ -108,4 +106,3 @@ class LiveMic {
     }
   }
 }
-

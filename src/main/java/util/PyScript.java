@@ -9,7 +9,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @UtilityClass
 public class PyScript {
-
   public static void run() throws IOException, InterruptedException {
     ProcessBuilder builder = new ProcessBuilder("python", "src/main/java/util/pypkg/ai.py");
     builder.redirectErrorStream(true);

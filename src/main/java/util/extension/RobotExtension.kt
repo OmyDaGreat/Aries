@@ -1,148 +1,107 @@
 package util.extension
 
-import util.extension.RobotUtils.directionActions
 import util.extension.RobotUtils.special
 import java.awt.MouseInfo
 import java.awt.Robot
-import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
 
 /**
- * Moves the mouse cursor according to the specified directions using a [Robot].
- *
- * @param robot The [Robot] instance to use for simulation.
- * @param direction A space-separated string specifying the directions ("up", "down", "left", "right").
- * @return The modified [Robot] instance.
+ * Moves the mouse cursor based on the specified directions.
+ * @param direction A string containing one or more directions (e.g., "up left") to move the mouse cursor.
+ * Each direction should be separated by a space.
  */
-fun Robot.mouseMoveString(direction: String): Robot {
-  val split = direction.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-  for (dir in split) {
-    val x = MouseInfo.getPointerInfo().location.x
-    val y = MouseInfo.getPointerInfo().location.y
-    val action = directionActions[dir]
-    if (action != null) {
-      action.accept(x, y, this)
-    } else {
-      RobotUtils.log.debug("Invalid direction: \"{}\"", dir)
+fun Robot.mouseMoveString(direction: String) {
+  direction.split(" ").forEach { dir ->
+    RobotUtils.directionActions[dir]?.accept(MouseInfo.getPointerInfo().location.x, MouseInfo.getPointerInfo().location.y, this)
+      ?: RobotUtils.log.debug("Invalid direction: \"$dir\"")
+  }
+}
+
+/**
+ * Simulates typing a sequence of characters.
+ * @param keys A string where each character represents a key to be typed by the robot.
+ */
+fun Robot.type(keys: String) {
+  keys.forEach { c ->
+    when {
+      c == KeyEvent.CHAR_UNDEFINED -> {
+        throw IllegalArgumentException("Key code not found for character '$c'")
+      }
+      special.containsKeySecond(c) -> {
+        special.getSecond(c).forEach { key ->
+          keyPress(key)
+          keyRelease(key)
+        }
+      }
+      c.isUpperCase() -> {
+        shift(KeyEvent.getExtendedKeyCodeForChar(c.code))
+      }
+      else -> {
+        type(KeyEvent.getExtendedKeyCodeForChar(c.code))
+      }
     }
   }
-  return this
 }
 
 /**
- * Simulates typing a sequence of characters using a [Robot].
- *
- * @param keys  The sequence of characters to type.
- * @return The modified [Robot] instance.
+ * Presses and releases a specified key.
+ * @param keyCode The integer code of the key to be pressed and released.
  */
-fun Robot.type(keys: String): Robot {
-  for (c in keys.toCharArray()) {
-    val keyCode = KeyEvent.getExtendedKeyCodeForChar(c.code)
-    require(KeyEvent.CHAR_UNDEFINED.code != keyCode) { "Key code not found for character '$c'" }
-    if (special.containsKeySecond(c)) {
-      for (i in special.getSecond(c).indices) {
-        keyPress(special.getSecond(c).getInt(i))
-      }
-      for (i in special.getSecond(c).indices.reversed()) {
-        keyRelease(special.getSecond(c).getInt(i))
-      }
-    } else if (Character.isUpperCase(c)) {
-      this.shift(keyCode)
-    } else {
-      this.type(keyCode)
-    }
-  }
-  return this
+fun Robot.type(keyCode: Int) {
+  keyPress(keyCode)
+  keyRelease(keyCode)
 }
 
 /**
- * Simulates pressing and releasing a single key using a [Robot].
- *
- * @param i     The virtual key code representing the key to press and release.
- * @return The modified [Robot] instance.
+ * Simulates a left mouse click.
  */
-fun Robot.type(i: Int): Robot {
-  keyPress(i)
-  keyRelease(i)
-  return this
-}
+fun Robot.leftClick() = click(KeyEvent.BUTTON1_DOWN_MASK)
 
 /**
- * Simulates a left mouse click using a [Robot].
- *
- * @return The modified [Robot] instance.
+ * Simulates a right mouse click.
  */
-fun Robot.leftClick(): Robot {
-  mousePress(InputEvent.BUTTON1_DOWN_MASK)
-  mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-  return this
-}
+fun Robot.rightClick() = click(KeyEvent.BUTTON2_DOWN_MASK)
 
 /**
- * Simulates a right mouse click using a [Robot].
- *
- * @return The modified [Robot] instance.
+ * Simulates pressing the ENTER key.
  */
-fun Robot.rightClick(): Robot {
-  mousePress(InputEvent.BUTTON2_DOWN_MASK)
-  mouseRelease(InputEvent.BUTTON2_DOWN_MASK)
-  return this
-}
+fun Robot.enter() = type(KeyEvent.VK_ENTER)
 
 /**
- * Simulates pressing the ENTER key using a [Robot].
- *
- * @return The modified [Robot] instance.
+ * Simulates pressing the TAB key.
  */
-fun Robot.enter(): Robot {
-  type(KeyEvent.VK_ENTER)
-  return this
-}
+fun Robot.tab() = type(KeyEvent.VK_TAB)
 
 /**
- * Simulates pressing the TAB key using a [Robot].
- *
- * @return The modified [Robot] instance.
+ * Simulates pressing CONTROL + another key.
+ * @param keyCode The integer code of the key to be pressed in combination with the CONTROL key.
  */
-fun Robot.tab(): Robot {
-  type(KeyEvent.VK_TAB)
-  return robot
-}
-
-/**
- * Simulates pressing the CONTROL key followed by another key using a [Robot].
- *
- * @param i     The virtual key code representing the key to press after CONTROL.
- * @return The modified [Robot] instance.
- */
-fun Robot.control(i: Int): Robot {
+fun Robot.control(keyCode: Int) {
   keyPress(KeyEvent.VK_CONTROL)
-  type(i)
+  type(keyCode)
   keyRelease(KeyEvent.VK_CONTROL)
-  return this
 }
 
 /**
- * Simulates pressing the SHIFT key followed by another key using a [Robot].
- *
- * @param robot The [Robot] instance to use for simulation.
- * @param i     The virtual key code representing the key to press after SHIFT.
- * @return The modified [Robot] instance.
+ * Simulates pressing SHIFT + another key.
+ * @param keyCode The integer code of the key to be pressed in combination with the SHIFT key.
  */
-fun Robot.shift(i: Int): Robot {
+fun Robot.shift(keyCode: Int) {
   keyPress(KeyEvent.VK_SHIFT)
-  type(i)
+  type(keyCode)
   keyRelease(KeyEvent.VK_SHIFT)
-  return this
 }
 
 /**
- * Simulates saving something using a [Robot].
- *
- * @param robot The [Robot] instance to use for simulation.
- * @return The modified [Robot] instance.
+ * Simulates saving something by pressing CONTROL + S.
  */
-fun Robot.save(): Robot {
-  control(this, KeyEvent.VK_S)
-  return this
+fun Robot.save() = control(KeyEvent.VK_S)
+
+/**
+ * Helper function to simulate mouse clicks.
+ * @param mask The mask for the mouse button to be clicked.
+ */
+private fun Robot.click(mask: Int) {
+  mousePress(mask)
+  mouseRelease(mask)
 }

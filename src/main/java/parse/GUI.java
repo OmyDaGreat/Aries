@@ -52,8 +52,9 @@ public class GUI {
         }
     });
 
-    String[] Countrys = { "US","es", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
-    final JComboBox<String> cbCountry = new JComboBox<>(Countrys);
+    String[] countries = { "US","GB", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
+
+    final JComboBox<String> cbCountry = new JComboBox<>(countries);
     cbCountry.setBounds(150, 50, 80, 20);
     cbCountry.addActionListener(e -> {
       try {

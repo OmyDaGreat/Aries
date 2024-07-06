@@ -1,2 +1,24 @@
-01:08:37.496 [main] INFO  parse.GetAvailableVoicesKt - name='Microsoft David Desktop', culture='en-US', gender='Male', age='Adult', description='Microsoft David Desktop (en_US, Male)'
-01:08:37.498 [main] INFO  parse.GetAvailableVoicesKt - name='Microsoft Zira Desktop', culture='en-US', gender='Female', age='Adult', description='Microsoft Zira Desktop (en_US, Female)'
+19:37:07.932 [main] INFO  parse.App - Hello world!
+19:37:10.983 [main] DEBUG parse.LiveMic - Leopard version: 2.0.0
+19:37:10.988 [main] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
+19:37:12.433 [main] INFO  parse.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+19:37:15.459 [main] INFO  parse.LiveMic - Hello how are you doing.
+
+19:37:15.496 [main] INFO  util.PyScript - Traceback (most recent call last):
+19:37:15.496 [main] INFO  util.PyScript -   File "C:\Users\Malefic\Documents\Competitive\ParseButPro\src\main\java\util\pypkg\ai.py", line 1, in <module>
+19:37:15.496 [main] INFO  util.PyScript -     import google.generativeai as genai
+19:37:15.496 [main] INFO  util.PyScript - ModuleNotFoundError: No module named 'google'
+19:37:15.499 [main] INFO  util.FilePrinterKt - 
+
+As a large language model, I have no memory of past conversations.  
+
+To help me respond effectively, please tell me what you want me to say next time you send a message.  For example, you could:
+
+* **Give me a specific topic:** "Next time, I want you to tell me about the history of the internet."
+* **Ask me a question:** "Next time, I want you to answer this question: What is the meaning of life?"
+* **Provide me with context:** "Next time, I want you to write a poem about a cat named Mittens who loves to play fetch."
+
+The more information you give me, the better I can understand your request and respond accordingly. 
+
+19:37:15.703 [main] INFO  parse.LiveMic - Ready...
+19:37:15.703 [main] INFO  parse.LiveMic - >>> Press 'ENTER' to start:
