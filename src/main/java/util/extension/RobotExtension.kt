@@ -11,9 +11,10 @@ import java.awt.event.KeyEvent
  * Each direction should be separated by a space.
  */
 fun Robot.mouseMoveString(direction: String) {
-  direction.split(" ").forEach { dir ->
-    RobotUtils.directionActions[dir]?.accept(MouseInfo.getPointerInfo().location.x, MouseInfo.getPointerInfo().location.y, this)
-      ?: RobotUtils.log.debug("Invalid direction: \"$dir\"")
+  direction.split(" ").forEach {dir ->
+    RobotUtils.directionActions[dir]?.accept(
+      MouseInfo.getPointerInfo().location.x, MouseInfo.getPointerInfo().location.y, this
+    ) ?: RobotUtils.log.debug("Invalid direction: \"$dir\"")
   }
 }
 
@@ -22,20 +23,23 @@ fun Robot.mouseMoveString(direction: String) {
  * @param keys A string where each character represents a key to be typed by the robot.
  */
 fun Robot.type(keys: String) {
-  keys.forEach { c ->
+  keys.forEach {c ->
     when {
       c == KeyEvent.CHAR_UNDEFINED -> {
         throw IllegalArgumentException("Key code not found for character '$c'")
       }
+
       special.containsKeySecond(c) -> {
-        special.getSecond(c).forEach { key ->
+        special.getSecond(c).forEach {key ->
           keyPress(key)
           keyRelease(key)
         }
       }
+
       c.isUpperCase() -> {
         shift(KeyEvent.getExtendedKeyCodeForChar(c.code))
       }
+
       else -> {
         type(KeyEvent.getExtendedKeyCodeForChar(c.code))
       }

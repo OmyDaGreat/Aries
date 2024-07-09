@@ -9,16 +9,16 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.Keys.get
 import util.NativeTTS
-import util.OpenPage
 import util.PyScript
-import util.extension.RobotUtils
 import util.extension.*
 import util.notepad.NotepadProcessor
 import util.printFileContents
 import java.awt.AWTException
+import java.awt.Desktop
 import java.awt.Robot
 import java.io.FileWriter
 import java.io.IOException
+import java.net.URI
 import java.sql.SQLException
 import java.util.*
 
@@ -26,27 +26,33 @@ import java.util.*
 class LiveMic {
   companion object {
     val log: Logger = LogManager.getLogger()
+
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
-      check(input.isNotBlank()) { "Hypothesis cannot be blank" }
+      check(input.isNotBlank()) {"Hypothesis cannot be blank"}
       when {
         input.trueContains("write special") -> {
           // TODO: Implement special characters
         }
+
         input.trueContains("write") -> {
-          Robot().type(input.replace("write", "").trim { it <= ' ' })
+          Robot().type(input.replace("write", "").trim {it <= ' '})
         }
+
         input.trueContains("mouse") -> {
-          Robot().mouseMoveString(input.replace(".", "").trim { it <= ' ' })
+          Robot().mouseMoveString(input.replace(".", "").trim {it <= ' '})
         }
+
         input.trueContains("notepad") -> {
           val n = NotepadProcessor()
           n.openNotepad()
         }
+
         input.trueContains("browse") -> {
-          OpenPage.open("https://google.com")
+          open("https://google.com")
           // TODO: Implement browsing
         }
+
         else -> {
           gemini(input)
           NativeTTS.ttsFromFile("output.txt")
@@ -56,7 +62,7 @@ class LiveMic {
 
     @Throws(IOException::class, InterruptedException::class)
     private fun gemini(string: String) {
-      FileWriter("prompt.txt").use { writer ->
+      FileWriter("prompt.txt").use {writer ->
         writer.write(string)
       }
       PyScript.run()
@@ -72,12 +78,8 @@ class LiveMic {
       SQLException::class
     )
     fun startRecognition() {
-      val leopard =
-        Leopard.Builder()
-          .setAccessKey(get("pico"))
-          .setModelPath("src/main/resources/leopard.pv")
-          .setEnableAutomaticPunctuation(true)
-          .build()
+      val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath("src/main/resources/leopard.pv")
+        .setEnableAutomaticPunctuation(true).build()
       log.debug("Leopard version: {}", leopard.version)
       var recorder: Recorder? = null
       val scanner = Scanner(System.`in`)
@@ -105,4 +107,15 @@ class LiveMic {
       leopard.delete()
     }
   }
+}
+
+/**
+ * Opens a web page in the system's default browser using a URL string.
+ *
+ * @param page The URL of the web page to open as a String.
+ * @throws IOException If the default browser is not found, or it fails to be launched.
+ */
+@Throws(IOException::class)
+fun open(page: String) {
+  Desktop.getDesktop().browse(URI.create(page))
 }

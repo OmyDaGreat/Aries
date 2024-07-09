@@ -21,9 +21,9 @@ object RobotUtils {
     Pair("tilde", '~') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE)
   )
   val directionActions = hashMapOf(
-    "up" to TriConsumer { x: Int?, y: Int, robot: Robot -> robot.mouseMove(x!!, y - 50) },
-    "down" to TriConsumer { x: Int?, y: Int, robot: Robot -> robot.mouseMove(x!!, y + 50) },
-    "left" to TriConsumer { x: Int, y: Int?, robot: Robot -> robot.mouseMove(x - 50, y!!) },
-    "right" to TriConsumer { x: Int, y: Int?, robot: Robot -> robot.mouseMove(x + 50, y!!) }
+    "up" to TriConsumer {x: Int?, y: Int, robot: Robot -> robot.mouseMove(x!!, y - 50)},
+    "down" to TriConsumer {x: Int?, y: Int, robot: Robot -> robot.mouseMove(x!!, y + 50)},
+    "left" to TriConsumer {x: Int, y: Int?, robot: Robot -> robot.mouseMove(x - 50, y!!)},
+    "right" to TriConsumer {x: Int, y: Int?, robot: Robot -> robot.mouseMove(x + 50, y!!)}
   )
 }

@@ -9,7 +9,7 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
-class WinNotepad : Notepad {
+class WinNotepad: Notepad {
   private val robot = Robot()
   private val log = LogManager.getLogger()
   private var process: Process? = null
@@ -41,7 +41,7 @@ class WinNotepad : Notepad {
     robot.control(KeyEvent.VK_S)
     robot.delay(1000)
     robot.type(name)
-    repeat(7) { robot.type(KeyEvent.VK_TAB) }
+    repeat(7) {robot.type(KeyEvent.VK_TAB)}
     repeat(4) {
       robot.enter()
       robot.delay(500)
@@ -55,6 +55,6 @@ class WinNotepad : Notepad {
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
     robot.control(KeyEvent.VK_F4)
-    process?.waitFor()?.also { log.debug("Exited Notepad++ with code: {}", it) }
+    process?.waitFor()?.also {log.debug("Exited Notepad++ with code: {}", it)}
   }
 }

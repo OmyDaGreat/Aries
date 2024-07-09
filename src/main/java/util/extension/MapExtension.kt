@@ -10,7 +10,7 @@ package util.extension
  * @return true if the map contains at least one key with the specified second element, false otherwise.
 </V></B></A> */
 fun <A, B, V> Map<Pair<A, B>, V>.containsKeyFirst(key: A): Boolean {
-  return keys.stream().anyMatch { pair: Pair<A, B> -> pair.first == key }
+  return keys.stream().anyMatch {pair: Pair<A, B> -> pair.first == key}
 }
 
 /**
@@ -23,7 +23,7 @@ fun <A, B, V> Map<Pair<A, B>, V>.containsKeyFirst(key: A): Boolean {
  * @return true if the map contains at least one key with the specified second element, false otherwise.
 </V></B></A> */
 fun <A, B, V> Map<Pair<A, B>, V>.containsKeySecond(key: B): Boolean {
-  return keys.stream().anyMatch { pair: Pair<A, B> -> pair.second == key }
+  return keys.stream().anyMatch {pair: Pair<A, B> -> pair.second == key}
 }
 
 /**
@@ -39,7 +39,7 @@ fun <A, B, V> Map<Pair<A, B>, V>.containsKeySecond(key: B): Boolean {
 </V></B></A> */
 @Throws(NoSuchElementException::class)
 fun <A, B, V> Map<Pair<A, B>, V>.getFirst(key: A): V {
-  return this.entries.firstOrNull { it.key.first == key }?.value
+  return this.entries.firstOrNull {it.key.first == key}?.value
     ?: throw NoSuchElementException("No value associated with key having first element $key")
 }
 
@@ -56,6 +56,6 @@ fun <A, B, V> Map<Pair<A, B>, V>.getFirst(key: A): V {
 </V></B></A> */
 @Throws(NoSuchElementException::class)
 fun <A, B, V> Map<Pair<A, B>, V>.getSecond(key: B): V {
-  return this.entries.firstOrNull { it.key.second == key }?.value
+  return this.entries.firstOrNull {it.key.second == key}?.value
     ?: throw NoSuchElementException("No value associated with key having second element $key")
 }
