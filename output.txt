@@ -1,9 +1,0 @@
-As a large language model, I have no memory of past conversations.  
-
-To help me respond effectively, please tell me what you want me to say next time you send a message.  For example, you could:
-
-* **Give me a specific topic:** "Next time, I want you to tell me about the history of the internet."
-* **Ask me a question:** "Next time, I want you to answer this question: What is the meaning of life?"
-* **Provide me with context:** "Next time, I want you to write a poem about a cat named Mittens who loves to play fetch."
-
-The more information you give me, the better I can understand your request and respond accordingly. 

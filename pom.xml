@@ -165,32 +165,12 @@
 						<goals>
 							<goal>compile</goal>
 						</goals>
-						<configuration>
-							<sourceDirs>
-								<source>src/main/java</source>
-								<source>target/generated-sources/annotations</source>
-							</sourceDirs>
-						</configuration>
-					</execution>
-					<execution>
-						<id>test-compile</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>test-compile</goal>
-						</goals>
-						<configuration>
-							<sourceDirs>
-								<source>src/test/java</source>
-								<source>target/generated-test-sources/test-annotations</source>
-							</sourceDirs>
-						</configuration>
 					</execution>
 				</executions>
 				<configuration>
 					<compilerPlugins>
 						<plugin>kotlinx-serialization</plugin>
 					</compilerPlugins>
-					<jvmTarget>${maven.compiler.target}</jvmTarget>
 				</configuration>
 				<dependencies>
 					<dependency>

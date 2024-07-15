@@ -9,12 +9,8 @@ import static parse.CoroutinesKt.startTranscriber;
 public class App {
 
   public static void main(String[] args) throws InterruptedException {
-    log.info("Hello world!");
-
+    log.info("Starting coroutines...");
     startGUI();
-
     startTranscriber();
-
-    log.info("Application finished.");
   }
 }
