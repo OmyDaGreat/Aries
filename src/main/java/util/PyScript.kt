@@ -9,7 +9,7 @@ object PyScript {
 
   fun run() {
     try {
-      val builder = ProcessBuilder("python", "src/main/java/util/pypkg/ai.py")
+      val builder = ProcessBuilder("python", "src/util.main/java/util/pypkg/ai.py")
       builder.redirectErrorStream(true)
       val process = builder.start()
 

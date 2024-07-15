@@ -57,14 +57,12 @@ object Keys {
 
     try {
       Class.forName(JDBC_DRIVER)
-
       connection =
         DriverManager.getConnection(props.getProperty("DB_URL1") + props.getProperty("PASSWORD") + props.getProperty("DB_URL2"))
       val sql = "SELECT apikey FROM apikeys WHERE service = ?"
       preparedStatement = connection.prepareStatement(sql)
       preparedStatement.setString(1, key)
       resultSet = preparedStatement.executeQuery()
-
       return if (resultSet.next()) {
         resultSet.getString("apikey")
       } else {

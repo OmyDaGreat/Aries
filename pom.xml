@@ -65,6 +65,16 @@
 			<version>2.23.1</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.23.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<version>2.0.13</version>
+		</dependency>
+		<dependency>
 			<groupId>com.tagtraum</groupId>
 			<artifactId>japlscript-runtime</artifactId>
 			<version>3.4.13</version>
@@ -74,11 +84,6 @@
 			<artifactId>japlscript-generator</artifactId>
 			<version>3.4.13</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.23.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -94,6 +99,31 @@
 			<groupId>org.jetbrains.kotlinx</groupId>
 			<artifactId>kotlinx-coroutines-core</artifactId>
 			<version>1.9.0-RC</version>
+		</dependency>
+		<dependency>
+			<groupId>io.ktor</groupId>
+			<artifactId>ktor-client-core-jvm</artifactId>
+			<version>2.3.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-serialization-json</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.ktor</groupId>
+			<artifactId>ktor-server-content-negotiation-jvm</artifactId>
+			<version>2.3.12</version>
+		</dependency>
+		<dependency>
+			<groupId>io.ktor</groupId>
+			<artifactId>ktor-serialization-kotlinx-json-jvm</artifactId>
+			<version>2.3.12</version>
+		</dependency>
+		<dependency>
+			<groupId>io.ktor</groupId>
+			<artifactId>ktor-client-cio-jvm</artifactId>
+			<version>2.3.12</version>
 		</dependency>
 	</dependencies>
 
@@ -131,7 +161,7 @@
 				<executions>
 					<execution>
 						<id>compile</id>
-						<phase>process-sources</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
@@ -157,8 +187,18 @@
 					</execution>
 				</executions>
 				<configuration>
+					<compilerPlugins>
+						<plugin>kotlinx-serialization</plugin>
+					</compilerPlugins>
 					<jvmTarget>${maven.compiler.target}</jvmTarget>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-serialization</artifactId>
+						<version>${kotlin.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -3,7 +3,7 @@ name: GitHub Release
 on:
   push:
     branches:
-      - main
+      - util.main
 
 jobs:
   build:

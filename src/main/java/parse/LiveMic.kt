@@ -78,7 +78,7 @@ class LiveMic {
       SQLException::class
     )
     fun startRecognition() {
-      val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath("src/main/resources/leopard.pv")
+      val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath("src/util.main/resources/leopard.pv")
         .setEnableAutomaticPunctuation(true).build()
       log.debug("Leopard version: {}", leopard.version)
       var recorder: Recorder? = null
