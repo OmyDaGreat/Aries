@@ -34,8 +34,8 @@ public class NativeTTS {
     SpeechEngine speechEngine = SpeechEngineNative.getInstance();
     List<Voice> voices = speechEngine.getAvailableVoices();
 
-    voicePreferences.setLanguage("en");
-    voicePreferences.setCountry("US");
+    voicePreferences.setLanguage("es");
+    voicePreferences.setCountry("GB");
     voicePreferences.setGender(VoicePreferences.Gender.MALE);
     Voice voice = speechEngine.findVoiceByPreferences(voicePreferences);
 
