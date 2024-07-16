@@ -1,5 +1,6 @@
 package parse
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import parse.gui.GUI
@@ -12,7 +13,7 @@ fun startGUI() = runBlocking {
 }
 
 fun startTranscriber() = runBlocking {
-  launch {
+  launch(Dispatchers.IO) {
     LiveMic.startRecognition()
   }
 }

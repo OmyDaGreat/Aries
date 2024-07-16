@@ -1,3 +1,10 @@
-11:39:33.604 [main] INFO  parse.App - Starting coroutines...
-11:39:36.431 [main] DEBUG parse.listen.LiveMic - Leopard version: 2.0.0
-11:39:36.435 [main] INFO  parse.listen.LiveMic - >>> Press 'ENTER' to start:
+23:36:05.147 [main] INFO  parse.App - Starting coroutines...
+23:36:09.524 [DefaultDispatcher-worker-2] DEBUG parse.listen.LiveMic - Leopard version: 2.0.0
+23:36:09.534 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - >>> Press 'ENTER' to start:
+23:36:13.810 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+23:36:15.685 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - Audio frame size: 512
+23:36:15.686 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - -1
+23:36:15.686 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - Wake word detected
+23:36:15.795 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - >>> Recording ... Press 'ENTER' to stop:
+23:36:22.381 [DefaultDispatcher-worker-2] INFO  parse.listen.LiveMic - 
+

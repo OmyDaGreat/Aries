@@ -77,7 +77,13 @@ class Recorder extends Thread {
 
     while (!stop) {
       micDataLine.read(captureBuffer.array(), 0, captureBuffer.capacity());
+//      captureBuffer.clear();
+//      captureBuffer.put(captureBuffer.array(), 0, bytesRead);
       captureBuffer.asShortBuffer().get(shortBuffer);
+      // Ensure we don't exceed the maximum frame size
+      if (this.pcmBuffer.size() > 256) { // Adjusted to ensure we don't read more than necessary
+        break; // Or handle overflow appropriately
+      }
       for (short value : shortBuffer) {
         this.pcmBuffer.add(value);
       }

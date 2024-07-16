@@ -54,3 +54,13 @@ X
 (src/main/java/util/notepad/MacNotepad.kt,2\d\2d3dcd733d67fc1cba762a394cf6588ff41e88a7
 ^
 .src/main/java/util/notepad/NotepadProcessor.kt,c\1\c11ae2d7469b4e81667b0b0c306bdb39e08b66c5
+Q
+!src/main/java/parse/Coroutines.kt,3\7\37dbada8a7fa6f258a7a618fe38aec80365c6a00
+X
+(src/main/java/parse/listen/Recorder.java,4\8\489eceb98801017949818baf23b12b2d5b187a5c
+U
+%src/main/java/parse/listen/LiveMic.kt,d\2\d23644ee93ad3e32f034deb03553acf16bafe2e2
+T
+$src/main/java/parse/PorcupinePath.kt,4\7\4746732197f729f909b607d7ba5c8dc3107da795
+T
+$src/main/java/util/ResourcePath.java,0\8\083b8a75a99c6ab85ce071693bc5ccbf4076086e
