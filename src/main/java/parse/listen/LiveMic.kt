@@ -18,6 +18,7 @@ import java.net.URI
 import java.sql.SQLException
 import java.util.*
 
+
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {
   companion object {
@@ -79,7 +80,8 @@ class LiveMic {
                         Platform.LINUX -> "hey-parse_en_linux_v3_0_0.ppn"
                         else -> throw IllegalArgumentException("Platform not supported")
                       }
-              ).replace("file:/", ""))).build()
+              ).replace("file:/", "")))
+              .build()
       val leopard = Leopard.Builder().setAccessKey(get("pico"))
         .setEnableAutomaticPunctuation(true).build()
       log.debug("Leopard version: {}", leopard.version)
@@ -96,6 +98,7 @@ class LiveMic {
           recorder.join()
           val pcm = recorder.pcm
           transcript = leopard.process(pcm)
+          log.info("Transcript: ${transcript.transcriptString}")
           log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
           recorder = null
@@ -119,13 +122,7 @@ class LiveMic {
               recorder = Recorder(-1)
               recorder.start()
             }
-//            else -> {
-//              log.info("Wake word detected")
-//              recorder = Recorder(-1)
-//              recorder.start()
-//            }
           }
-
         }
       }
       porcupine.delete();
