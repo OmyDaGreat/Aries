@@ -7,12 +7,10 @@ import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import util.*
 import util.Keys.get
-import util.NativeTTS
-import util.Platform
-import util.ResourcePath
+import util.ResourcePath.getResourcePath
 import util.extension.*
-import util.generateContent
 import util.notepad.NotepadProcessor
 import java.awt.*
 import java.io.IOException
@@ -74,12 +72,14 @@ class LiveMic {
     fun startRecognition() {
       val porcupine = Porcupine.Builder()
               .setAccessKey(get("pico")) // Ensure ACCESS_KEY is defined somewhere in your code
-              .setKeywordPaths(arrayOf("src/main/resources/" +
-                      if (platform == Platform.WINDOWS) "hey-parse_en_windows_v3_0_0.ppn"
-                      else if (platform == Platform.MAC) "hey-parse_en_mac_v3_0_0.ppn"
-                      else if (platform == Platform.LINUX) "hey-parse_en_linux_v3_0_0.ppn"
-                        else throw IllegalArgumentException("Platform not supported")
-              )).build()
+              .setKeywordPaths(arrayOf(getResourcePath(
+                      when (platform) {
+                        Platform.WINDOWS -> "hey-parse_en_windows_v3_0_0.ppn"
+                        Platform.MAC -> "hey-parse_en_mac_v3_0_0.ppn"
+                        Platform.LINUX -> "hey-parse_en_linux_v3_0_0.ppn"
+                        else -> throw IllegalArgumentException("Platform not supported")
+                      }
+              ).replace("file:/", ""))).build()
       val leopard = Leopard.Builder().setAccessKey(get("pico"))
         .setEnableAutomaticPunctuation(true).build()
       log.debug("Leopard version: {}", leopard.version)
