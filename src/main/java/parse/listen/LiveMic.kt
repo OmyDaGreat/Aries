@@ -1,7 +1,7 @@
 package parse.listen
 
 import ai.picovoice.leopard.*
-import ai.picovoice.porcupine.*
+import ai.picovoice.porcupine.Porcupine
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.*
 import util.Keys.get
-import util.ResourcePath.getResourcePath
 import util.extension.*
 import util.notepad.NotepadProcessor
 import java.awt.*
@@ -18,12 +17,9 @@ import java.net.URI
 import java.sql.SQLException
 import java.util.*
 
-
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {
   companion object {
-    val platform: Platform = Platform.detectPlatform()
-
     val log: Logger = LogManager.getLogger()
 
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
@@ -71,24 +67,26 @@ class LiveMic {
       SQLException::class
     )
     fun startRecognition() {
-      val porcupine = Porcupine.Builder()
-              .setAccessKey(get("pico")) // Ensure ACCESS_KEY is defined somewhere in your code
-              .setKeywordPaths(arrayOf(getResourcePath(
-                      when (platform) {
-                        Platform.WINDOWS -> "hey-parse_en_windows_v3_0_0.ppn"
-                        Platform.MAC -> "hey-parse_en_mac_v3_0_0.ppn"
-                        Platform.LINUX -> "hey-parse_en_linux_v3_0_0.ppn"
-                        else -> throw IllegalArgumentException("Platform not supported")
-                      }
-              ).replace("file:/", "")))
-              .build()
       val leopard = Leopard.Builder().setAccessKey(get("pico"))
         .setEnableAutomaticPunctuation(true).build()
+      val platform = Platform.detectPlatform()
+      val porcupine = Porcupine.Builder().setAccessKey(get("pico")).setModelPath(
+        "Hey-parse-me_en_" +
+        when (platform) {
+          Platform.WINDOWS -> "windows"
+          Platform.MAC -> "mac"
+          Platform.LINUX -> "linux"
+          else -> throw IllegalArgumentException("Platform not supported")
+        }
+        + "_v3.0.0.ppn"
+      ).build()
       log.debug("Leopard version: {}", leopard.version)
+      log.debug("Porcupine version: {}", porcupine.version)
       var recorder: Recorder? = null
-      var wakeUpWord: Recorder?
       val scanner = Scanner(System.`in`)
 
+      // Only run the loop when porcupine detects the wake word
+      // and exit afterwards
       var transcript: LeopardTranscript
       while (System.`in`.available() == 0) {
         if (recorder != null) {
@@ -98,7 +96,6 @@ class LiveMic {
           recorder.join()
           val pcm = recorder.pcm
           transcript = leopard.process(pcm)
-          log.info("Transcript: ${transcript.transcriptString}")
           log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
           recorder = null
@@ -106,26 +103,10 @@ class LiveMic {
         } else {
           log.info(">>> Press 'ENTER' to start:")
           scanner.nextLine()
-          wakeUpWord = Recorder(-1)
-          wakeUpWord.start()
-          log.info(">>> Recording ... Press 'ENTER' to stop:")
-          scanner.nextLine()
-          wakeUpWord.end()
-          wakeUpWord.join()
-          val pcm = wakeUpWord.pcm
-          log.info("Audio frame size: ${pcm.size}")
-          val keywordIndex = porcupine.process(pcm)
-          log.info("$keywordIndex")
-          when (keywordIndex) {
-            0 -> {
-              log.info("Wake word detected")
-              recorder = Recorder(-1)
-              recorder.start()
-            }
-          }
+          recorder = Recorder(-1)
+          recorder.start()
         }
       }
-      porcupine.delete();
       leopard.delete()
     }
   }

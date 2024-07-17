@@ -1,12 +1,12 @@
 package parse.listen;
 
 import lombok.extern.log4j.Log4j2;
-import org.jetbrains.annotations.NotNull;
 
 import javax.sound.sampled.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @Log4j2
 class Recorder extends Thread {
@@ -76,42 +76,12 @@ class Recorder extends Thread {
     short[] shortBuffer = new short[256];
 
     while (!stop) {
-      int bytesRead = micDataLine.read(captureBuffer.array(), 0, captureBuffer.capacity());
-      if (bytesRead > 0) {
-        captureBuffer.clear();
-        captureBuffer.asShortBuffer().get(shortBuffer);
-        // Ensure we don't exceed the maximum frame size
-        int maxSize = 256;
-        if (this.pcmBuffer.size() + shortBuffer.length > maxSize) {
-          // Create a temporary list to hold the combined old and new data
-          List<Short> tempList = getShortList(maxSize, shortBuffer);
-          // Clear the pcmBuffer and refill it with the truncated list
-          this.pcmBuffer.clear();
-          this.pcmBuffer.addAll(tempList);
-        } else {
-          for (short value : shortBuffer) {
-            this.pcmBuffer.add(value);
-          }
-        }
-        captureBuffer.clear();
-      } else {
-        log.error("captureBuffer does not contain enough audio data to fill the shortBuffer");
+      micDataLine.read(captureBuffer.array(), 0, captureBuffer.capacity());
+      captureBuffer.asShortBuffer().get(shortBuffer);
+      for (short value : shortBuffer) {
+        this.pcmBuffer.add(value);
       }
     }
-  }
-
-  @NotNull
-  private List<Short> getShortList(int maxSize, short[] shortBuffer) {
-    List<Short> tempList = new ArrayList<>(this.pcmBuffer);
-    // Calculate how many elements we can add from shortBuffer without exceeding maxSize
-    int elementsToAdd = Math.min(maxSize - tempList.size(), shortBuffer.length);
-    // Manually add each short value to the list, boxing it into a Short object
-    for (int i = 0; i < elementsToAdd; i++) {
-      tempList.add(shortBuffer[i]);
-    }
-    // Truncate the list to the maximum size
-    tempList = tempList.subList(0, maxSize);
-    return tempList;
   }
 
   public void end() {
