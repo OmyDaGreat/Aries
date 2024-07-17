@@ -5,13 +5,11 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@OptIn(InternalAPI::class)
 suspend fun generateContent(prompt: String): String {
   val body = mapOf(
     "contents" to listOf(
@@ -29,7 +27,7 @@ suspend fun generateContent(prompt: String): String {
   val client = HttpClient(CIO)
   val response: HttpResponse = client.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${Keys.get("gemini")}") {
     contentType(ContentType.Application.Json)
-    this.body = bodyString
+    setBody(bodyString)
   }
 
   val responseBody = response.bodyAsText()
