@@ -46,5 +46,3 @@ X
 (src/main/java/parse/listen/Recorder.java,4\8\489eceb98801017949818baf23b12b2d5b187a5c
 U
 %src/main/java/parse/listen/LiveMic.kt,d\2\d23644ee93ad3e32f034deb03553acf16bafe2e2
-T
-$src/main/java/util/ResourcePath.java,0\8\083b8a75a99c6ab85ce071693bc5ccbf4076086e

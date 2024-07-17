@@ -70,7 +70,7 @@ class LiveMic {
       val leopard = Leopard.Builder().setAccessKey(get("pico"))
         .setEnableAutomaticPunctuation(true).build()
       val platform = Platform.detectPlatform()
-      val porcupine = Porcupine.Builder().setAccessKey(get("pico")).setModelPath(
+      val porcupine = Porcupine.Builder().setAccessKey(get("pico")).setKeywordPath(
         "Hey-parse-me_en_" +
         when (platform) {
           Platform.WINDOWS -> "windows"
