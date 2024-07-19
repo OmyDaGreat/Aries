@@ -1,5 +1,5 @@
-23:52:29.769 [main] INFO  parse.App - Starting coroutines...
-23:52:35.296 [DefaultDispatcher-worker-1] DEBUG parse.listen.LiveMic - Leopard version: 2.0.0
-23:52:35.297 [DefaultDispatcher-worker-1] DEBUG parse.listen.LiveMic - Porcupine version: 3.0.0
-23:52:54.428 [DefaultDispatcher-worker-1] INFO  parse.listen.LiveMic - >>> Wake word detected.
-23:52:54.432 [DefaultDispatcher-worker-1] ERROR parse.listen.Recorder - Failed to get a valid capture device. Use --show_audio_devices to show available capture devices and their indices
+12:46:52.891 [main] INFO  parse.App - Starting coroutines...
+12:46:59.393 [DefaultDispatcher-worker-1] DEBUG parse.listen.LiveMic - Leopard version: 2.0.0
+12:46:59.393 [DefaultDispatcher-worker-1] DEBUG parse.listen.LiveMic - Porcupine version: 3.0.0
+12:47:13.382 [DefaultDispatcher-worker-1] INFO  parse.listen.LiveMic - >>> Wake word detected.
+12:47:13.397 [DefaultDispatcher-worker-1] INFO  parse.listen.LiveMic - >>> Recording...

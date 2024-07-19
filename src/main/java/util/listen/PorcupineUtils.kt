@@ -71,7 +71,7 @@ fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: ()
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames = 0
   val silenceThreshold = 62 // Number of consecutive frames of silence to consider the user has stopped speaking
-  val amplitudeThreshold = 1000 // Amplitude threshold to consider as silence, adjust based on your needs
+  val amplitudeThreshold = 1200 // Amplitude threshold to consider as silence, adjust based on your needs
 
   while (true) {
     val bytesRead = line.read(byteBuffer, 0, byteBuffer.size)

@@ -74,8 +74,9 @@ class LiveMic {
       var recorder: Recorder? = null
 
       try {
-        val line = openAudioLine(porcupine)
+        var line = openAudioLine(porcupine)
         processAudio(line, porcupine, {
+          line.close()
           log.info(">>> Wake word detected.")
           recorder = Recorder(-1)
           recorder!!.start()
@@ -89,6 +90,7 @@ class LiveMic {
           val transcript = leopard.process(pcm)
           log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
+          line = openAudioLine(porcupine)
         }) {
           recorder != null
         }
