@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import net.miginfocom.swing.MigLayout;
 import org.jetbrains.annotations.NotNull;
-import util.NativeTTS;
+import util.listen.NativeTTS;
 import util.extension.SwingExtension;
 
 import javax.swing.*;

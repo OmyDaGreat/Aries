@@ -1,7 +1,6 @@
 package parse.listen
 
 import ai.picovoice.leopard.*
-import ai.picovoice.porcupine.Porcupine
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
@@ -9,8 +8,8 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.*
 import util.Keys.get
-import util.ResourcePath.getResourcePath
 import util.extension.*
+import util.listen.*
 import util.notepad.NotepadProcessor
 import java.awt.*
 import java.io.IOException
@@ -68,47 +67,37 @@ class LiveMic {
       SQLException::class
     )
     fun startRecognition() {
-      val leopard = Leopard.Builder().setAccessKey(get("pico"))
-        .setEnableAutomaticPunctuation(true).build()
-      val platform = Platform.detectPlatform()
-      val porcupine = Porcupine.Builder().setAccessKey(get("pico")).setKeywordPath(getResourcePath(
-        "Hey-parse-me_en_" +
-        when (platform) {
-          Platform.WINDOWS -> "windows"
-          Platform.MAC -> "mac"
-          Platform.LINUX -> "linux"
-          else -> throw IllegalArgumentException("Platform not supported")
-        }
-        + "_v3_0_0.ppn").replace("file:/", "")
-      ).build()
+      val leopard = Leopard.Builder().setAccessKey(get("pico")).build()
+      val porcupine = createPorcupine()
       log.debug("Leopard version: {}", leopard.version)
       log.debug("Porcupine version: {}", porcupine.version)
       var recorder: Recorder? = null
-      val scanner = Scanner(System.`in`)
 
-      // Only run the loop when porcupine detects the wake word
-      // and exit afterwards
-      var transcript: LeopardTranscript
-      while (System.`in`.available() == 0) {
-        if (recorder != null) {
-          log.info(">>> Recording ... Press 'ENTER' to stop:")
-          scanner.nextLine()
-          recorder.end()
-          recorder.join()
-          val pcm = recorder.pcm
-          transcript = leopard.process(pcm)
+      try {
+        val line = openAudioLine(porcupine)
+        processAudio(line, porcupine, {
+          log.info(">>> Wake word detected.")
+          recorder = Recorder(-1)
+          recorder!!.start()
+          log.info(">>> Recording...")
+        }, {
+          log.info(">>> Silence detected.")
+          recorder!!.end()
+          recorder!!.join()
+          val pcm = recorder!!.pcm
+          recorder = null
+          val transcript = leopard.process(pcm)
           log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
-          recorder = null
-          log.info("Ready...")
-        } else {
-          log.info(">>> Press 'ENTER' to start:")
-          scanner.nextLine()
-          recorder = Recorder(-1)
-          recorder.start()
+        }) {
+          recorder != null
         }
+      } catch (e: Exception) {
+        log.error("Error: {}", e.message)
+      } finally {
+        leopard.delete()
+        porcupine.delete()
       }
-      leopard.delete()
     }
   }
 }
