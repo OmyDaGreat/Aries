@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.*
 import util.Keys.get
+import util.ResourcePath.getResourcePath
 import util.extension.*
 import util.notepad.NotepadProcessor
 import java.awt.*
@@ -70,7 +71,7 @@ class LiveMic {
       val leopard = Leopard.Builder().setAccessKey(get("pico"))
         .setEnableAutomaticPunctuation(true).build()
       val platform = Platform.detectPlatform()
-      val porcupine = Porcupine.Builder().setAccessKey(get("pico")).setKeywordPath(
+      val porcupine = Porcupine.Builder().setAccessKey(get("pico")).setKeywordPath(getResourcePath(
         "Hey-parse-me_en_" +
         when (platform) {
           Platform.WINDOWS -> "windows"
@@ -78,7 +79,7 @@ class LiveMic {
           Platform.LINUX -> "linux"
           else -> throw IllegalArgumentException("Platform not supported")
         }
-        + "_v3.0.0.ppn"
+        + "_v3_0_0.ppn").replace("file:/", "")
       ).build()
       log.debug("Leopard version: {}", leopard.version)
       log.debug("Porcupine version: {}", porcupine.version)
