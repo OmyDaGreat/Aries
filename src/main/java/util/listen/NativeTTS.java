@@ -7,11 +7,13 @@ import io.github.jonelo.tts.engines.VoicePreferences;
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import parse.gui.GUI;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Utility class for text-to-speech (TTS) functionalities.
@@ -34,15 +36,15 @@ public class NativeTTS {
     SpeechEngine speechEngine = SpeechEngineNative.getInstance();
     List<Voice> voices = speechEngine.getAvailableVoices();
 
-    voicePreferences.setLanguage("es");
-    voicePreferences.setCountry("GB");
+    voicePreferences.setLanguage(Objects.requireNonNull(GUI.getCbLanguage().getSelectedItem()).toString());
+    voicePreferences.setCountry(Objects.requireNonNull(GUI.getCbCountry().getSelectedItem()).toString());
     voicePreferences.setGender(VoicePreferences.Gender.MALE);
     Voice voice = speechEngine.findVoiceByPreferences(voicePreferences);
 
     if (voice == null) {
-      log.error("Voice has not been found by the voice preferences {}%n", voicePreferences);
+      log.error("Voice has not been found by the voice preferences {}\n", voicePreferences);
       voice = voices.getFirst();
-      log.info("Using \"{}\" instead.%n", voice);
+      log.info("Using \"{}\" instead.\n", voice);
     }
 
     speechEngine.setVoice(voice.getName());

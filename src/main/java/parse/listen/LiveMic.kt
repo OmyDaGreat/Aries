@@ -50,7 +50,7 @@ class LiveMic {
 
         else -> {
           runBlocking {
-            val gemini = generateContent(input)
+            val gemini = generateContent(input.replace("*", ""))
             log.info(gemini)
             NativeTTS.tts(gemini)
           }

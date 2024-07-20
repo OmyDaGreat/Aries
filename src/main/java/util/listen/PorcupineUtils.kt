@@ -73,11 +73,12 @@ fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: ()
   val buffer = ShortArray(porcupine.frameLength)
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
-  val amplitudeThreshold = 1200 // Amplitude threshold to consider as silence, adjust based on your needs
+  val amplitudeThreshold = 1000 // Amplitude threshold to consider as silence, adjust based on your needs
 
   while (true) {
     if (isRecording()) {
       if (isSilence(buffer, amplitudeThreshold)) {
+        log.debug("Silent...")
         if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 3) {
           onSilence()
         }
@@ -94,6 +95,7 @@ fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: ()
         val keywordIndex: Int = porcupine.process(buffer)
         if (keywordIndex >= 0) {
           keywordDetected()
+          silenceFrames = Instant.now()
         }
       } catch (e: PorcupineException) {
         e.printStackTrace()

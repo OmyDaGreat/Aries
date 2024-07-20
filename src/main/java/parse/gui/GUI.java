@@ -1,14 +1,16 @@
 package parse.gui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import net.miginfocom.swing.MigLayout;
 import org.jetbrains.annotations.NotNull;
-import util.listen.NativeTTS;
 import util.extension.SwingExtension;
+import util.listen.NativeTTS;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -18,6 +20,9 @@ import java.util.Objects;
 @UtilityClass
 @ExtensionMethod(SwingExtension.class)
 public class GUI {
+  @Getter @Setter JComboBox<String> cbLanguage = null;
+  @Getter @Setter JComboBox<String> cbCountry = null;
+
   public static void run() {
     SwingUtilities.invokeLater(GUI::getGUI);
   }
@@ -36,10 +41,10 @@ public class GUI {
     frame.add(panel);
 
     String[] languages = {"en", "es", "zh", "hi", "ar", "fr"};
-    final JComboBox<String> cbLanguage = new JComboBox<>(languages);
+    cbLanguage = new JComboBox<>(languages);
 
     String[] countries = {"US", "GB", "CN", "IN", "MX", "CA"};
-    final JComboBox<String> cbCountry = new JComboBox<>(countries);
+    cbCountry = new JComboBox<>(countries);
 
     JButton btn = getBtn(cbLanguage, cbCountry);
 
