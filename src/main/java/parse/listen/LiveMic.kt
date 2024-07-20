@@ -71,10 +71,11 @@ class LiveMic {
       val porcupine = createPorcupine()
       log.debug("Leopard version: {}", leopard.version)
       log.debug("Porcupine version: {}", porcupine.version)
+      log.info("Ready...")
       var recorder: Recorder? = null
 
       try {
-        var line = openAudioLine(porcupine)
+        val line = openAudioLine(porcupine)
         processAudio(line, porcupine, {
           line.close()
           log.info(">>> Wake word detected.")

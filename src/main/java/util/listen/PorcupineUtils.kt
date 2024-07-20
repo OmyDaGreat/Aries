@@ -1,7 +1,7 @@
 package util.listen
 
+import ai.picovoice.leopard.Leopard
 import ai.picovoice.porcupine.Porcupine
-import ai.picovoice.porcupine.PorcupineException
 import org.apache.logging.log4j.LogManager
 import util.Keys.get
 import util.Platform
@@ -68,9 +68,17 @@ fun openAudioLine(porcupine: Porcupine): TargetDataLine {
  * @param keywordDetected A lambda function to execute when a keyword is detected.
  * @param onSilence A lambda function to execute when silence is detected for a defined duration.
  */
-fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
+fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
+  val info = DataLine.Info(TargetDataLine::class.java, null)
+  if (!AudioSystem.isLineSupported(info)) {
+    throw LineUnavailableException("No line matching provided info found.")
+  }
+  val line = AudioSystem.getLine(info) as TargetDataLine
+  val format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
+  line.open(format)
+  line.start()
   val log = LogManager.getLogger()
-  val buffer = ShortArray(porcupine.frameLength)
+  val buffer = ShortArray(512)
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
   val amplitudeThreshold = 1000 // Amplitude threshold to consider as silence, adjust based on your needs
@@ -81,6 +89,8 @@ fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: ()
         log.debug("Silent...")
         if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 3) {
           onSilence()
+          line.open(format)
+          line.start()
         }
       } else {
         log.debug("Sound detected")
@@ -91,14 +101,9 @@ fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: ()
       if (bytesRead <= 0) continue
       ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
 
-      try {
-        val keywordIndex: Int = porcupine.process(buffer)
-        if (keywordIndex >= 0) {
-          keywordDetected()
-          silenceFrames = Instant.now()
-        }
-      } catch (e: PorcupineException) {
-        e.printStackTrace()
+      if (convertAudioToText(buffer).contains("Hey Aries")) {
+        keywordDetected()
+        silenceFrames = Instant.now()
       }
     }
   }
@@ -117,6 +122,10 @@ fun isSilence(buffer: ShortArray, threshold: Int): Boolean {
   for (short in buffer) sum += abs(short.toInt())
   val average = sum / buffer.size
   return average < threshold
+}
+
+fun convertAudioToText(buffer: ShortArray?): String {
+  return Leopard.Builder().setAccessKey(get("pico")).build().process(buffer).transcriptString
 }
 
 /**
