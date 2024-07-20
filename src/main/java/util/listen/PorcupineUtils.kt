@@ -8,6 +8,8 @@ import util.Platform
 import util.ResourcePath.getResourcePath
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.time.Duration
+import java.time.Instant
 import javax.sound.sampled.*
 import kotlin.math.abs
 
@@ -67,33 +69,35 @@ fun openAudioLine(porcupine: Porcupine): TargetDataLine {
  * @param onSilence A lambda function to execute when silence is detected for a defined duration.
  */
 fun processAudio(line: TargetDataLine, porcupine: Porcupine, keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
+  val log = LogManager.getLogger()
   val buffer = ShortArray(porcupine.frameLength)
   val byteBuffer = ByteArray(buffer.size * 2)
-  var silenceFrames = 0
-  val silenceThreshold = 62 // Number of consecutive frames of silence to consider the user has stopped speaking
+  var silenceFrames: Instant? = null
   val amplitudeThreshold = 1200 // Amplitude threshold to consider as silence, adjust based on your needs
 
   while (true) {
-    val bytesRead = line.read(byteBuffer, 0, byteBuffer.size)
-    if (bytesRead <= 0) continue
-    ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
-    // Check for silence only if recording is active
-    if (isRecording() && isSilence(buffer, amplitudeThreshold)) {
-      silenceFrames++
-      if (silenceFrames >= silenceThreshold) {
-        onSilence()
-        break
+    if (isRecording()) {
+      if (isSilence(buffer, amplitudeThreshold)) {
+        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 3) {
+          onSilence()
+        }
+      } else {
+        log.debug("Sound detected")
+        silenceFrames = Instant.now()
       }
     } else {
-      silenceFrames = 0 // Reset silence counter if noise is detected
-    }
-    try {
-      val keywordIndex: Int = porcupine.process(buffer)
-      if (keywordIndex >= 0) {
-        keywordDetected()
+      val bytesRead = line.read(byteBuffer, 0, byteBuffer.size)
+      if (bytesRead <= 0) continue
+      ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
+
+      try {
+        val keywordIndex: Int = porcupine.process(buffer)
+        if (keywordIndex >= 0) {
+          keywordDetected()
+        }
+      } catch (e: PorcupineException) {
+        e.printStackTrace()
       }
-    } catch (e: PorcupineException) {
-      System.err.println(e)
     }
   }
 }

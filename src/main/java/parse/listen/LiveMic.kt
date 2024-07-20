@@ -96,6 +96,7 @@ class LiveMic {
         }
       } catch (e: Exception) {
         log.error("Error: {}", e.message)
+        e.printStackTrace()
       } finally {
         leopard.delete()
         porcupine.delete()
