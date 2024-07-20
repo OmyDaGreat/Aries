@@ -90,7 +90,7 @@ class LiveMic {
           val transcript = leopard.process(pcm)
           log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
-          line = openAudioLine(porcupine)
+          startRecognition()
         }) {
           recorder != null
         }
