@@ -30,9 +30,8 @@ fun Robot.type(keys: String) {
       }
 
       special.containsKeySecond(c) -> {
-        special.getSecond(c).forEach {key ->
-          keyPress(key)
-          keyRelease(key)
+        special.getFromSecond(c).forEach {key ->
+          type(key)
         }
       }
 

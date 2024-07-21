@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger
 import util.*
 import util.Keys.get
 import util.extension.*
+import util.extension.RobotUtils.special
 import util.listen.*
 import util.notepad.NotepadProcessor
 import java.awt.*
@@ -27,7 +28,16 @@ class LiveMic {
       check(input.isNotBlank()) {"Hypothesis cannot be blank"}
       when {
         input.trueContains("write special") -> {
-          // TODO: Implement special characters
+          input.replace("write special", "").trim {it <= ' '}
+            .split(" ").forEach {c ->
+              if(special.containsKeyFirst(c)) {
+                special.getFromFirst(c).forEach {key ->
+                  Robot().type(key)
+                }
+              } else {
+                Robot().type(c)
+              }
+          }
         }
 
         input.trueContains("write") -> {
@@ -38,7 +48,7 @@ class LiveMic {
           Robot().mouseMoveString(input.replace(".", "").trim {it <= ' '})
         }
 
-        input.trueContains("notepad") -> {
+        input.trueContains("open notepad") -> {
           val n = NotepadProcessor()
           n.openNotepad()
         }
@@ -68,16 +78,12 @@ class LiveMic {
     )
     fun startRecognition() {
       val leopard = Leopard.Builder().setAccessKey(get("pico")).build()
-      val porcupine = createPorcupine()
       log.debug("Leopard version: {}", leopard.version)
-      log.debug("Porcupine version: {}", porcupine.version)
       log.info("Ready...")
       var recorder: Recorder? = null
 
       try {
-        val line = openAudioLine(porcupine)
-        processAudio(line, porcupine, {
-          line.close()
+        processAudio({
           log.info(">>> Wake word detected.")
           recorder = Recorder(-1)
           recorder!!.start()
@@ -100,7 +106,6 @@ class LiveMic {
         e.printStackTrace()
       } finally {
         leopard.delete()
-        porcupine.delete()
       }
     }
   }

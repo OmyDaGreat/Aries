@@ -18,7 +18,8 @@ object RobotUtils {
     Pair("exclamation", '!') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1),
     Pair("colon", ':') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON),
     Pair("quote", '"') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),
-    Pair("tilde", '~') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE)
+    Pair("tilde", '~') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE),
+    Pair("apostrophe", '\'') to IntArrayList.of(KeyEvent.VK_QUOTE)
   )
   val directionActions = hashMapOf(
     "up" to TriConsumer {x: Int?, y: Int, robot: Robot -> robot.mouseMove(x!!, y - 50)},

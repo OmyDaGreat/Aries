@@ -1,11 +1,8 @@
 package util.listen
 
 import ai.picovoice.leopard.Leopard
-import ai.picovoice.porcupine.Porcupine
 import org.apache.logging.log4j.LogManager
 import util.Keys.get
-import util.Platform
-import util.ResourcePath.getResourcePath
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.time.Duration
@@ -13,61 +10,6 @@ import java.time.Instant
 import javax.sound.sampled.*
 import kotlin.math.abs
 
-/**
- * Utility functions for working with the Porcupine voice recognition library.
- */
-
-/**
- * Creates a Porcupine instance with "Hey-parse-me" as its keyword.
- * The keyword file is selected based on the operating system.
- *
- * @return A new Porcupine instance configured with the access key and keyword path.
- * @throws IllegalArgumentException If the platform is not supported.
- */
-fun createPorcupine(): Porcupine {
-  return Porcupine.Builder().setAccessKey(get("pico")).setKeywordPath(
-    getResourcePath(
-      "Hey-parse-me_en_" +
-              when (Platform.detectPlatform()) {
-                Platform.WINDOWS -> "windows"
-                Platform.MAC -> "mac"
-                Platform.LINUX -> "linux"
-                else -> throw IllegalArgumentException("Platform not supported")
-              }
-              + "_v3_0_0.ppn").replace("file:/", "")
-  ).build()
-}
-
-/**
- * Opens an audio line for the Porcupine instance to process audio.
- * The audio format is set to PCM_SIGNED with the sample rate and frame size
- * matching the Porcupine instance's requirements.
- *
- * @param porcupine The Porcupine instance for which the audio line is opened.
- * @return The opened TargetDataLine ready for audio input.
- * @throws LineUnavailableException If no matching audio line is found.
- */
-fun openAudioLine(porcupine: Porcupine): TargetDataLine {
-  val info = DataLine.Info(TargetDataLine::class.java, null)
-  if (!AudioSystem.isLineSupported(info)) {
-    throw LineUnavailableException("No line matching provided info found.")
-  }
-  val line = AudioSystem.getLine(info) as TargetDataLine
-  val format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, porcupine.sampleRate.toFloat(), 16, 1, 2, porcupine.sampleRate.toFloat(), false)
-  line.open(format)
-  line.start()
-  return line
-}
-
-/**
- * Processes audio input from the TargetDataLine and detects keywords using the Porcupine instance.
- * It also detects periods of silence based on a defined threshold and triggers an event when silence is detected.
- *
- * @param line The audio line from which audio data is read.
- * @param porcupine The Porcupine instance used to process the audio data.
- * @param keywordDetected A lambda function to execute when a keyword is detected.
- * @param onSilence A lambda function to execute when silence is detected for a defined duration.
- */
 fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
   val info = DataLine.Info(TargetDataLine::class.java, null)
   if (!AudioSystem.isLineSupported(info)) {
@@ -102,6 +44,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
       ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
 
       if (convertAudioToText(buffer).contains("Hey Aries")) {
+        line.close()
         keywordDetected()
         silenceFrames = Instant.now()
       }
@@ -134,10 +77,8 @@ fun convertAudioToText(buffer: ShortArray?): String {
  */
 fun main() {
   val log = LogManager.getLogger()
-  val porcupine = createPorcupine()
   try {
-    val line = openAudioLine(porcupine)
-    processAudio(line, porcupine, {
+    processAudio({
       log.info("Keyword detected")
     }, {
       log.info("Silence detected")
@@ -146,7 +87,5 @@ fun main() {
     }
   } catch (e: Exception) {
     log.error("Error: {}", e.message)
-  } finally {
-    porcupine.delete()
   }
 }
