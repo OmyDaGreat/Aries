@@ -7,13 +7,15 @@ import io.github.jonelo.tts.engines.VoicePreferences;
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-import parse.gui.GUI;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
+import static parse.gui.GUI.cbCountry;
+import static parse.gui.GUI.cbLanguage;
 
 /**
  * Utility class for text-to-speech (TTS) functionalities.
@@ -36,8 +38,8 @@ public class NativeTTS {
     SpeechEngine speechEngine = SpeechEngineNative.getInstance();
     List<Voice> voices = speechEngine.getAvailableVoices();
 
-    voicePreferences.setLanguage(Objects.requireNonNull(GUI.getCbLanguage().getSelectedItem()).toString());
-    voicePreferences.setCountry(Objects.requireNonNull(GUI.getCbCountry().getSelectedItem()).toString());
+    voicePreferences.setLanguage(Objects.requireNonNull(cbLanguage.getSelectedItem()).toString());
+    voicePreferences.setCountry(Objects.requireNonNull(cbCountry.getSelectedItem()).toString());
     voicePreferences.setGender(VoicePreferences.Gender.MALE);
     Voice voice = speechEngine.findVoiceByPreferences(voicePreferences);
 

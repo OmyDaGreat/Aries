@@ -21,7 +21,8 @@ import java.util.*
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {
   companion object {
-    val log: Logger = LogManager.getLogger()
+    private val log: Logger = LogManager.getLogger()
+    private val n = NotepadProcessor()
 
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
@@ -49,8 +50,11 @@ class LiveMic {
         }
 
         input.trueContains("open notepad") -> {
-          val n = NotepadProcessor()
           n.openNotepad()
+        }
+
+        input.trueContains("close notepad") -> {
+          n.closeNotepad()
         }
 
         input.trueContains("browse") -> {

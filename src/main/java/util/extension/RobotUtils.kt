@@ -1,6 +1,5 @@
 package util.extension
 
-import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.apache.commons.lang3.function.TriConsumer
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -14,12 +13,12 @@ object RobotUtils {
   val screenHeight = Toolkit.getDefaultToolkit().screenSize.height
 
   val special = hashMapOf(
-    Pair("question", '?') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH),
-    Pair("exclamation", '!') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_1),
-    Pair("colon", ':') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON),
-    Pair("quote", '"') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),
-    Pair("tilde", '~') to IntArrayList.of(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE),
-    Pair("apostrophe", '\'') to IntArrayList.of(KeyEvent.VK_QUOTE)
+    Pair("question", '?') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH),
+    Pair("exclamation", '!') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_1),
+    Pair("colon", ':') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON),
+    Pair("quote", '"') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),
+    Pair("tilde", '~') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE),
+    Pair("apostrophe", '\'') to listOf(KeyEvent.VK_QUOTE)
   )
   val directionActions = hashMapOf(
     "up" to TriConsumer {x: Int?, y: Int, robot: Robot -> robot.mouseMove(x!!, y - 50)},

@@ -1,6 +1,3 @@
-23:36:25.126 [main] DEBUG parse.WakeWordTestingKt - Possible start of keyword detected
-23:36:25.253 [main] DEBUG parse.WakeWordTestingKt - Possible start of keyword detected
-23:36:27.637 [main] DEBUG parse.WakeWordTestingKt - Possible start of keyword detected
-23:36:28.891 [main] DEBUG parse.WakeWordTestingKt - Possible start of keyword detected
-23:36:28.891 [main] DEBUG parse.WakeWordTestingKt - Possible start of keyword detected
-23:36:30.271 [main] DEBUG parse.WakeWordTestingKt - Possible start of keyword detected
+20:30:01.829 [main] INFO  parse.App - Starting coroutines...
+20:30:04.561 [DefaultDispatcher-worker-1] DEBUG parse.listen.LiveMic - Leopard version: 2.0.0
+20:30:04.562 [DefaultDispatcher-worker-1] INFO  parse.listen.LiveMic - Ready...
