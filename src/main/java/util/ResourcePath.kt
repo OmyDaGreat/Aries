@@ -13,7 +13,7 @@ object ResourcePath {
 
   @Throws(URISyntaxException::class)
   fun getResourcePath(path: String?): String {
-    return Objects.requireNonNull(ResourcePath::class.java.classLoader.getResource(path)).toURI().toString()
+    return Objects.requireNonNull(ResourcePath::class.java.classLoader.getResource(path)).toURI().toString().replace("file:/", "")
   }
 
   @JvmStatic

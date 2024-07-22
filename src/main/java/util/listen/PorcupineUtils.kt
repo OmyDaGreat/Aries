@@ -3,6 +3,7 @@ package util.listen
 import ai.picovoice.leopard.Leopard
 import org.apache.logging.log4j.LogManager
 import util.Keys.get
+import util.ResourcePath.getResourcePath
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.time.Duration
@@ -15,12 +16,13 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
   if (!AudioSystem.isLineSupported(info)) {
     throw LineUnavailableException("No line matching provided info found.")
   }
+  val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv")).build()
   val line = AudioSystem.getLine(info) as TargetDataLine
   val format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
   line.open(format)
   line.start()
   val log = LogManager.getLogger()
-  val buffer = ShortArray(512)
+  val buffer = ShortArray(10000)
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
   val amplitudeThreshold = 1000 // Amplitude threshold to consider as silence, adjust based on your needs
@@ -43,7 +45,11 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
       if (bytesRead <= 0) continue
       ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
 
-      if (convertAudioToText(buffer).contains("Hey Aries")) {
+      val conversion = convertAudioToText(buffer, leopard)
+
+      log.debug("Conversion: $conversion")
+
+      if (conversion.contains("Hey Aries")) {
         line.close()
         keywordDetected()
         silenceFrames = Instant.now()
@@ -67,8 +73,8 @@ fun isSilence(buffer: ShortArray, threshold: Int): Boolean {
   return average < threshold
 }
 
-fun convertAudioToText(buffer: ShortArray?): String {
-  return Leopard.Builder().setAccessKey(get("pico")).build().process(buffer).transcriptString
+fun convertAudioToText(buffer: ShortArray?, leopard: Leopard): String {
+  return leopard.process(buffer).transcriptString
 }
 
 /**

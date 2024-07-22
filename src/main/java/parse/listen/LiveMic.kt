@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.*
 import util.Keys.get
+import util.ResourcePath.getResourcePath
 import util.extension.*
 import util.extension.RobotUtils.special
 import util.listen.*
@@ -81,9 +82,10 @@ class LiveMic {
       SQLException::class
     )
     fun startRecognition() {
-      val leopard = Leopard.Builder().setAccessKey(get("pico")).build()
+      val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv")).build()
       log.debug("Leopard version: {}", leopard.version)
       log.info("Ready...")
+      NativeTTS.tts("Aries is starting up...")
       var recorder: Recorder? = null
 
       try {

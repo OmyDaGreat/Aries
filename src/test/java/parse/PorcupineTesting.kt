@@ -22,7 +22,7 @@ fun main() {
                 Platform.LINUX -> "linux"
                 else -> throw IllegalArgumentException("Platform not supported")
               }
-              + "_v3_0_0.ppn").replace("file:/", "")
+              + "_v3_0_0.ppn")
   ).build()
   try {
     log.debug(porcupine.sampleRate)

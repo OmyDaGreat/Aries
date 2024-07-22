@@ -2,6 +2,7 @@ package util.notepad
 
 import org.apache.logging.log4j.LogManager
 import util.extension.*
+import util.listen.NativeTTS
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.File
@@ -55,6 +56,10 @@ class WinNotepad: Notepad {
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
     robot.control(KeyEvent.VK_F4)
+    if (process == null) {
+      log.error("Notepad++ is not open")
+      NativeTTS.tts("Notepad++ is not open")
+    }
     process?.waitFor()?.also {log.debug("Exited Notepad++ with code: {}", it)}
   }
 }
