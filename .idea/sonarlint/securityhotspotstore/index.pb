@@ -44,3 +44,7 @@ X
 (src/main/java/parse/listen/Recorder.java,4\8\489eceb98801017949818baf23b12b2d5b187a5c
 U
 %src/main/java/parse/listen/LiveMic.kt,d\2\d23644ee93ad3e32f034deb03553acf16bafe2e2
+[
++src/main/java/util/listen/PorcupineUtils.kt,d\e\de8d9cb13bc4615e8d6cef08213a35cde782f3b3
+X
+(src/main/java/util/listen/NativeTTS.java,2\7\27067d8256ba40b3b4f8bedbbaf8a52de6494b93

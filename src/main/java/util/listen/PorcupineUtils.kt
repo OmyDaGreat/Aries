@@ -22,7 +22,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
   line.open(format)
   line.start()
   val log = LogManager.getLogger()
-  val buffer = ShortArray(10000)
+  val buffer = ShortArray(25000) // 20,000 is too little; 40,000 is too much: slow to process
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
   val amplitudeThreshold = 1000 // Amplitude threshold to consider as silence, adjust based on your needs
@@ -43,6 +43,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
     } else {
       val bytesRead = line.read(byteBuffer, 0, byteBuffer.size)
       if (bytesRead <= 0) continue
+      log.debug("Bytes read: $bytesRead")
       ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
 
       val conversion = convertAudioToText(buffer, leopard)
@@ -74,7 +75,14 @@ fun isSilence(buffer: ShortArray, threshold: Int): Boolean {
 }
 
 fun convertAudioToText(buffer: ShortArray?, leopard: Leopard): String {
-  return leopard.process(buffer).transcriptString
+  val log = LogManager.getLogger()
+  try {
+    log.info("Processing audio buffer of size ${buffer?.size ?: "null"}")
+    return leopard.process(buffer).transcriptString
+  } catch (e: Exception) {
+    log.error("Error processing audio: ${e.message}")
+    return ""
+  }
 }
 
 /**

@@ -103,7 +103,6 @@ class LiveMic {
           val transcript = leopard.process(pcm)
           log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
-          startRecognition()
         }) {
           recorder != null
         }
@@ -111,6 +110,7 @@ class LiveMic {
         log.error("Error: {}", e.message)
         e.printStackTrace()
       } finally {
+        startRecognition()
         leopard.delete()
       }
     }
