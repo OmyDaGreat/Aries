@@ -77,7 +77,12 @@ import java.util.concurrent.TimeUnit
   }
 
   fun deleteNote() {
-    // Implementation depends on what needs to be done here
+    try {
+      val scriptPath = Paths.get(javaClass.classLoader.getResource("deleteNote.scpt")?.toURI()?.toString() ?: "")
+      ProcessBuilder("osascript", scriptPath.toString()).start().waitFor()
+    } catch (e: Exception) {
+      log.error("Error opening notepad with script", e)
+    }
   }
 
   fun openExistingNote() {
