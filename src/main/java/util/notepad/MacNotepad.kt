@@ -52,18 +52,6 @@ import java.util.concurrent.TimeUnit
     }
   }
 
-    override fun saveFileAs(name: String) {
-      TODO("Not yet implemented")
-    }
-
-    override fun openNewFile() {
-      TODO("Not yet implemented")
-    }
-
-    override fun closeFile() {
-      TODO("Not yet implemented")
-    }
-
     fun openNewNote() {
     try {
       ProcessBuilder("osascript", "-e", """
@@ -83,10 +71,6 @@ import java.util.concurrent.TimeUnit
     } catch (e: Exception) {
       log.error("Error opening notepad with script", e)
     }
-  }
-
-  fun openExistingNote() {
-    // Implementation depends on what needs to be done here
   }
 
   override fun closeNotepad() {
