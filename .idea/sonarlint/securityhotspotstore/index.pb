@@ -48,3 +48,5 @@ U
 +src/main/java/util/listen/PorcupineUtils.kt,d\e\de8d9cb13bc4615e8d6cef08213a35cde782f3b3
 X
 (src/main/java/util/listen/NativeTTS.java,2\7\27067d8256ba40b3b4f8bedbbaf8a52de6494b93
+N
+src/main/java/parse/gui/GUI.kt,b\1\b12c44df04f687af17433ecdb7f60f7768191864

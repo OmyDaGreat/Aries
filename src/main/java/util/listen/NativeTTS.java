@@ -38,9 +38,6 @@ public class NativeTTS {
     SpeechEngine speechEngine = SpeechEngineNative.getInstance();
     List<Voice> voices = speechEngine.getAvailableVoices();
 
-    voicePreferences.setLanguage(Objects.requireNonNull(cbLanguage.getSelectedItem()).toString());
-    voicePreferences.setCountry(Objects.requireNonNull(cbCountry.getSelectedItem()).toString());
-    voicePreferences.setGender(VoicePreferences.Gender.MALE);
     Voice voice = speechEngine.findVoiceByPreferences(voicePreferences);
 
     if (voice == null) {
