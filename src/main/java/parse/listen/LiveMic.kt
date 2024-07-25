@@ -18,6 +18,7 @@ import java.io.IOException
 import java.net.URI
 import java.sql.SQLException
 import java.util.*
+import javax.swing.JOptionPane
 
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {
@@ -67,6 +68,7 @@ class LiveMic {
           runBlocking {
             val gemini = generateContent(input.replace("*", ""))
             log.info(gemini)
+            JOptionPane.showMessageDialog(null, input.replace("*", ""))
             NativeTTS.tts(gemini)
           }
         }
