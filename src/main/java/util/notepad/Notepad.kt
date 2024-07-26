@@ -11,7 +11,6 @@ interface Notepad {
   fun addNewLine()
   fun saveFileAs(name: String)
   fun openNewFile()
-  fun closeFile()
 
   @Throws(InterruptedException::class)
   fun closeNotepad()

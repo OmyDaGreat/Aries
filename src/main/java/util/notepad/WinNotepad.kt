@@ -51,8 +51,6 @@ class WinNotepad: Notepad {
 
   override fun openNewFile() = robot.control(KeyEvent.VK_N)
 
-  override fun closeFile() = robot.control(KeyEvent.VK_W)
-
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
     robot.control(KeyEvent.VK_F4)

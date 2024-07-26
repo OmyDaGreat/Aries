@@ -86,6 +86,16 @@ fun Robot.control(keyCode: Int) {
 }
 
 /**
+ * Simulates pressing COMMAND + another key.
+ * @param keyCode The integer code of the key to be pressed in combination with the COMMAND key.
+ */
+fun Robot.command(keyCode: Int) {
+  keyPress(KeyEvent.VK_META)
+  type(keyCode)
+  keyRelease(KeyEvent.VK_META)
+}
+
+/**
  * Simulates pressing SHIFT + another key.
  * @param keyCode The integer code of the key to be pressed in combination with the SHIFT key.
  */

@@ -25,7 +25,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
   val buffer = ShortArray(25000) // 20,000 is too little; 40,000 is too much: slow to process
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
-  val amplitudeThreshold = 1000 // Amplitude threshold to consider as silence, adjust based on your needs
+  val amplitudeThreshold = 1000
 
   while (true) {
     if (isRecording()) {

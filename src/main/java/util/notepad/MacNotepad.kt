@@ -1,14 +1,16 @@
 package util.notepad
 
 import org.apache.logging.log4j.LogManager
+import util.extension.command
+import java.awt.Robot
+import java.awt.event.KeyEvent
 import java.io.IOException
 import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
-  class MacNotepad: Notepad {
-  companion object {
-    private val log = LogManager.getLogger(MacNotepad::class.java)
-  }
+class MacNotepad: Notepad {
+  private val log = LogManager.getLogger()
+  private val robot = Robot()
 
   override fun openNotepad() {
     try {
@@ -52,7 +54,11 @@ import java.util.concurrent.TimeUnit
     }
   }
 
-    fun openNewNote() {
+  override fun saveFileAs(name: String) {
+    robot.command(KeyEvent.VK_S)
+  }
+
+  override fun openNewFile() {
     try {
       ProcessBuilder("osascript", "-e", """
             tell application \"System Events\"
@@ -61,15 +67,6 @@ import java.util.concurrent.TimeUnit
         """.trimIndent()).start().waitFor()
     } catch (e: Exception) {
       log.error("Error opening new note in notepad", e)
-    }
-  }
-
-  fun deleteNote() {
-    try {
-      val scriptPath = Paths.get(javaClass.classLoader.getResource("deleteNote.scpt")?.toURI()?.toString() ?: "")
-      ProcessBuilder("osascript", scriptPath.toString()).start().waitFor()
-    } catch (e: Exception) {
-      log.error("Error opening notepad with script", e)
     }
   }
 
