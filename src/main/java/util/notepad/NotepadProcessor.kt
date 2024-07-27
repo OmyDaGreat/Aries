@@ -30,8 +30,6 @@ class NotepadProcessor {
 
   fun openNewFile() = notepad.openNewFile()
 
-  fun closeFile() = notepad.closeFile()
-
   @Throws(InterruptedException::class)
   fun closeNotepad() = notepad.closeNotepad()
 }

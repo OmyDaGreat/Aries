@@ -84,22 +84,3 @@ fun convertAudioToText(buffer: ShortArray?, leopard: Leopard): String {
     return ""
   }
 }
-
-/**
- * The main function to demonstrate the usage of Porcupine voice recognition.
- * It initializes the Porcupine instance, opens an audio line, and starts processing audio input.
- */
-fun main() {
-  val log = LogManager.getLogger()
-  try {
-    processAudio({
-      log.info("Keyword detected")
-    }, {
-      log.info("Silence detected")
-    }) {
-      true
-    }
-  } catch (e: Exception) {
-    log.error("Error: {}", e.message)
-  }
-}

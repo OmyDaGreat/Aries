@@ -44,11 +44,11 @@ class LiveMic {
         }
 
         input.trueContains("write") -> {
-          Robot().type(input.replace("write", "").trim {it <= ' '})
+          Robot().type(input.replace("write", "", ignoreCase = true).trim {it <= ' '})
         }
 
         input.trueContains("mouse") -> {
-          Robot().mouseMoveString(input.replace(".", "").trim {it <= ' '})
+          Robot().mouseMoveString(input.replace(".", "").replace("mouse", "", ignoreCase = true).trim {it <= ' '})
         }
 
         input.trueContains("open notepad") -> {
@@ -60,8 +60,7 @@ class LiveMic {
         }
 
         input.trueContains("browse") -> {
-          open("https://google.com")
-          // TODO: Implement browsing
+          open("https://www.google.com/search?q=" + input.replace("browse", "", ignoreCase = true).trim {it <= ' '})
         }
 
         else -> {
