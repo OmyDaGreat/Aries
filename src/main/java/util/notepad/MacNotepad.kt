@@ -2,6 +2,7 @@ package util.notepad
 
 import org.apache.logging.log4j.LogManager
 import util.extension.command
+import util.extension.type
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.IOException
@@ -22,17 +23,7 @@ class MacNotepad: Notepad {
   }
 
   override fun writeText(text: String) {
-    try {
-      val script = StringBuilder("tell application \"System Events\"")
-      for (c in text.toCharArray()) {
-        script.append("  keystroke \"").append(c).append("\"")
-      }
-      script.append("end tell")
-
-      ProcessBuilder("osascript", "-e", script.toString()).start().waitFor()
-    } catch (e: Exception) {
-      log.error("Error writing text to notepad", e)
-    }
+    robot.type(text)
   }
 
   override fun deleteText() {

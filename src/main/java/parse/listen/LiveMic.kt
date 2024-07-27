@@ -47,6 +47,10 @@ class LiveMic {
           Robot().type(input.replace("write", "", ignoreCase = true).trim {it <= ' '})
         }
 
+        input.trueContains("search") -> {
+          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '})
+        }
+
         input.trueContains("mouse") -> {
           Robot().mouseMoveString(input.replace(".", "").replace("mouse", "", ignoreCase = true).trim {it <= ' '})
         }
@@ -59,8 +63,20 @@ class LiveMic {
           n.closeNotepad()
         }
 
-        input.trueContains("browse") -> {
-          open("https://www.google.com/search?q=" + input.replace("browse", "", ignoreCase = true).trim {it <= ' '})
+        input.trueContains("open new") -> {
+          n.openNewFile()
+        }
+
+        input.trueContains("delete everything") -> {
+          n.deleteText()
+        }
+
+        input.trueContains("save file") -> {
+          n.saveFileAs(input.replace("search", "", ignoreCase = true).trim {it <= ' '}.replace(" ", "_"))
+        }
+
+        input.trueContains("enter") -> {
+          n.addNewLine()
         }
 
         else -> {
