@@ -12,10 +12,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
-import static parse.gui.GUI.cbCountry;
-import static parse.gui.GUI.cbLanguage;
 
 /**
  * Utility class for text-to-speech (TTS) functionalities.
@@ -37,7 +33,6 @@ public class NativeTTS {
   public static void tts(String text) throws SpeechEngineCreationException, IOException {
     SpeechEngine speechEngine = SpeechEngineNative.getInstance();
     List<Voice> voices = speechEngine.getAvailableVoices();
-
     Voice voice = speechEngine.findVoiceByPreferences(voicePreferences);
 
     if (voice == null) {
@@ -54,9 +49,8 @@ public class NativeTTS {
    * Sets the language preference for the voice.
    *
    * @param text The language code (e.g., "en" for English).
-   * @throws IOException If there is an input/output error.
    */
-  public static void voiceLanguage(String text) throws IOException {
+  public static void voiceLanguage(String text) {
     voicePreferences.setLanguage(text);
   }
 

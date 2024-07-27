@@ -31,9 +31,9 @@ class GUI {
         val frame = JFrame("ParseButPro")
         frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         frame.setSize(500, 500)
-        frame.setLocation(430, 100)
+        frame.setLocationRelativeTo(null) // Center the frame on the screen
 
-        val panel = JPanel(MigLayout("", "[][grow]", "[]10[]"))
+        val panel = JPanel(MigLayout("fill, insets 0", "[center]", "[center]10[center]"))
         frame.add(panel)
 
         val languages = arrayOf("en", "es", "zh", "hi", "ar", "fr")
@@ -49,15 +49,13 @@ class GUI {
 
         panel.addAll(
           cbLanguage to "cell 0 0, growx",
-          cbCountry to "cell 1 0, growx",
-          cbGender to "cell 0 1, growx",
-          btn to "cell 0 1 2 1, growx"
+          cbCountry to "cell 0 1, growx",
+          cbGender to "cell 0 2, growx",
+          btn to "cell 0 3, growx"
         )
 
         frame.isVisible = true
         frame.rootPane.defaultButton = btn
-
-        SystemTrayIcon.run()
       }
 
     private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>): JButton {
