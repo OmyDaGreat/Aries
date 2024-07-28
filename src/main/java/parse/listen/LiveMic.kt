@@ -79,14 +79,22 @@ class LiveMic {
           n.addNewLine()
         }
 
-        else -> {
-          runBlocking {
-            val gemini = generateContent(input.replace("*", ""))
-            log.info(gemini)
-            JOptionPane.showMessageDialog(null, input.replace("*", ""))
-            NativeTTS.tts(gemini)
-          }
+        input.trueContains("ask") -> {
+          ask(input)
         }
+
+        else -> {
+          ask(input)
+        }
+      }
+    }
+
+    private fun ask(input: String) {
+      runBlocking {
+        val gemini = generateContent(input.replace("*", ""))
+        log.info(gemini)
+        JOptionPane.showMessageDialog(null, input.replace("*", ""))
+        NativeTTS.tts(gemini)
       }
     }
 
