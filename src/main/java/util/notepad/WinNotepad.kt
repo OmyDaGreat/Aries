@@ -53,11 +53,13 @@ class WinNotepad: Notepad {
 
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
-    robot.control(KeyEvent.VK_F4)
     if (process == null) {
       log.error("Notepad++ is not open")
       NativeTTS.tts("Notepad++ is not open")
+      return
     }
-    process?.waitFor()?.also {log.debug("Exited Notepad++ with code: {}", it)}
+    process?.destroy()
+    process?.waitFor()?.also {if (it == 1) NativeTTS.tts("Exited Notepad++") else NativeTTS.tts("Please open Notepad++ with the open notepad command")}
+    process = null
   }
 }

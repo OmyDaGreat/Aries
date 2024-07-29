@@ -101,11 +101,12 @@ private val commandInfo = """
   - "write [text]": Writes the specified text.<br/>
   - "search [query]": Searches Google for the specified query.<br/>
   - "mouse [coordinates]": Moves the mouse to the specified coordinates.<br/>
+  - "ask gemini [question]": Asks gemini a question and processes the response.<br/>
+  - Notepad commands:<br/>
   - "open notepad": Opens the notepad.<br/>
   - "close notepad": Closes the notepad.<br/>
   - "open new": Opens a new file in notepad.<br/>
   - "delete everything": Deletes all text in notepad.<br/>
   - "save file [name]": Saves the file with the specified name.<br/>
-  - "enter": Adds a new line in notepad.<br/>
-  - "ask [question]": Asks a question and processes the response.
+  - "enter": Adds a new line in notepad.
 """.trimIndent()
