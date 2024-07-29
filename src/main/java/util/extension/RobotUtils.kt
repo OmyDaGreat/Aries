@@ -18,6 +18,9 @@ object RobotUtils {
     Pair("colon", ':') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON),
     Pair("quote", '"') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),
     Pair("tilde", '~') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE),
+    Pair("hashtag", '#') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_3),
+    Pair("dollar", '$') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
+    Pair("dollar", '$') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_5),
     Pair("apostrophe", '\'') to listOf(KeyEvent.VK_QUOTE)
   )
   val directionActions = hashMapOf(

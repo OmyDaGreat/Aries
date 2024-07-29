@@ -30,7 +30,7 @@ class LiveMic {
     private fun process(input: String) {
       when {
         input.trueContains("write special") -> {
-          input.replace("write special", "").trim {it <= ' '}
+          input.replace("write special", "", ignoreCase = true).trim {it <= ' '}
             .split(" ").forEach {c ->
               if(special.containsKeyFirst(c)) {
                 special.getFromFirst(c).forEach {key ->
@@ -47,7 +47,7 @@ class LiveMic {
         }
 
         input.trueContains("search") -> {
-          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '})
+          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '}.replace(" ", "+"))
         }
 
         input.trueContains("mouse") -> {
@@ -71,7 +71,7 @@ class LiveMic {
         }
 
         input.trueContains("save file") -> {
-          n.saveFileAs(input.replace("search", "", ignoreCase = true).trim {it <= ' '}.replace(" ", "_"))
+          n.saveFileAs(input.replace("save file", "", ignoreCase = true).trim {it <= ' '}.replace(" ", "_"))
         }
 
         input.trueContains("enter") -> {
