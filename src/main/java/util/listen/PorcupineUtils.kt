@@ -31,7 +31,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
     if (isRecording()) {
       if (isSilence(buffer, amplitudeThreshold)) {
         log.debug("Silent...")
-        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 3) {
+        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 10) {
           onSilence()
           line.open(format)
           line.start()

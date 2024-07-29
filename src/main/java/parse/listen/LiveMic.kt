@@ -58,7 +58,7 @@ class LiveMic {
           n.openNotepad()
         }
 
-        input.trueContainsAny("close notepad", "closed notepad") -> {
+        input.trueContainsAny("close notepad", "closed notepad", "clothes notepad") -> {
           n.closeNotepad()
         }
 
@@ -79,11 +79,11 @@ class LiveMic {
         }
 
         input.trueContains("ask gemini") -> {
-          ask("Answer the request: $input")
+          ask("Answer the request while staying concise: $input")
         }
 
         else -> {
-          ask("Answer the request: $input")
+          ask("Answer the request while staying concise: $input")
         }
       }
     }
@@ -92,8 +92,10 @@ class LiveMic {
       runBlocking {
         val gemini = generateContent(input.replace("*", ""))
         log.info(gemini)
+        launch {
+          NativeTTS.tts(gemini)
+        }
         JOptionPane.showMessageDialog(null, gemini.replace("*", ""))
-        NativeTTS.tts(gemini)
       }
     }
 
