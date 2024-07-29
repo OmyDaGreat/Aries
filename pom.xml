@@ -30,24 +30,9 @@
 			<version>3.14.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>33.2.1-jre</version>
-		</dependency>
-		<dependency>
-			<groupId>it.unimi.dsi</groupId>
-			<artifactId>fastutil</artifactId>
-			<version>8.5.13</version>
-		</dependency>
-		<dependency>
 			<groupId>ai.picovoice</groupId>
 			<artifactId>leopard-java</artifactId>
 			<version>2.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>ai.picovoice</groupId>
-			<artifactId>porcupine-java</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
@@ -128,6 +113,11 @@
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
 			<version>11.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-coroutines-swing</artifactId>
+			<version>1.8.1</version>
 		</dependency>
 	</dependencies>
 

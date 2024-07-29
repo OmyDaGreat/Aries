@@ -1,10 +1,11 @@
 package parse
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.swing.Swing
 import parse.listen.LiveMic
 
 fun startGUI() = runBlocking {
-  launch {
+  launch(Dispatchers.Swing) {
     GUI.run()
   }
 }

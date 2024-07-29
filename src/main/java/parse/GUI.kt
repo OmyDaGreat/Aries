@@ -49,7 +49,7 @@ class GUI {
 
         // Define the infoPanel
         val infoPanel = JPanel()
-        val infoLabel = JLabel("<html>$commandInfo<html>")
+        val infoLabel = JLabel("<html>$commandInfo</html>")
         infoPanel.add(infoLabel)
 
         // Add the infoPanel to the main panel
