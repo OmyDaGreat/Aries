@@ -1,4 +1,4 @@
-package parse.listen
+package parse.audio
 
 import ai.picovoice.leopard.*
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
@@ -25,6 +25,7 @@ class LiveMic {
   companion object {
     private val log: Logger = LogManager.getLogger()
     private val n = NotepadProcessor()
+    private var maxWords = 40
 
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
@@ -71,7 +72,7 @@ class LiveMic {
         }
 
         input.trueContains("save file") -> {
-          n.saveFileAs(input.replace("save file", "", ignoreCase = true).trim {it <= ' '}.replace(" ", "_"))
+          n.saveFileAs(input.replace("save file", "", ignoreCase = true).trim {it <= ' '}.removeForIfFirst().replace(" ", "_"))
         }
 
         input.trueContains("enter") -> {
@@ -93,9 +94,23 @@ class LiveMic {
         val gemini = generateContent(input.replace("*", ""))
         log.info(gemini)
         launch {
-          NativeTTS.tts(gemini)
+          if (gemini.split(" ").size > maxWords) {
+            NativeTTS.tts("The response is over $maxWords words.")
+          } else {
+            NativeTTS.tts(gemini)
+          }
         }
-        JOptionPane.showMessageDialog(null, gemini.replace("*", ""))
+        Thread {
+          JOptionPane.showMessageDialog(null, gemini.replace("*", ""))
+        }.start()
+      }
+    }
+
+    private fun String.removeForIfFirst(): String {
+      return if (startsWith("for ")) {
+        removePrefix("for ").trimStart()
+      } else {
+        this
       }
     }
 

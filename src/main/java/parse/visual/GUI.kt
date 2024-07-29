@@ -1,4 +1,4 @@
-package parse
+package parse.visual
 
 import com.formdev.flatlaf.FlatDarkLaf
 import io.github.jonelo.tts.engines.VoicePreferences
@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import util.extension.addAll
 import util.listen.NativeTTS
+import java.awt.SystemTray
 import java.awt.event.ActionEvent
 import java.io.IOException
 import javax.swing.*
@@ -28,7 +29,7 @@ class GUI {
         FlatDarkLaf.setup()
         JFrame.setDefaultLookAndFeelDecorated(true)
         val frame = JFrame("ParseButPro")
-        frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        frame.defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
         frame.setSize(500, 400)
         frame.setLocationRelativeTo(null)
 
@@ -64,6 +65,8 @@ class GUI {
 
         frame.isVisible = true
         frame.rootPane.defaultButton = btn
+
+        SystemTrayManager(frame).setupSystemTray()
       }
 
     private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>): JButton {

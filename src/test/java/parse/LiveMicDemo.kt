@@ -1,6 +1,6 @@
 package parse
 
-import parse.listen.LiveMic
+import parse.audio.LiveMic
 
 fun main() {
   LiveMic.startRecognition()

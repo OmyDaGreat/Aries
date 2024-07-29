@@ -1,6 +1,21 @@
-17:21:37.790 [main] INFO  parse.App - Starting coroutines...
-17:21:42.189 [DefaultDispatcher-worker-1] DEBUG parse.listen.LiveMic - Leopard version: 2.0.0
-17:21:42.190 [DefaultDispatcher-worker-1] INFO  parse.listen.LiveMic - Ready...
-17:21:46.541 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 50000
-17:21:46.541 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 25000
-17:21:46.597 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
+01:12:46.788 [main] INFO  parse.App - Starting coroutines...
+01:12:49.792 [DefaultDispatcher-worker-1] DEBUG parse.audio.LiveMic - Leopard version: 2.0.0
+01:12:49.793 [DefaultDispatcher-worker-1] INFO  parse.audio.LiveMic - Ready...
+01:12:54.016 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 66664
+01:12:54.016 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 33332
+01:12:54.092 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
+01:12:56.101 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 66664
+01:12:56.101 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 33332
+01:12:56.174 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
+01:12:58.180 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 66664
+01:12:58.180 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 33332
+01:12:58.253 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
+01:13:00.261 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 66664
+01:13:00.261 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 33332
+01:13:00.334 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
+01:13:02.341 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 66664
+01:13:02.341 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 33332
+01:13:02.413 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
+01:13:04.420 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Bytes read: 66664
+01:13:04.420 [DefaultDispatcher-worker-1] INFO  util.listen.PorcupineUtilsKt - Processing audio buffer of size 33332
+01:13:04.492 [DefaultDispatcher-worker-1] DEBUG util.listen.PorcupineUtilsKt - Conversion: 
