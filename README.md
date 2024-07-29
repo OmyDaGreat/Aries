@@ -10,6 +10,7 @@ Dictation-controlled computer actions.
 - **Browser Control**: Easily control your browser and search the web using only your voice.
 - **Customizable Commands**: Tailor the application to recognize your unique voice commands for various actions.
 - **Cross-Platform Compatibility**: Works seamlessly across Windows, Linux, and Mac.
+- **Gemini**: Using Google Gemini
 
 ## Demo
 

@@ -22,7 +22,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
   line.open(format)
   line.start()
   val log = LogManager.getLogger()
-  val buffer = ShortArray(25000) // 20,000 is too little; 40,000 is too much: slow to process
+  val buffer = ShortArray(33332) // 20,000 is too little; 40,000 is too much: slow to process
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
   val amplitudeThreshold = 1000

@@ -28,7 +28,6 @@ class LiveMic {
 
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
-      check(input.isNotBlank()) {"Hypothesis cannot be blank"}
       when {
         input.trueContains("write special") -> {
           input.replace("write special", "").trim {it <= ' '}
@@ -55,11 +54,11 @@ class LiveMic {
           Robot().mouseMoveString(input.replace(".", "").replace("mouse", "", ignoreCase = true).trim {it <= ' '})
         }
 
-        input.trueContains("open notepad") -> {
+        input.trueContainsAny("open notepad", "opened notepad") -> {
           n.openNotepad()
         }
 
-        input.trueContains("close notepad") -> {
+        input.trueContainsAny("close notepad", "closed notepad") -> {
           n.closeNotepad()
         }
 
@@ -79,12 +78,12 @@ class LiveMic {
           n.addNewLine()
         }
 
-        input.trueContains("ask") -> {
-          ask(input)
+        input.trueContains("ask gemini") -> {
+          ask("Answer the request: $input")
         }
 
         else -> {
-          ask(input)
+          ask("Answer the request: $input")
         }
       }
     }
@@ -93,7 +92,7 @@ class LiveMic {
       runBlocking {
         val gemini = generateContent(input.replace("*", ""))
         log.info(gemini)
-        JOptionPane.showMessageDialog(null, input.replace("*", ""))
+        JOptionPane.showMessageDialog(null, gemini.replace("*", ""))
         NativeTTS.tts(gemini)
       }
     }
