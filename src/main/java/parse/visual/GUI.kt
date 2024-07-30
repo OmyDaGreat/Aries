@@ -6,6 +6,7 @@ import net.miginfocom.swing.MigLayout
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import parse.audio.LiveMic
+import util.audio.NativeTTS
 import util.extension.addAll
 import java.awt.SystemTray
 import java.awt.event.ActionEvent
