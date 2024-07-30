@@ -1,6 +1,6 @@
 package parse
 
-import util.listen.processAudio
+import util.audio.processAudio
 
 fun main() {
   processAudio({

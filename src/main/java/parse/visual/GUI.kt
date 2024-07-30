@@ -7,10 +7,8 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import parse.audio.LiveMic
 import util.extension.addAll
-import util.listen.NativeTTS
 import java.awt.SystemTray
 import java.awt.event.ActionEvent
-import java.io.IOException
 import javax.swing.*
 
 class GUI {
@@ -23,21 +21,18 @@ class GUI {
     private val log: Logger = LogManager.getLogger()
 
     fun run() {
-      SwingUtilities.invokeLater { GUI }
+      SwingUtilities.invokeLater { setupGUI }
     }
 
-    private val GUI: Unit
+    private val setupGUI: Unit
       get() {
         FlatDarkLaf.setup()
         JFrame.setDefaultLookAndFeelDecorated(true)
-        val frame = JFrame("ParseButPro")
-        frame.defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-        frame.setSize(500, 425)
-        frame.setLocationRelativeTo(null)
-
-        // Adjusted MigLayout to center components with whitespace
-        val panel = JPanel(MigLayout("center", "[grow,fill]"))
-        frame.add(panel)
+        val frame = JFrame("ParseButPro").apply {
+          defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
+          setSize(500, 425)
+          setLocationRelativeTo(null)
+        }
 
         val languages = arrayOf("en", "es", "zh", "hi", "ar", "fr")
         cbLanguage = JComboBox<String>(languages)
@@ -52,53 +47,59 @@ class GUI {
 
         val btn = getBtn(cbLanguage, cbCountry, cbGender, spMaxWords)
 
-        // Define the infoPanel
         val infoPanel = JPanel()
         val infoLabel = JLabel("<html>$commandInfo</html>")
         infoPanel.add(infoLabel)
 
-        // Add the infoPanel to the main panel
         val span2wrap = "span 2, wrap"
-        panel.addAll(
-          cbLanguage to span2wrap,
-          cbCountry to span2wrap,
-          cbGender to span2wrap,
-          spMaxWords to span2wrap,
-          btn to span2wrap,
-          infoPanel to span2wrap
-        )
+        val panel = JPanel(MigLayout("center", "[grow,fill]")).apply {
+          addAll(
+            cbLanguage to span2wrap,
+            cbCountry to span2wrap,
+            cbGender to span2wrap,
+            spMaxWords to span2wrap,
+            btn to span2wrap,
+            infoPanel to span2wrap
+          )
+        }
 
-        frame.isVisible = true
-        frame.rootPane.defaultButton = btn
+        frame.apply {
+          add(panel)
+          NativeTTS.loadVoicePreferences()
+          updateGUIFromPreferences()
+          isVisible = true
+          rootPane.defaultButton = btn
+        }
 
         SystemTrayManager(frame).setupSystemTray()
       }
 
     private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>, spMaxWords: JSpinner): JButton {
-      val btn = JButton("Parse")
-      btn.addActionListener { _: ActionEvent? ->
-        val selectedLanguage = cbLanguage.selectedItem?.toString()
-        val selectedCountry = cbCountry.selectedItem?.toString()
-        val selectedGender = cbGender.selectedItem?.toString()
-        val maxWords = spMaxWords.value as Int
-        try {
+      return JButton("Parse").apply {
+        addActionListener { _: ActionEvent? ->
+          val selectedLanguage = cbLanguage.selectedItem?.toString()
+          val selectedCountry = cbCountry.selectedItem?.toString()
+          val selectedGender = cbGender.selectedItem?.toString()
+          val maxWords = spMaxWords.value as Int
           NativeTTS.voiceLanguage(selectedLanguage)
           log.debug("Language set to: {}", selectedLanguage)
           NativeTTS.voiceCountry(selectedCountry)
           log.debug("Country set to: {}", selectedCountry)
-          if (selectedGender == "FEMALE") {
-            NativeTTS.voiceGender(VoicePreferences.Gender.FEMALE)
-          } else if (selectedGender == "MALE") {
-            NativeTTS.voiceGender(VoicePreferences.Gender.MALE)
-          }
+          NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender!!))
           log.debug("Gender set to: {}", selectedGender)
           LiveMic.maxWords = maxWords
           log.debug("Max Words set to: {}", maxWords)
-        } catch (ex: IOException) {
-          log.error("Couldn't set the voice language or country", ex)
+          NativeTTS.saveVoicePreferences()
         }
       }
-      return btn
+    }
+
+    private fun updateGUIFromPreferences() {
+      val preferences = NativeTTS.voicePreferences
+      cbLanguage.selectedItem = preferences.language
+      cbCountry.selectedItem = preferences.country
+      cbGender.selectedItem = preferences.gender.name
+      spMaxWords.value = LiveMic.maxWords
     }
   }
 }

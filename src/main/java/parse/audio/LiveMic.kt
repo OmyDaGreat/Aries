@@ -11,7 +11,7 @@ import util.Keys.get
 import util.ResourcePath.getResourcePath
 import util.extension.*
 import util.extension.RobotUtils.special
-import util.listen.*
+import util.audio.*
 import util.notepad.NotepadProcessor
 import java.awt.*
 import java.io.IOException
@@ -25,11 +25,16 @@ class LiveMic {
   companion object {
     private val log: Logger = LogManager.getLogger()
     private val n = NotepadProcessor()
+    @JvmField
     var maxWords = 40
 
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
       when {
+        input.trueContains("ask gemini") -> {
+          ask("Answer the request while staying concise: $input")
+        }
+
         input.trueContains("write special") -> {
           input.replace("write special", "", ignoreCase = true).trim {it <= ' '}
             .split(" ").forEach {c ->
@@ -79,8 +84,8 @@ class LiveMic {
           n.addNewLine()
         }
 
-        input.trueContains("ask gemini") -> {
-          ask("Answer the request while staying concise: $input")
+        input.trueContains("arrow") -> {
+          Robot().arrow(input.replace("arrow", "", ignoreCase = true).trim {it <= ' '})
         }
 
         else -> {
@@ -152,8 +157,8 @@ class LiveMic {
         log.error("Error: {}", e.message)
         e.printStackTrace()
       } finally {
-        startRecognition()
         leopard.delete()
+        startRecognition()
       }
     }
   }

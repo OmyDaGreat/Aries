@@ -1,5 +1,6 @@
 package util.extension
 
+import util.extension.RobotUtils.log
 import util.extension.RobotUtils.special
 import java.awt.MouseInfo
 import java.awt.Robot
@@ -103,6 +104,23 @@ fun Robot.shift(keyCode: Int) {
   keyPress(KeyEvent.VK_SHIFT)
   type(keyCode)
   keyRelease(KeyEvent.VK_SHIFT)
+}
+
+/**
+ * Moves the mouse cursor based on a string of directions.
+ * @param directions A string containing directions (e.g., "up down left right") to move the mouse cursor.
+ * Each direction should be separated by a space.
+ */
+fun Robot.arrow(directions: String) {
+  directions.split(" ").forEach { direction ->
+    when (direction.lowercase()) {
+      "up" -> type(KeyEvent.VK_UP)
+      "down" -> type(KeyEvent.VK_DOWN)
+      "left" -> type(KeyEvent.VK_LEFT)
+      "right" -> type(KeyEvent.VK_RIGHT)
+      else -> log.error("Invalid direction: $direction")
+    }
+  }
 }
 
 /**

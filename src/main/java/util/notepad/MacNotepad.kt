@@ -30,7 +30,7 @@ class MacNotepad: Notepad {
     try {
       repeat(5) {
         ProcessBuilder("osascript", "-e", "tell application \"System Events\" key code 51 end tell").start().waitFor()
-        TimeUnit.MILLISECONDS.sleep(100) // Kotlin equivalent of Thread.sleep
+        TimeUnit.MILLISECONDS.sleep(100)
       }
     } catch (e: Exception) {
       log.error("Error deleting text from notepad", e)

@@ -1,0 +1,35 @@
+14:40:49.714 [main] INFO  parse.App - Starting coroutines...
+14:40:50.108 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences loaded from C:/Users/Malefic/Documents/Competitive/ParseButPro/target/classes/voicePreferences.txt
+14:40:52.536 [DefaultDispatcher-worker-1] DEBUG parse.audio.LiveMic - Leopard version: 2.0.0
+14:40:52.536 [DefaultDispatcher-worker-1] INFO  parse.audio.LiveMic - Ready...
+14:40:56.819 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:40:56.819 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:40:56.821 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Language set to: en
+14:40:56.821 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Country set to: US
+14:40:56.821 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Gender set to: MALE
+14:40:56.821 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Max Words set to: 42
+14:40:56.822 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences saved to C:/Users/Malefic/Documents/Competitive/ParseButPro/target/classes/voicePreferences.txt
+14:40:56.889 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:
+14:40:58.897 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:40:58.897 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:40:58.969 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:
+14:40:59.173 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Language set to: en
+14:40:59.174 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Country set to: US
+14:40:59.174 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Gender set to: MALE
+14:40:59.174 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Max Words set to: 45
+14:40:59.174 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences saved to C:/Users/Malefic/Documents/Competitive/ParseButPro/target/classes/voicePreferences.txt
+14:41:00.977 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:41:00.977 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:41:01.049 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:
+14:41:03.057 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:41:03.057 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:41:03.127 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:
+14:41:05.136 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:41:05.136 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:41:05.205 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:
+14:41:07.213 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:41:07.213 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:41:07.282 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:
+14:41:09.290 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+14:41:09.290 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+14:41:09.362 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion:

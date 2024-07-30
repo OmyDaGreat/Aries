@@ -2,7 +2,6 @@ package util.notepad
 
 import org.apache.logging.log4j.LogManager
 import util.extension.*
-import util.listen.NativeTTS
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.File
