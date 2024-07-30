@@ -25,7 +25,7 @@ class LiveMic {
   companion object {
     private val log: Logger = LogManager.getLogger()
     private val n = NotepadProcessor()
-    private var maxWords = 40
+    var maxWords = 40
 
     @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
@@ -91,17 +91,18 @@ class LiveMic {
 
     private fun ask(input: String) {
       runBlocking {
-        val gemini = generateContent(input.replace("*", ""))
+        val gemini = generateContent(input).replace("*", "")
         log.info(gemini)
         launch {
           if (gemini.split(" ").size > maxWords) {
             NativeTTS.tts("The response is over $maxWords words.")
           } else {
+            log.debug(gemini)
             NativeTTS.tts(gemini)
           }
         }
         Thread {
-          JOptionPane.showMessageDialog(null, gemini.replace("*", ""))
+          JOptionPane.showMessageDialog(null, gemini)
         }.start()
       }
     }

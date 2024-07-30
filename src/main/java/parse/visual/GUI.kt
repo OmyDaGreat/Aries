@@ -5,6 +5,7 @@ import io.github.jonelo.tts.engines.VoicePreferences
 import net.miginfocom.swing.MigLayout
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import parse.audio.LiveMic
 import util.extension.addAll
 import util.listen.NativeTTS
 import java.awt.SystemTray
@@ -18,6 +19,7 @@ class GUI {
     private lateinit var cbLanguage: JComboBox<String>
     private lateinit var cbCountry: JComboBox<String>
     private lateinit var cbGender: JComboBox<String>
+    private lateinit var spMaxWords: JSpinner
     private val log: Logger = LogManager.getLogger()
 
     fun run() {
@@ -30,7 +32,7 @@ class GUI {
         JFrame.setDefaultLookAndFeelDecorated(true)
         val frame = JFrame("ParseButPro")
         frame.defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-        frame.setSize(500, 400)
+        frame.setSize(500, 425)
         frame.setLocationRelativeTo(null)
 
         // Adjusted MigLayout to center components with whitespace
@@ -46,7 +48,9 @@ class GUI {
         val gender = arrayOf("MALE", "FEMALE")
         cbGender = JComboBox<String>(gender)
 
-        val btn = getBtn(cbLanguage, cbCountry, cbGender)
+        spMaxWords = JSpinner(SpinnerNumberModel(40, 1, 100000, 1))
+
+        val btn = getBtn(cbLanguage, cbCountry, cbGender, spMaxWords)
 
         // Define the infoPanel
         val infoPanel = JPanel()
@@ -59,6 +63,7 @@ class GUI {
           cbLanguage to span2wrap,
           cbCountry to span2wrap,
           cbGender to span2wrap,
+          spMaxWords to span2wrap,
           btn to span2wrap,
           infoPanel to span2wrap
         )
@@ -69,12 +74,13 @@ class GUI {
         SystemTrayManager(frame).setupSystemTray()
       }
 
-    private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>): JButton {
+    private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>, spMaxWords: JSpinner): JButton {
       val btn = JButton("Parse")
       btn.addActionListener { _: ActionEvent? ->
         val selectedLanguage = cbLanguage.selectedItem?.toString()
         val selectedCountry = cbCountry.selectedItem?.toString()
         val selectedGender = cbGender.selectedItem?.toString()
+        val maxWords = spMaxWords.value as Int
         try {
           NativeTTS.voiceLanguage(selectedLanguage)
           log.debug("Language set to: {}", selectedLanguage)
@@ -86,6 +92,8 @@ class GUI {
             NativeTTS.voiceGender(VoicePreferences.Gender.MALE)
           }
           log.debug("Gender set to: {}", selectedGender)
+          LiveMic.maxWords = maxWords
+          log.debug("Max Words set to: {}", maxWords)
         } catch (ex: IOException) {
           log.error("Couldn't set the voice language or country", ex)
         }
