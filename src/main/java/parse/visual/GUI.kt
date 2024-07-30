@@ -102,7 +102,7 @@ private val commandInfo = """
   - "search [query]": Searches Google for the specified query.<br/>
   - "mouse [coordinates]": Moves the mouse to the specified coordinates.<br/>
   - "ask gemini [question]": Asks gemini a question and processes the response.<br/>
-  - Notepad commands:<br/>
+  Notepad-specific commands:<br/>
   - "open notepad": Opens the notepad.<br/>
   - "close notepad": Closes the notepad.<br/>
   - "open new": Opens a new file in notepad.<br/>

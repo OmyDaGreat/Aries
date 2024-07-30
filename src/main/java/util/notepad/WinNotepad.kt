@@ -53,13 +53,15 @@ class WinNotepad: Notepad {
 
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
-    if (process == null) {
+    process?.let {
+      it.destroy()
+      val exitCode = it.waitFor()
+      val message = if (exitCode == 1) "Exited Notepad++" else "Please open Notepad++ with the open notepad command"
+      NativeTTS.tts(message)
+    } ?: run {
       log.error("Notepad++ is not open")
       NativeTTS.tts("Notepad++ is not open")
-      return
     }
-    process?.destroy()
-    process?.waitFor()?.also {if (it == 1) NativeTTS.tts("Exited Notepad++") else NativeTTS.tts("Please open Notepad++ with the open notepad command")}
     process = null
   }
 }
