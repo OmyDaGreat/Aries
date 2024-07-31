@@ -112,8 +112,8 @@ class LiveMic {
           Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).trim {it <= ' '})
         }
 
-        input.trueContains("scroll") -> {
-          Robot().scroll(input.replace("scroll", "", ignoreCase = true).trim { it <= ' ' })
+        input.trueContainsAny("scroll", "scrolled") -> {
+          Robot().scroll(input.replace("scroll", "", ignoreCase = true).replace("scrolled", "", ignoreCase = true).trim { it <= ' ' })
         }
 
         input.trueContainsAny("open notepad", "opened notepad") -> {
