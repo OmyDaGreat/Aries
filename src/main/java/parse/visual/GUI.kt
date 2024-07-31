@@ -6,8 +6,10 @@ import net.miginfocom.swing.MigLayout
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import parse.audio.LiveMic
+import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
 import util.extension.addAll
+import util.extension.copyFileIfNotExists
 import java.awt.SystemTray
 import java.awt.event.ActionEvent
 import javax.swing.*
@@ -66,6 +68,7 @@ class GUI {
 
         frame.apply {
           add(panel)
+          copyFileIfNotExists("voicePreferences.txt", getLocalResourcePath("voicePreferences.txt"))
           NativeTTS.loadVoicePreferences()
           updateGUIFromPreferences()
           isVisible = true

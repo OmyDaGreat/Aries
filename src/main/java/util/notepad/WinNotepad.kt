@@ -39,13 +39,15 @@ class WinNotepad: Notepad {
   override fun addNewLine() = robot.enter()
 
   override fun saveFileAs(name: String) {
-    robot.control(KeyEvent.VK_S)
-    robot.delay(1000)
-    robot.type(name)
-    repeat(7) {robot.type(KeyEvent.VK_TAB)}
-    repeat(4) {
-      robot.enter()
-      robot.delay(500)
+    robot.apply {
+      control(KeyEvent.VK_S)
+      delay(1000)
+      type(name)
+      repeat(7) {type(KeyEvent.VK_TAB)}
+      repeat(4) {
+        enter()
+        delay(500)
+      }
     }
   }
 

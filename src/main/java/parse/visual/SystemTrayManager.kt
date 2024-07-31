@@ -14,7 +14,7 @@ class SystemTrayManager(private val guiFrame: JFrame) {
 
     fun setupSystemTray() {
         if (!SystemTray.isSupported()) {
-            log.error("System tray not supported")
+            log.error("System tray is not supported")
             return
         }
 
@@ -24,7 +24,7 @@ class SystemTrayManager(private val guiFrame: JFrame) {
         popupMenu.add(showGuiItem)
 
         val iconUrl = "file:" + getResourcePath("java.png")
-        val image: Image = ImageIO.read(URI(iconUrl).toURL())
+        val image: Image = ImageIO.read(URI(iconUrl).toURL()).getScaledInstance(16, 16, Image.SCALE_SMOOTH)
         trayIcon = TrayIcon(image)
         trayIcon.popupMenu = popupMenu
 

@@ -6,7 +6,7 @@ import io.github.jonelo.tts.engines.VoicePreferences.Gender
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
 import org.apache.logging.log4j.LogManager
 import parse.audio.LiveMic
-import util.ResourcePath.getResourcePath
+import util.ResourcePath.getLocalResourcePath
 import java.io.*
 import java.net.URISyntaxException
 
@@ -75,7 +75,7 @@ class NativeTTS {
 
     @Throws(URISyntaxException::class)
     fun saveVoicePreferences() {
-      val filePath = getResourcePath(PREFERENCES_FILE)
+      val filePath = getLocalResourcePath(PREFERENCES_FILE)
       try {
         BufferedWriter(FileWriter(filePath)).use {writer ->
           writer.write("language=" + voicePreferences.language + "\n")
@@ -91,7 +91,7 @@ class NativeTTS {
 
     @Throws(URISyntaxException::class)
     fun loadVoicePreferences() {
-      val filePath = getResourcePath(PREFERENCES_FILE)
+      val filePath = getLocalResourcePath(PREFERENCES_FILE)
       try {
         BufferedReader(FileReader(filePath)).use {reader ->
           var line: String

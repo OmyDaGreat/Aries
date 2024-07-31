@@ -1,0 +1,4 @@
+language=en
+country=US
+gender=MALE
+maxWords=40
