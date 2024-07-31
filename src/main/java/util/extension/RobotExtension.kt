@@ -87,6 +87,16 @@ fun Robot.control(keyCode: Int) {
 }
 
 /**
+ * Simulates pressing CONTROL + doing something else.
+ * @param action The function to be done in combination with the CONTROL key.
+ */
+fun Robot.control(action: (Robot) -> Unit) {
+  keyPress(KeyEvent.VK_CONTROL)
+  action(this)
+  keyRelease(KeyEvent.VK_CONTROL)
+}
+
+/**
  * Simulates pressing COMMAND + another key.
  * @param keyCode The integer code of the key to be pressed in combination with the COMMAND key.
  */
@@ -97,12 +107,32 @@ fun Robot.command(keyCode: Int) {
 }
 
 /**
+ * Simulates pressing CMD + doing something else.
+ * @param action The function to be done in combination with the CMD key.
+ */
+fun Robot.command(action: (Robot) -> Unit) {
+  keyPress(KeyEvent.VK_META)
+  action(this)
+  keyRelease(KeyEvent.VK_META)
+}
+
+/**
  * Simulates pressing SHIFT + another key.
  * @param keyCode The integer code of the key to be pressed in combination with the SHIFT key.
  */
 fun Robot.shift(keyCode: Int) {
   keyPress(KeyEvent.VK_SHIFT)
   type(keyCode)
+  keyRelease(KeyEvent.VK_SHIFT)
+}
+
+/**
+ * Simulates pressing SHIFT + doing something else.
+ * @param action The function to be done in combination with the SHIFT key.
+ */
+fun Robot.shift(action: (Robot) -> Unit) {
+  keyPress(KeyEvent.VK_SHIFT)
+  action(this)
   keyRelease(KeyEvent.VK_SHIFT)
 }
 

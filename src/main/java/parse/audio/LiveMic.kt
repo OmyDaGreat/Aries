@@ -1,7 +1,6 @@
 package parse.audio
 
 import ai.picovoice.leopard.*
-import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
 import org.apache.logging.log4j.LogManager
@@ -9,14 +8,13 @@ import org.apache.logging.log4j.Logger
 import util.*
 import util.Keys.get
 import util.ResourcePath.getResourcePath
+import util.audio.*
 import util.extension.*
 import util.extension.RobotUtils.special
-import util.audio.*
 import util.notepad.NotepadProcessor
 import java.awt.*
 import java.io.IOException
 import java.net.URI
-import java.sql.SQLException
 import java.util.*
 import javax.swing.JOptionPane
 
@@ -25,35 +23,61 @@ class LiveMic {
   companion object {
     private val log: Logger = LogManager.getLogger()
     private val n = NotepadProcessor()
+
     @JvmField
     var maxWords = 40
 
-    @Throws(AWTException::class, IOException::class, InterruptedException::class, SpeechEngineCreationException::class)
     private fun process(input: String) {
       when {
         input.trueContains("ask gemini") -> {
-          ask("Answer the request while staying concise: $input")
+          ask("Answer the request while staying concise but without contractions: $input")
         }
 
-        input.trueContains("write special") -> {
-          input.replace("write special", "", ignoreCase = true).trim {it <= ' '}
-            .split(" ").forEach {c ->
-              if(special.containsKeyFirst(c)) {
-                special.getFromFirst(c).forEach {key ->
-                  Robot().type(key)
-                }
-              } else {
-                Robot().type(c)
+        input.trueContains("left click") -> {
+          Robot().leftClick()
+        }
+
+        input.trueContains("right click") -> {
+          Robot().rightClick()
+        }
+
+        input.trueContains("command shift") -> {
+          Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).trim {it <= ' '})}}
+        }
+
+        input.trueContains("control shift") -> {
+          Robot().control{r1 -> r1.shift{r2 -> r2.type(input.replace("control shift", "", ignoreCase = true).trim {it <= ' '})}}
+        }
+
+        input.trueContains("shift") -> {
+          Robot().shift{r -> r.type(input.replace("shift", "", ignoreCase = true).trim {it <= ' '})}
+        }
+
+        input.trueContainsAny("control") -> {
+          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).trim {it <= ' '})}
+        }
+
+        input.trueContainsAny("command") -> {
+          Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).trim {it <= ' '})}
+        }
+
+        input.trueContainsAny("write special", "right special") -> {
+          input.split(" ").forEach {c ->
+            if (special.containsKeyFirst(c)) {
+              special.getFromFirst(c).forEach {key ->
+                Robot().type(key)
               }
+            }
           }
         }
 
-        input.trueContains("write") -> {
-          Robot().type(input.replace("write", "", ignoreCase = true).trim {it <= ' '})
+        input.trueContainsAny("write", "right") -> {
+          Robot().type(input.replace("write", "", ignoreCase = true).replace("right", "", ignoreCase = true).trim {it <= ' '})
         }
 
         input.trueContains("search") -> {
-          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '}.replace(" ", "+"))
+          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '}
+            .replace(" ", "+"))
         }
 
         input.trueContains("mouse") -> {
@@ -77,7 +101,9 @@ class LiveMic {
         }
 
         input.trueContains("save file") -> {
-          n.saveFileAs(input.replace("save file", "", ignoreCase = true).trim {it <= ' '}.removeForIfFirst().replace(" ", "_"))
+          n.saveFileAs(
+            input.replace("save file", "", ignoreCase = true).trim {it <= ' '}.removeForIfFirst().replace(" ", "_")
+          )
         }
 
         input.trueContains("enter") -> {
@@ -89,7 +115,7 @@ class LiveMic {
         }
 
         else -> {
-          ask("Answer the request while staying concise: $input")
+          ask("Answer the request while staying concise but without contractions: $input")
         }
       }
     }
@@ -120,14 +146,6 @@ class LiveMic {
       }
     }
 
-    @Throws(
-      LeopardException::class,
-      IOException::class,
-      InterruptedException::class,
-      AWTException::class,
-      SpeechEngineCreationException::class,
-      SQLException::class
-    )
     fun startRecognition() {
       val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv")).build()
       log.debug("Leopard version: {}", leopard.version)

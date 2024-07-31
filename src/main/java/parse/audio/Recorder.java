@@ -1,8 +1,11 @@
 package parse.audio;
 
+import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
 import lombok.extern.log4j.Log4j2;
+import util.audio.NativeTTS;
 
 import javax.sound.sampled.*;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ class Recorder extends Thread {
   private boolean stop = false;
   private ArrayList<Short> pcmBuffer = null;
 
-  public Recorder(int audioDeviceIndex) {
+  public Recorder(int audioDeviceIndex) throws IOException, SpeechEngineCreationException {
     AudioFormat format = new AudioFormat(16000f, 16, 1, true, false);
     DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, format);
     TargetDataLine dataLine;
@@ -22,6 +25,7 @@ class Recorder extends Thread {
       dataLine = getAudioDevice(audioDeviceIndex, dataLineInfo);
       dataLine.open(format);
     } catch (LineUnavailableException e) {
+      NativeTTS.tts("There is no available microphone.");
       log.error(
               "Failed to get a valid capture device. Use --show_audio_devices to show available capture devices and their indices");
       System.exit(1);

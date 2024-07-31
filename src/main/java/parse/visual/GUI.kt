@@ -33,7 +33,7 @@ class GUI {
         JFrame.setDefaultLookAndFeelDecorated(true)
         val frame = JFrame("ParseButPro").apply {
           defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-          setSize(500, 425)
+          setSize(500, 550)
           setLocationRelativeTo(null)
         }
 
@@ -113,8 +113,17 @@ private val commandInfo = """
   - "write special [text]": Writes special characters.<br/>
   - "write [text]": Writes the specified text.<br/>
   - "search [query]": Searches Google for the specified query.<br/>
-  - "mouse [coordinates]": Moves the mouse to the specified coordinates.<br/>
   - "ask gemini [question]": Asks gemini a question and processes the response.<br/>
+  Keyboard Shortcut Commands:<br/>
+  - "control shift [text]": Types text with Control + Shift modifier.<br/>
+  - "shift [text]": Types text with Shift modifier.<br/>
+  - "control [text]": Types text with Control modifier.<br/>
+  - "command [text]": Types text with Command modifier (on macOS).<br/>
+  - "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
+  Mouse Commands:<br/>
+  - "left click": Performs a left mouse click.<br/>
+  - "right click": Performs a right mouse click.<br/>
+  - "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
   Notepad-specific commands:<br/>
   - "open notepad": Opens the notepad.<br/>
   - "close notepad": Closes the notepad.<br/>

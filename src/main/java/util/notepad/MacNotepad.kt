@@ -1,13 +1,11 @@
 package util.notepad
 
 import org.apache.logging.log4j.LogManager
-import util.extension.command
-import util.extension.type
+import util.extension.*
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.IOException
 import java.nio.file.Paths
-import java.util.concurrent.TimeUnit
 
 class MacNotepad: Notepad {
   private val log = LogManager.getLogger()
@@ -27,22 +25,12 @@ class MacNotepad: Notepad {
   }
 
   override fun deleteText() {
-    try {
-      repeat(5) {
-        ProcessBuilder("osascript", "-e", "tell application \"System Events\" key code 51 end tell").start().waitFor()
-        TimeUnit.MILLISECONDS.sleep(100)
-      }
-    } catch (e: Exception) {
-      log.error("Error deleting text from notepad", e)
-    }
+    robot.control(KeyEvent.VK_A)
+    robot.type(KeyEvent.VK_BACK_SPACE)
   }
 
   override fun addNewLine() {
-    try {
-      ProcessBuilder("osascript", "-e", "tell application \"System Events\" keystroke \"return\" end tell").start().waitFor()
-    } catch (e: Exception) {
-      log.error("Error adding new line to notepad", e)
-    }
+    robot.enter()
   }
 
   override fun saveFileAs(name: String) {

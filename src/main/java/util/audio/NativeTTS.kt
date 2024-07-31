@@ -28,6 +28,7 @@ class NativeTTS {
      * @throws SpeechEngineCreationException If there is an error creating the speech engine.
      * @throws IOException                   If there is an input/output error.
      */
+    @JvmStatic
     @Throws(SpeechEngineCreationException::class, IOException::class)
     fun tts(text: String?) {
       val speechEngine = SpeechEngineNative.getInstance()
