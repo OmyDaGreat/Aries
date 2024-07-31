@@ -67,23 +67,23 @@ class LiveMic {
         }
 
         input.trueContains("command shift") -> {
-          Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).trim {it <= ' '})}}
+          Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}}
         }
 
-        input.trueContains("control shift") -> {
-          Robot().control{r1 -> r1.shift{r2 -> r2.type(input.replace("control shift", "", ignoreCase = true).trim {it <= ' '})}}
+        input.trueContainsAny("control shift", "controlled shift") -> {
+          Robot().control{r1 -> r1.shift{r2 -> r2.type(input.replace("control shift", "", ignoreCase = true).replace("controlled shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}}
         }
 
         input.trueContains("shift") -> {
-          Robot().shift{r -> r.type(input.replace("shift", "", ignoreCase = true).trim {it <= ' '})}
+          Robot().shift{r -> r.type(input.replace("shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}
         }
 
-        input.trueContainsAny("control") -> {
-          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}
+        input.trueContainsAny("control", "controlled") -> {
+          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replace("controlled", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}
         }
 
         input.trueContainsAny("command") -> {
-          Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).trim {it <= ' '})}
+          Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}
         }
 
         input.trueContainsAny("write special", "right special") -> {
