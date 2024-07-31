@@ -60,14 +60,19 @@ class GUI {
         }
 
         val span2wrap = "span 2, wrap"
+        val split2span = "split 2, span"
         val infoPanel = JPanel().apply {
           add(infoLabel)
         }
         val panel = JPanel(MigLayout("center", "[grow,fill]")).apply {
           addAll(
+            JLabel("Language:") to split2span,
             cbLanguage to span2wrap,
+            JLabel("Country:") to split2span,
             cbCountry to span2wrap,
+            JLabel("Gender") to split2span,
             cbGender to span2wrap,
+            JLabel("Max Words") to split2span,
             spMaxWords to span2wrap,
             btn to span2wrap,
             infoPanel to span2wrap,

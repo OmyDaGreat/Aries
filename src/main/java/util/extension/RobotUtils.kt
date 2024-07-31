@@ -21,6 +21,7 @@ object RobotUtils {
     Pair("exclamation", '!') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_1),
     Pair("at", '@') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_2),
     Pair("hashtag", '#') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_3),
+    Pair("octothorpe", '#') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_3),
     Pair("dollar", '$') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
     Pair("percent", '%') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_5),
     Pair("up", '^') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_6),

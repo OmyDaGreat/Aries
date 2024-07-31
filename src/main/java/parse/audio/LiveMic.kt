@@ -90,7 +90,10 @@ class LiveMic {
           input.split(" ").forEach {c ->
             if (special.containsKeyFirst(c)) {
               special.getFromFirst(c).forEach {key ->
-                Robot().type(key)
+                Robot().keyPress(key)
+              }
+              special.getFromFirst(c).reversed().forEach {key ->
+                Robot().keyRelease(key)
               }
             }
           }
@@ -162,7 +165,7 @@ class LiveMic {
           }
         }
         Thread {
-          showScrollableMessageDialog(null, "Gemini", gemini, JOptionPane.INFORMATION_MESSAGE)
+          showScrollableMessageDialog(null, gemini, "Gemini", JOptionPane.INFORMATION_MESSAGE)
         }.start()
       }
     }
