@@ -104,8 +104,8 @@ class LiveMic {
         }
 
         input.trueContains("search") -> {
-          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '}
-            .replace(" ", "+").removeForIfFirst())
+          open("https://www.google.com/search?q=" + input.removeForIfFirst().replace("search", "", ignoreCase = true).trim {it <= ' '}
+            .replace(" ", "+"))
         }
 
         input.trueContains("mouse") -> {
