@@ -137,6 +137,17 @@ fun Robot.shift(action: (Robot) -> Unit) {
 }
 
 /**
+ * Scrolls the mouse wheel up or down based on the specified direction.
+ * @param direction A string specifying the scroll direction ("up" or "down").
+ */
+fun Robot.scroll(direction: String) {
+  when (direction.lowercase()) {
+    "up" -> mouseWheel(-1)
+    "down" -> mouseWheel(1)
+  }
+}
+
+/**
  * Moves the mouse cursor based on a string of directions.
  * @param directions A string containing directions (e.g., "up down left right") to move the mouse cursor.
  * Each direction should be separated by a space.

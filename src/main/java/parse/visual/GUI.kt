@@ -8,10 +8,11 @@ import org.apache.logging.log4j.Logger
 import parse.audio.LiveMic
 import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
+import util.extension.RobotUtils.special
+import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.extension.addAll
 import util.extension.copyFileIfNotExists
 import java.awt.SystemTray
-import java.awt.event.ActionEvent
 import javax.swing.*
 
 class GUI {
@@ -31,9 +32,9 @@ class GUI {
       get() {
         FlatDarkLaf.setup()
         JFrame.setDefaultLookAndFeelDecorated(true)
-        val frame = JFrame("ParseButPro").apply {
+        val frame = JFrame("Aries").apply {
           defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-          setSize(500, 550)
+          setSize(500, 590)
           setLocationRelativeTo(null)
         }
 
@@ -50,11 +51,18 @@ class GUI {
 
         val btn = getBtn(cbLanguage, cbCountry, cbGender, spMaxWords)
 
-        val infoPanel = JPanel()
         val infoLabel = JLabel("<html>$commandInfo</html>")
-        infoPanel.add(infoLabel)
+        val specialKeysButton = JButton("Show Special Keys").apply {
+          addActionListener {
+            val specialKeys = special.keys.joinToString("\n") { it.first }
+            showScrollableMessageDialog(null, specialKeys, "Special Keys", JOptionPane.INFORMATION_MESSAGE)
+          }
+        }
 
         val span2wrap = "span 2, wrap"
+        val infoPanel = JPanel().apply {
+          add(infoLabel)
+        }
         val panel = JPanel(MigLayout("center", "[grow,fill]")).apply {
           addAll(
             cbLanguage to span2wrap,
@@ -62,7 +70,8 @@ class GUI {
             cbGender to span2wrap,
             spMaxWords to span2wrap,
             btn to span2wrap,
-            infoPanel to span2wrap
+            infoPanel to span2wrap,
+            specialKeysButton to span2wrap
           )
         }
 
@@ -80,7 +89,7 @@ class GUI {
 
     private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>, spMaxWords: JSpinner): JButton {
       return JButton("Parse").apply {
-        addActionListener { _: ActionEvent? ->
+        addActionListener {
           val selectedLanguage = cbLanguage.selectedItem?.toString()
           val selectedCountry = cbCountry.selectedItem?.toString()
           val selectedGender = cbGender.selectedItem?.toString()

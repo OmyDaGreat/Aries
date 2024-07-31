@@ -12,7 +12,7 @@ object RobotUtils {
   val screenWidth = Toolkit.getDefaultToolkit().screenSize.width
   val screenHeight = Toolkit.getDefaultToolkit().screenSize.height
 
-  val special = hashMapOf(
+  val special = linkedMapOf(
     Pair("question", '?') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH),
     Pair("colon", ':') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON),
     Pair("quote", '"') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),

@@ -11,8 +11,10 @@ import util.ResourcePath.getResourcePath
 import util.audio.*
 import util.extension.*
 import util.extension.RobotUtils.special
+import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.notepad.NotepadProcessor
 import java.awt.*
+import java.awt.event.InputEvent
 import java.io.IOException
 import java.net.URI
 import java.util.*
@@ -31,6 +33,29 @@ class LiveMic {
       when {
         input.trueContains("ask gemini") -> {
           ask("Answer the request while staying concise but without contractions: $input")
+        }
+
+        input.trueContains("left press") -> {
+          Robot().mousePress(InputEvent.BUTTON1_DOWN_MASK)
+        }
+
+        input.trueContains("left release") -> {
+          Robot().mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+        }
+
+        input.trueContains("right press") -> {
+          Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
+        }
+
+        input.trueContains("right release") -> {
+          Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
+        }
+
+        input.trueContains("middle click") -> {
+          Robot().apply {
+            mousePress(InputEvent.BUTTON2_DOWN_MASK)
+            mouseRelease(InputEvent.BUTTON2_DOWN_MASK)
+          }
         }
 
         input.trueContains("left click") -> {
@@ -81,7 +106,11 @@ class LiveMic {
         }
 
         input.trueContains("mouse") -> {
-          Robot().mouseMoveString(input.replace(".", "").replace("mouse", "", ignoreCase = true).trim {it <= ' '})
+          Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).trim {it <= ' '})
+        }
+
+        input.trueContains("scroll") -> {
+          Robot().scroll(input.replace("scroll", "", ignoreCase = true).trim { it <= ' ' })
         }
 
         input.trueContainsAny("open notepad", "opened notepad") -> {
@@ -133,7 +162,7 @@ class LiveMic {
           }
         }
         Thread {
-          JOptionPane.showMessageDialog(null, gemini)
+          showScrollableMessageDialog(null, "Gemini", gemini, JOptionPane.INFORMATION_MESSAGE)
         }.start()
       }
     }
