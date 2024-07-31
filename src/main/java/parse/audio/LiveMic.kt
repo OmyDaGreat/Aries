@@ -124,7 +124,7 @@ class LiveMic {
           n.closeNotepad()
         }
 
-        input.trueContains("open new") -> {
+        input.trueContainsAny("open new", "open knew") -> {
           n.openNewFile()
         }
 
