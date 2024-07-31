@@ -137,6 +137,16 @@ fun Robot.shift(action: (Robot) -> Unit) {
 }
 
 /**
+ * Simulates pressing WINDOWS + doing something else.
+ * @param action The function to be done in combination with the WINDOWS key.
+ */
+fun Robot.windows(action: (Robot) -> Unit) {
+  keyPress(KeyEvent.VK_WINDOWS)
+  action(this)
+  keyRelease(KeyEvent.VK_WINDOWS)
+}
+
+/**
  * Scrolls the mouse wheel up or down based on the specified direction.
  * @param direction A string specifying the scroll direction ("up" or "down").
  */
