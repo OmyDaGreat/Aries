@@ -105,7 +105,7 @@ class LiveMic {
 
         input.trueContains("search") -> {
           open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '}
-            .replace(" ", "+"))
+            .replace(" ", "+").removeForIfFirst())
         }
 
         input.trueContains("mouse") -> {
@@ -187,6 +187,7 @@ class LiveMic {
 
       try {
         processAudio({
+          NativeTTS.tts("Hm?")
           log.info(">>> Wake word detected.")
           recorder = Recorder(-1)
           recorder!!.start()
