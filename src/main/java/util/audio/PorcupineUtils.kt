@@ -4,6 +4,7 @@ import ai.picovoice.leopard.Leopard
 import org.apache.logging.log4j.LogManager
 import util.Keys.get
 import util.ResourcePath.getResourcePath
+import util.extension.containsAny
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.time.Duration
@@ -50,7 +51,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
 
       log.debug("Conversion: $conversion")
 
-      if (conversion.contains("Hey Aries")) {
+      if (conversion.containsAny("Hey Aries", "Aries")) {
         line.close()
         keywordDetected()
         silenceFrames = Instant.now()

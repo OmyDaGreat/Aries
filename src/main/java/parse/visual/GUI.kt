@@ -93,7 +93,7 @@ class GUI {
       }
 
     private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>, spMaxWords: JSpinner): JButton {
-      return JButton("Parse").apply {
+      return JButton("Apply Settings").apply {
         addActionListener {
           val selectedLanguage = cbLanguage.selectedItem?.toString()
           val selectedCountry = cbCountry.selectedItem?.toString()
