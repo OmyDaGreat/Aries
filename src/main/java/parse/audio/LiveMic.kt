@@ -79,7 +79,7 @@ class LiveMic {
         }
 
         input.trueContainsAny("control") -> {
-          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).trim {it <= ' '})}
+          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replaceSpecial().trim {it <= ' '})}
         }
 
         input.trueContainsAny("command") -> {
@@ -187,7 +187,7 @@ class LiveMic {
 
       try {
         processAudio({
-          NativeTTS.tts("Hm?")
+          NativeTTS.tts("Yes?")
           log.info(">>> Wake word detected.")
           recorder = Recorder(-1)
           recorder!!.start()

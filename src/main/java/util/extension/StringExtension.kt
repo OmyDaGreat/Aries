@@ -1,5 +1,7 @@
 package util.extension
 
+import util.extension.RobotUtils.special
+
 /**
  * Checks if the original string contains any of the provided strings.
  * This method performs a case-sensitive check to determine if any of the specified
@@ -44,4 +46,17 @@ fun String.trueContainsAny(vararg strings: String): Boolean {
  */
 fun String.trueContains(string: String): Boolean {
   return lowercase().contains(string.lowercase())
+}
+
+/**
+ * Replaces occurrences of the first element of each key in the special map with the second element.
+ *
+ * @return The modified string with replacements.
+ */
+fun String.replaceSpecial(): String {
+  var result = this
+  for ((key, _) in special) {
+    result = result.replace(key.first, key.second.toString())
+  }
+  return result
 }
