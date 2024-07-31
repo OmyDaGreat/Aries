@@ -134,20 +134,21 @@ class GUI {
 }
 
 private const val commandInfo = """
-  "Hey Aries..."<br/>
+  "<strong>Hey Aries..."</strong><br/>
   - "write special [text]": Writes special characters.<br/>
   - "write [text]": Writes the specified text.<br/>
   - "search [query]": Searches Google for the specified query.<br/>
   - "ask gemini [query]": Queries gemini and processes the response.<br/>
   - "[query]": Queries gemini and processes the response.<br/>
-  Keyboard Commands:<br/>
+  <strong>Keyboard Commands:</strong><br/>
   - "control shift [text]": Types text with Control + Shift modifier.<br/>
   - "shift [text]": Types text with Shift modifier.<br/>
   - "control [text]": Types text with Control modifier.<br/>
   - "command [text]": Types text with Command modifier (on macOS).<br/>
   - "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
   - "cap": Presses the Caps Lock key.<br/>
-  Mouse Commands:<br/>
+  - "switch window [number]": Switches to the specified window.<br/>
+  <strong>Mouse Commands:</strong><br/>
   - "left click": Performs a left mouse click.<br/>
   - "right click": Performs a right mouse click.<br/>
   - "left press": Presses the left mouse button.<br/>
@@ -157,7 +158,7 @@ private const val commandInfo = """
   - "middle click": Performs a middle mouse click.<br/>
   - "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
   - "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).<br/>
-  Notepad-specific commands:<br/>
+  <strong>Notepad-specific commands:</strong><br/>
   - "open notepad": Opens the notepad.<br/>
   - "close notepad": Closes the notepad.<br/>
   - "open new": Opens a new file in notepad.<br/>

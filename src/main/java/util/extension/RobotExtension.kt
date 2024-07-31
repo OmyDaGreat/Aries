@@ -96,6 +96,24 @@ fun Robot.control(action: (Robot) -> Unit) {
   keyRelease(KeyEvent.VK_CONTROL)
 }
 
+fun Robot.f(i: Int?) {
+  if (i == null) return
+  when (i) {
+    1 -> type(KeyEvent.VK_F1)
+    2 -> type(KeyEvent.VK_F2)
+    3 -> type(KeyEvent.VK_F3)
+    4 -> type(KeyEvent.VK_F4)
+    5 -> type(KeyEvent.VK_F5)
+    6 -> type(KeyEvent.VK_F6)
+    7 -> type(KeyEvent.VK_F7)
+    8 -> type(KeyEvent.VK_F8)
+    9 -> type(KeyEvent.VK_F9)
+    10 -> type(KeyEvent.VK_F10)
+    11 -> type(KeyEvent.VK_F11)
+    12 -> type(KeyEvent.VK_F12)
+  }
+}
+
 /**
  * Simulates pressing COMMAND + another key.
  * @param keyCode The integer code of the key to be pressed in combination with the COMMAND key.

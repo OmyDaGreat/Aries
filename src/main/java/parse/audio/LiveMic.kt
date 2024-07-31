@@ -97,6 +97,10 @@ class LiveMic {
           Robot().rightClick()
         }
 
+        input.trueContains("alte f") -> {
+          Robot().alt{it.f(input.replace("alte f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())}
+        }
+
         input.trueContains("windows shift") -> {
           Robot().windows{r1 -> r1.shift{r2 -> r2.type(input.replace("windows shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
         }
@@ -119,6 +123,10 @@ class LiveMic {
 
         input.trueContainsAny("control", "controlled") -> {
           Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replace("controlled", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
+        }
+
+        input.trueContains("f") -> {
+          Robot().f(input.replace("f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())
         }
 
         input.trueContainsAny("command") -> {
@@ -204,9 +212,8 @@ class LiveMic {
       val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv")).build()
       log.debug("Leopard version: {}", leopard.version)
       log.info("Ready...")
-      NativeTTS.tts("Aries is starting up...")
       var recorder: Recorder? = null
-
+      NativeTTS.tts("Aries is ready.")
       try {
         processAudio({
           NativeTTS.tts("Yes?")
