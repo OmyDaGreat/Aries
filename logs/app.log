@@ -1,5 +1,38 @@
-11:24:51.134 [main] INFO  parse.App - Starting coroutines...
-11:24:51.626 [AWT-EventQueue-0] DEBUG util.extension.RobotUtils - File already exists at C:\Users\Malefic\ParseButPro\voicePreferences.txt
-11:24:51.690 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences loaded from C:\Users\Malefic\ParseButPro\voicePreferences.txt
-11:24:54.158 [DefaultDispatcher-worker-1] DEBUG parse.audio.LiveMic - Leopard version: 2.0.0
-11:24:54.158 [DefaultDispatcher-worker-1] INFO  parse.audio.LiveMic - Ready...
+13:14:53.476 [main] INFO  parse.App - Starting coroutines...
+13:14:53.969 [AWT-EventQueue-0] DEBUG util.extension.RobotUtils - File already exists at C:\Users\Malefic\ParseButPro\voicePreferences.txt
+13:14:54.006 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences loaded from C:\Users\Malefic\ParseButPro\voicePreferences.txt
+13:14:56.469 [DefaultDispatcher-worker-1] DEBUG parse.audio.LiveMic - Leopard version: 2.0.0
+13:14:56.469 [DefaultDispatcher-worker-1] INFO  parse.audio.LiveMic - Ready...
+13:15:00.743 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:00.743 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:00.879 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: Honestly tell me share my screen
+13:15:02.888 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:02.888 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:02.970 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: 
+13:15:04.981 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:04.981 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:05.059 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: 
+13:15:07.068 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:07.068 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:07.182 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: Wait how does this work
+13:15:09.063 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:09.063 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:09.164 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: If I have two different monitors
+13:15:11.173 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:11.173 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:11.352 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: Sharing
+13:15:13.235 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:13.235 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:13.377 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: And screen with discord open on the other one this is
+13:15:15.385 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:15.385 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:15.458 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: 
+13:15:17.466 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:17.466 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:17.541 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: 
+13:15:19.550 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:19.551 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:19.629 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: That's cool anyway
+13:15:21.639 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
+13:15:21.639 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
+13:15:21.764 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: Casey up

@@ -12,6 +12,7 @@ import util.extension.RobotUtils.special
 import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.extension.addAll
 import util.extension.copyFileIfNotExists
+import java.awt.Dimension
 import java.awt.SystemTray
 import javax.swing.*
 
@@ -25,7 +26,7 @@ class GUI {
     private val log: Logger = LogManager.getLogger()
 
     fun run() {
-      SwingUtilities.invokeLater { setupGUI }
+      SwingUtilities.invokeLater {setupGUI}
     }
 
     private val setupGUI: Unit
@@ -33,8 +34,9 @@ class GUI {
         FlatDarkLaf.setup()
         JFrame.setDefaultLookAndFeelDecorated(true)
         val frame = JFrame("Aries").apply {
-          defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-          setSize(500, 680)
+          defaultCloseOperation =
+            if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
+          setSize(500, 600)
           setLocationRelativeTo(null)
         }
 
@@ -51,18 +53,22 @@ class GUI {
 
         val btn = getBtn(cbLanguage, cbCountry, cbGender, spMaxWords)
 
-        val infoLabel = JLabel("<html>$commandInfo</html>")
         val specialKeysButton = JButton("Show Special Keys").apply {
           addActionListener {
-            val specialKeys = special.keys.joinToString("\n") { it.first }
+            val specialKeys = special.keys.joinToString("\n") {it.first}
             showScrollableMessageDialog(null, specialKeys, "Special Keys", JOptionPane.INFORMATION_MESSAGE)
           }
+        }
+
+        val textArea = JLabel("<html>$commandInfo</html>")
+        val scrollPane = JScrollPane(textArea).apply {
+          preferredSize = Dimension(450, 350)
         }
 
         val span2wrap = "span 2, wrap"
         val split2span = "split 2, span"
         val infoPanel = JPanel().apply {
-          add(infoLabel)
+          add(scrollPane)
         }
         val panel = JPanel(MigLayout("center", "[grow,fill]")).apply {
           addAll(
@@ -92,7 +98,12 @@ class GUI {
         SystemTrayManager(frame).setupSystemTray()
       }
 
-    private fun getBtn(cbLanguage: JComboBox<String>, cbCountry: JComboBox<String>, cbGender: JComboBox<String>, spMaxWords: JSpinner): JButton {
+    private fun getBtn(
+      cbLanguage: JComboBox<String>,
+      cbCountry: JComboBox<String>,
+      cbGender: JComboBox<String>,
+      spMaxWords: JSpinner,
+    ): JButton {
       return JButton("Apply Settings").apply {
         addActionListener {
           val selectedLanguage = cbLanguage.selectedItem?.toString()
@@ -122,18 +133,20 @@ class GUI {
   }
 }
 
-private val commandInfo = """
+private const val commandInfo = """
   "Hey Aries..."<br/>
   - "write special [text]": Writes special characters.<br/>
   - "write [text]": Writes the specified text.<br/>
   - "search [query]": Searches Google for the specified query.<br/>
-  - "ask gemini [question]": Asks gemini a question and processes the response.<br/>
-  Keyboard Shortcut Commands:<br/>
+  - "ask gemini [query]": Queries gemini and processes the response.<br/>
+  - "[query]": Queries gemini and processes the response.<br/>
+  Keyboard Commands:<br/>
   - "control shift [text]": Types text with Control + Shift modifier.<br/>
   - "shift [text]": Types text with Shift modifier.<br/>
   - "control [text]": Types text with Control modifier.<br/>
   - "command [text]": Types text with Command modifier (on macOS).<br/>
   - "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
+  - "cap": Presses the Caps Lock key.<br/>
   Mouse Commands:<br/>
   - "left click": Performs a left mouse click.<br/>
   - "right click": Performs a right mouse click.<br/>
@@ -143,7 +156,7 @@ private val commandInfo = """
   - "right release": Releases the right mouse button.<br/>
   - "middle click": Performs a middle mouse click.<br/>
   - "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
-  - "scroll [direction]": Scrolls the mouse wheel in the specified direction.<br/>
+  - "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).<br/>
   Notepad-specific commands:<br/>
   - "open notepad": Opens the notepad.<br/>
   - "close notepad": Closes the notepad.<br/>
@@ -151,4 +164,4 @@ private val commandInfo = """
   - "delete everything": Deletes all text in notepad.<br/>
   - "save file [name]": Saves the file with the specified name.<br/>
   - "enter": Adds a new line in notepad.
-""".trimIndent()
+"""

@@ -15,6 +15,7 @@ import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.notepad.NotepadProcessor
 import java.awt.*
 import java.awt.event.InputEvent
+import java.awt.event.KeyEvent
 import java.io.IOException
 import java.net.URI
 import java.util.*
@@ -31,8 +32,29 @@ class LiveMic {
 
     private fun process(input: String) {
       when {
+        input.trueContainsAny("write special", "right special") -> {
+          input.split(" ").forEach {c ->
+            if (special.containsKeyFirst(c)) {
+              special.getFromFirst(c).forEach {key ->
+                Robot().keyPress(key)
+              }
+              special.getFromFirst(c).reversed().forEach {key ->
+                Robot().keyRelease(key)
+              }
+            }
+          }
+        }
+
+        input.trueContainsAny("write", "right") -> {
+          Robot().type(input.replace("write", "", ignoreCase = true).replace("right", "", ignoreCase = true).trim {it <= ' '})
+        }
+
         input.trueContains("ask gemini") -> {
           ask("Answer the request while staying concise but without contractions: $input")
+        }
+
+        input.trueContains("cap") -> {
+          Robot().type(KeyEvent.VK_CAPS_LOCK)
         }
 
         input.trueContains("left press") -> {
@@ -96,23 +118,6 @@ class LiveMic {
 
         input.trueContainsAny("alt", "alternate", "alte", "alternative") -> {
           Robot().alt{r -> r.type(input.replace("alt", "", ignoreCase = true).trim {it <= ' '})}
-        }
-
-        input.trueContainsAny("write special", "right special") -> {
-          input.split(" ").forEach {c ->
-            if (special.containsKeyFirst(c)) {
-              special.getFromFirst(c).forEach {key ->
-                Robot().keyPress(key)
-              }
-              special.getFromFirst(c).reversed().forEach {key ->
-                Robot().keyRelease(key)
-              }
-            }
-          }
-        }
-
-        input.trueContainsAny("write", "right") -> {
-          Robot().type(input.replace("write", "", ignoreCase = true).replace("right", "", ignoreCase = true).trim {it <= ' '})
         }
 
         input.trueContains("search") -> {
