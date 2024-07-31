@@ -148,6 +148,11 @@ private const val commandInfo = """
   - "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
   - "cap": Presses the Caps Lock key.<br/>
   - "switch window [number]": Switches to the specified window.<br/>
+  - "f [number]": Presses the specified function key.<br/>
+  - "alt f [number]": Presses ALT + specified function key.<br/>
+  - "windows shift [text]": Types text with Windows + Shift modifier.<br/>
+  - "windows [text]": Types text with Windows modifier.<br/>
+  - "command shift [text]": Types text with Command + Shift modifier.<br/>
   <strong>Mouse Commands:</strong><br/>
   - "left click": Performs a left mouse click.<br/>
   - "right click": Performs a right mouse click.<br/>
