@@ -20,7 +20,6 @@ object RobotUtils {
     Pair("apostrophe", '\'') to listOf(KeyEvent.VK_QUOTE),
     Pair("exclamation", '!') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_1),
     Pair("at", '@') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_2),
-    Pair("tab", '\t') to listOf(KeyEvent.VK_TAB),
     Pair("hashtag", '#') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_3),
     Pair("octothorpe", '#') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_3),
     Pair("dollar", '$') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
