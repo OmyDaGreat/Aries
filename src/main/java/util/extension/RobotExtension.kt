@@ -147,6 +147,16 @@ fun Robot.windows(action: (Robot) -> Unit) {
 }
 
 /**
+ * Simulates pressing ALT + doing something else.
+ * @param action The function to be done in combination with the ALT key.
+ */
+fun Robot.alt(action: (Robot) -> Unit) {
+  keyPress(KeyEvent.VK_ALT)
+  action(this)
+  keyRelease(KeyEvent.VK_ALT)
+}
+
+/**
  * Scrolls the mouse wheel up or down based on the specified direction.
  * @param direction A string specifying the scroll direction ("up" or "down").
  */

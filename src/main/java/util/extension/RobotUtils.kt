@@ -18,6 +18,7 @@ object RobotUtils {
     Pair("quote", '"') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),
     Pair("tilde", '~') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE),
     Pair("apostrophe", '\'') to listOf(KeyEvent.VK_QUOTE),
+    Pair("tab", '\t') to listOf(KeyEvent.VK_TAB),
     Pair("exclamation", '!') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_1),
     Pair("at", '@') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_2),
     Pair("hashtag", '#') to listOf(KeyEvent.VK_SHIFT, KeyEvent.VK_3),

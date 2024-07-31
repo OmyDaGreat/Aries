@@ -94,6 +94,10 @@ class LiveMic {
           Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}
         }
 
+        input.trueContainsAny("alt", "alternate", "alte", "alternative") -> {
+          Robot().alt{r -> r.type(input.replace("alt", "", ignoreCase = true).trim {it <= ' '})}
+        }
+
         input.trueContainsAny("write special", "right special") -> {
           input.split(" ").forEach {c ->
             if (special.containsKeyFirst(c)) {
