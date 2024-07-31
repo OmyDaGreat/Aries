@@ -4,7 +4,6 @@ import io.github.jonelo.tts.engines.SpeechEngineNative
 import io.github.jonelo.tts.engines.VoicePreferences
 import io.github.jonelo.tts.engines.VoicePreferences.Gender
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
-import org.apache.logging.log4j.LogManager
 import parse.audio.LiveMic
 import util.ResourcePath.getLocalResourcePath
 import java.io.*
@@ -18,7 +17,6 @@ class NativeTTS {
 
   companion object {
     val voicePreferences: VoicePreferences = VoicePreferences()
-    private val log = LogManager.getLogger()
 
     /**
      * Converts text to speech using the preferred voice settings.
@@ -36,9 +34,7 @@ class NativeTTS {
       var voice = speechEngine.findVoiceByPreferences(voicePreferences)
 
       if (voice == null) {
-        log.error("Voice has not been found by the voice preferences {}\n", voicePreferences)
         voice = voices.first()
-        log.info("Using \"{}\" instead.\n", voice)
       }
 
       speechEngine.setVoice(voice!!.name)
@@ -83,10 +79,9 @@ class NativeTTS {
           writer.write("country=" + voicePreferences.country + "\n")
           writer.write("gender=" + voicePreferences.gender.name + "\n")
           writer.write("maxWords=" + LiveMic.maxWords + "\n")
-          log.debug("Voice preferences saved to {}", filePath)
         }
       } catch (e: IOException) {
-        log.error("Error saving voice preferences: {}", e.message)
+        e.printStackTrace()
       }
     }
 
@@ -107,10 +102,9 @@ class NativeTTS {
               }
             }
           }
-          log.debug("Voice preferences loaded from {}", filePath)
         }
       } catch (e: IOException) {
-        log.error("Error loading voice preferences: {}", e.message)
+        e.printStackTrace()
       }
     }
   }

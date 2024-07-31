@@ -1,6 +1,5 @@
 package util.extension
 
-import util.extension.RobotUtils.log
 import util.extension.RobotUtils.special
 import java.awt.MouseInfo
 import java.awt.Robot
@@ -15,7 +14,7 @@ fun Robot.mouseMoveString(direction: String) {
   direction.split(" ").forEach {dir ->
     RobotUtils.directionActions[dir]?.accept(
       MouseInfo.getPointerInfo().location.x, MouseInfo.getPointerInfo().location.y, this
-    ) ?: RobotUtils.log.debug("Invalid direction: \"$dir\"")
+    )
   }
 }
 
@@ -197,7 +196,6 @@ fun Robot.arrow(directions: String) {
       "down" -> type(KeyEvent.VK_DOWN)
       "left" -> type(KeyEvent.VK_LEFT)
       "right" -> type(KeyEvent.VK_RIGHT)
-      else -> log.error("Invalid direction: $direction")
     }
   }
 }

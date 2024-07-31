@@ -1,6 +1,5 @@
 package util.notepad
 
-import org.apache.logging.log4j.LogManager
 import util.extension.*
 import java.awt.Robot
 import java.awt.event.KeyEvent
@@ -8,7 +7,6 @@ import java.io.File
 import java.io.IOException
 
 class LinuxNotepad: Notepad {
-  private val log = LogManager.getLogger()
   private val robot = Robot()
   private var process: Process? = null
 
@@ -60,6 +58,6 @@ class LinuxNotepad: Notepad {
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
     robot.control(KeyEvent.VK_F4)
-    process?.waitFor()?.also {log.debug("Exited Notepad++ with code: {}", it)}
+    process?.waitFor()?.also {println("Exited Notepad++ with code: $it")}
   }
 }

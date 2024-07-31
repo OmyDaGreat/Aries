@@ -1,7 +1,6 @@
 package util.audio
 
 import ai.picovoice.leopard.Leopard
-import org.apache.logging.log4j.LogManager
 import util.Keys.get
 import util.ResourcePath.getResourcePath
 import util.extension.trueContainsAny
@@ -12,17 +11,19 @@ import java.time.Instant
 import javax.sound.sampled.*
 import kotlin.math.abs
 
+val leopardthing: Leopard.Builder =
+  Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv"))
+
 fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
   val info = DataLine.Info(TargetDataLine::class.java, null)
   if (!AudioSystem.isLineSupported(info)) {
     throw LineUnavailableException("No line matching provided info found.")
   }
-  val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv")).build()
+  val leopard = leopardthing.build()
   val line = AudioSystem.getLine(info) as TargetDataLine
   val format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
   line.open(format)
   line.start()
-  val log = LogManager.getLogger()
   val buffer = ShortArray(33332) // 20,000 is too little; 40,000 is too much: slow to process
   val byteBuffer = ByteArray(buffer.size * 2)
   var silenceFrames: Instant? = null
@@ -31,25 +32,20 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
   while (true) {
     if (isRecording()) {
       if (isSilence(buffer, amplitudeThreshold)) {
-        log.debug("Silent...")
         if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 7) {
           onSilence()
           line.open(format)
           line.start()
         }
       } else {
-        log.debug("Sound detected")
         silenceFrames = Instant.now()
       }
     } else {
       val bytesRead = line.read(byteBuffer, 0, byteBuffer.size)
       if (bytesRead <= 0) continue
-      log.debug("Bytes read: $bytesRead")
       ByteBuffer.wrap(byteBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()[buffer]
 
       val conversion = convertAudioToText(buffer, leopard)
-
-      log.debug("Conversion: $conversion")
 
       if (conversion.trueContainsAny("Hey Aries", "Aries", "Harry")) {
         line.close()
@@ -76,12 +72,9 @@ fun isSilence(buffer: ShortArray, threshold: Int): Boolean {
 }
 
 fun convertAudioToText(buffer: ShortArray?, leopard: Leopard): String {
-  val log = LogManager.getLogger()
-  try {
-    log.info("Processing audio buffer of size ${buffer?.size ?: "null"}")
-    return leopard.process(buffer).transcriptString
+  return try {
+    leopard.process(buffer).transcriptString
   } catch (e: Exception) {
-    log.error("Error processing audio: ${e.message}")
-    return ""
+    ""
   }
 }

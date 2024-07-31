@@ -1,14 +1,11 @@
 package util.extension
 
 import org.apache.commons.lang3.function.TriConsumer
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import java.awt.Robot
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 
 object RobotUtils {
-  val log: Logger = LogManager.getLogger()
   val screenWidth = Toolkit.getDefaultToolkit().screenSize.width
   val screenHeight = Toolkit.getDefaultToolkit().screenSize.height
 

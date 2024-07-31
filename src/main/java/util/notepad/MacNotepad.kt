@@ -1,6 +1,5 @@
 package util.notepad
 
-import org.apache.logging.log4j.LogManager
 import util.extension.*
 import java.awt.Robot
 import java.awt.event.KeyEvent
@@ -8,7 +7,6 @@ import java.io.IOException
 import java.nio.file.Paths
 
 class MacNotepad: Notepad {
-  private val log = LogManager.getLogger()
   private val robot = Robot()
 
   override fun openNotepad() {
@@ -16,7 +14,7 @@ class MacNotepad: Notepad {
       val scriptPath = Paths.get(javaClass.classLoader.getResource("openNotepad.scpt")?.toURI()?.toString() ?: "")
       ProcessBuilder("osascript", scriptPath.toString()).start().waitFor()
     } catch (e: Exception) {
-      log.error("Error opening notepad with script", e)
+      e.printStackTrace()
     }
   }
 
@@ -45,7 +43,7 @@ class MacNotepad: Notepad {
             end tell
         """.trimIndent()).start().waitFor()
     } catch (e: Exception) {
-      log.error("Error opening new note in notepad", e)
+      e.printStackTrace()
     }
   }
 
@@ -53,7 +51,7 @@ class MacNotepad: Notepad {
     try {
       ProcessBuilder("osascript", "-e", "tell application \"Notes\" to quit").start().waitFor()
     } catch (e: IOException) {
-      log.error("Error closing notepad", e)
+      e.printStackTrace()
     }
   }
 }

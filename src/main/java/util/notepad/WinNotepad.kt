@@ -1,6 +1,5 @@
 package util.notepad
 
-import org.apache.logging.log4j.LogManager
 import util.audio.NativeTTS
 import util.extension.*
 import java.awt.Robot
@@ -12,7 +11,6 @@ import java.nio.file.Paths
 
 class WinNotepad: Notepad {
   private val robot = Robot()
-  private val log = LogManager.getLogger()
   private var process: Process? = null
 
   companion object {
@@ -61,7 +59,6 @@ class WinNotepad: Notepad {
       val message = if (exitCode == 1) "Exited Notepad++" else "Please open Notepad++ with the open notepad command"
       NativeTTS.tts(message)
     } ?: run {
-      log.error("Notepad++ is not open")
       NativeTTS.tts("Notepad++ is not open")
     }
     process = null

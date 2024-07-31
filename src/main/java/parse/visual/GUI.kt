@@ -3,8 +3,6 @@ package parse.visual
 import com.formdev.flatlaf.FlatDarkLaf
 import io.github.jonelo.tts.engines.VoicePreferences
 import net.miginfocom.swing.MigLayout
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import parse.audio.LiveMic
 import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
@@ -23,7 +21,6 @@ class GUI {
     private lateinit var cbCountry: JComboBox<String>
     private lateinit var cbGender: JComboBox<String>
     private lateinit var spMaxWords: JSpinner
-    private val log: Logger = LogManager.getLogger()
 
     fun run() {
       SwingUtilities.invokeLater {setupGUI}
@@ -111,13 +108,9 @@ class GUI {
           val selectedGender = cbGender.selectedItem?.toString()
           val maxWords = spMaxWords.value as Int
           NativeTTS.voiceLanguage(selectedLanguage)
-          log.debug("Language set to: {}", selectedLanguage)
           NativeTTS.voiceCountry(selectedCountry)
-          log.debug("Country set to: {}", selectedCountry)
           NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender!!))
-          log.debug("Gender set to: {}", selectedGender)
           LiveMic.maxWords = maxWords
-          log.debug("Max Words set to: {}", maxWords)
           NativeTTS.saveVoicePreferences()
         }
       }

@@ -1,7 +1,6 @@
 package parse.audio;
 
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException;
-import lombok.extern.log4j.Log4j2;
 import util.audio.NativeTTS;
 
 import javax.sound.sampled.*;
@@ -9,9 +8,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Optional;
 
-@Log4j2
 class Recorder extends Thread {
   private TargetDataLine micDataLine = null;
   private boolean stop = false;
@@ -26,8 +23,6 @@ class Recorder extends Thread {
       dataLine.open(format);
     } catch (LineUnavailableException e) {
       NativeTTS.tts("There is no available microphone.");
-      log.error(
-              "Failed to get a valid capture device. Use --show_audio_devices to show available capture devices and their indices");
       System.exit(1);
       return;
     }
@@ -56,14 +51,9 @@ class Recorder extends Thread {
 
         if (mixer.isLineSupported(dataLineInfo)) {
           return (TargetDataLine) mixer.getLine(dataLineInfo);
-        } else {
-          log.error(
-                  "Audio capture device at index {} does not support the audio format required by Picovoice. Using default capture device.",
-                  Optional.of(deviceIndex));
         }
-      } catch (Exception e) {
-        log.error(
-                "No capture device found at index {}. Using default capture device.", Optional.of(deviceIndex));
+      } catch (LineUnavailableException e) {
+        e.printStackTrace();
       }
     }
 

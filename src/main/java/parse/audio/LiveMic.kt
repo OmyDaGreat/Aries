@@ -3,11 +3,7 @@ package parse.audio
 import ai.picovoice.leopard.*
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import util.*
-import util.Keys.get
-import util.ResourcePath.getResourcePath
 import util.audio.*
 import util.extension.*
 import util.extension.RobotUtils.special
@@ -24,7 +20,6 @@ import javax.swing.JOptionPane
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {
   companion object {
-    private val log: Logger = LogManager.getLogger()
     private val n = NotepadProcessor()
 
     @JvmField
@@ -60,7 +55,6 @@ class LiveMic {
         input.trueContainsAny("switch window") -> {
           input.replace("switch window", "", ignoreCase = true).trim().split(" ").forEach {
             it.replaceSpecial().toIntOrNull()?.let { n ->
-              log.debug("Switching to window $n")
               Robot().alt{repeat(n) {Robot().tab()}}
             }
           }
@@ -185,12 +179,10 @@ class LiveMic {
     private fun ask(input: String) {
       runBlocking {
         val gemini = generateContent(input).replace("*", "")
-        log.info(gemini)
         launch {
           if (gemini.split(" ").size > maxWords) {
             NativeTTS.tts("The response is over $maxWords words.")
           } else {
-            log.debug(gemini)
             NativeTTS.tts(gemini)
           }
         }
@@ -209,32 +201,26 @@ class LiveMic {
     }
 
     fun startRecognition() {
-      val leopard = Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv")).build()
-      log.debug("Leopard version: {}", leopard.version)
-      log.info("Ready...")
+      val leopard = leopardthing.build()
       var recorder: Recorder? = null
+      println("Aries is ready.")
       NativeTTS.tts("Aries is ready.")
       try {
         processAudio({
           NativeTTS.tts("Yes?")
-          log.info(">>> Wake word detected.")
           recorder = Recorder(-1)
           recorder!!.start()
-          log.info(">>> Recording...")
         }, {
-          log.info(">>> Silence detected.")
           recorder!!.end()
           recorder!!.join()
           val pcm = recorder!!.pcm
           recorder = null
           val transcript = leopard.process(pcm)
-          log.info("{}\n", transcript.transcriptString)
           process(transcript.transcriptString)
         }) {
           recorder != null
         }
       } catch (e: Exception) {
-        log.error("Error: {}", e.message)
         e.printStackTrace()
       } finally {
         leopard.delete()

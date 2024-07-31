@@ -1,16 +1,14 @@
 package util
 
 import lombok.Cleanup
-import org.apache.logging.log4j.LogManager
 import java.sql.*
-import java.util.Properties
+import java.util.*
 
 /**
  * Singleton object for managing API keys stored in a database.
  * It provides functionality to load database properties and retrieve API keys by service name.
  */
 object Keys {
-  private val log = LogManager.getLogger(Keys::class.java)
   private lateinit var props: Properties
 
   /**
@@ -31,11 +29,9 @@ object Keys {
         props = Properties().apply {
           load(resourceStream)
         }
-      } else {
-        log.error("db.properties file not found")
       }
     } catch (e: Exception) {
-      log.error("Error loading db.properties: ${e.message}")
+      e.printStackTrace()
     }
   }
 
