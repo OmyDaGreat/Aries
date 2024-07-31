@@ -46,7 +46,7 @@ class LiveMic {
         }
 
         input.trueContainsAny("write", "right") -> {
-          Robot().type(input.replace("write", "", ignoreCase = true).replace("right", "", ignoreCase = true).trim {it <= ' '})
+          Robot().type(input.replace("write", "", ignoreCase = true).replace("right", "", ignoreCase = true).trim())
         }
 
         input.trueContains("ask gemini") -> {
@@ -55,6 +55,15 @@ class LiveMic {
 
         input.trueContains("cap") -> {
           Robot().type(KeyEvent.VK_CAPS_LOCK)
+        }
+
+        input.trueContainsAny("switch window") -> {
+          input.replace("switch window", "", ignoreCase = true).trim().split(" ").forEach {
+            it.replaceSpecial().toIntOrNull()?.let { n ->
+              log.debug("Switching to window $n")
+              Robot().alt{repeat(n) {Robot().tab()}}
+            }
+          }
         }
 
         input.trueContains("left press") -> {
@@ -89,44 +98,40 @@ class LiveMic {
         }
 
         input.trueContains("windows shift") -> {
-          Robot().windows{r1 -> r1.shift{r2 -> r2.type(input.replace("windows shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}}
+          Robot().windows{r1 -> r1.shift{r2 -> r2.type(input.replace("windows shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
         }
 
         input.trueContains("windows") -> {
-          Robot().windows{r -> r.type(input.replace("windows", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}
+          Robot().windows{r -> r.type(input.replace("windows", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
         }
 
         input.trueContains("command shift") -> {
-          Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}}
+          Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
         }
 
         input.trueContainsAny("control shift", "controlled shift") -> {
-          Robot().control{r1 -> r1.shift{r2 -> r2.type(input.replace("control shift", "", ignoreCase = true).replace("controlled shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}}
+          Robot().control{r1 -> r1.shift{r2 -> r2.type(input.replace("control shift", "", ignoreCase = true).replace("controlled shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
         }
 
         input.trueContains("shift") -> {
-          Robot().shift{r -> r.type(input.replace("shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}
+          Robot().shift{r -> r.type(input.replace("shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
         }
 
         input.trueContainsAny("control", "controlled") -> {
-          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replace("controlled", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}
+          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replace("controlled", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
         }
 
         input.trueContainsAny("command") -> {
-          Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}
-        }
-
-        input.trueContainsAny("alt", "alternate", "alte", "alternative") -> {
-          Robot().alt{r -> r.type(input.replace("alt", "", ignoreCase = true).trim {it <= ' '})}
+          Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
         }
 
         input.trueContains("search") -> {
-          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim {it <= ' '}.removeForIfFirst()
+          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim().removeForIfFirst()
             .replace(" ", "+"))
         }
 
         input.trueContains("mouse") -> {
-          Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).trim {it <= ' '})
+          Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).trim())
         }
 
         input.trueContainsAny("scroll", "scrolled") -> {
@@ -151,7 +156,7 @@ class LiveMic {
 
         input.trueContains("save file") -> {
           n.saveFileAs(
-            input.replace("save file", "", ignoreCase = true).trim {it <= ' '}.removeForIfFirst().replace(" ", "_")
+            input.replace("save file", "", ignoreCase = true).trim().removeForIfFirst().replace(" ", "_")
           )
         }
 
@@ -160,7 +165,7 @@ class LiveMic {
         }
 
         input.trueContains("arrow") -> {
-          Robot().arrow(input.replace("arrow", "", ignoreCase = true).trim {it <= ' '})
+          Robot().arrow(input.replace("arrow", "", ignoreCase = true).trim())
         }
 
         else -> {

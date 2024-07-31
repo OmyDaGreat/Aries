@@ -43,6 +43,7 @@ object RobotUtils {
     Pair("to", '2') to listOf(KeyEvent.VK_2),
     Pair("three", '3') to listOf(KeyEvent.VK_3),
     Pair("four", '4') to listOf(KeyEvent.VK_4),
+    Pair("for", '4') to listOf(KeyEvent.VK_4),
     Pair("five", '5') to listOf(KeyEvent.VK_5),
     Pair("six", '6') to listOf(KeyEvent.VK_6),
     Pair("seven", '7') to listOf(KeyEvent.VK_7),
