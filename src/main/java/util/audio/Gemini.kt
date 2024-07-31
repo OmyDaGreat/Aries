@@ -26,11 +26,7 @@ suspend fun generateContent(prompt: String): String {
   val bodyString = json.encodeToString(body)
 
   val client = HttpClient(CIO)
-  val response: HttpResponse = client.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${
-    Keys.get(
-      "gemini"
-    )
-  }") {
+  val response: HttpResponse = client.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${Keys.get("gemini")}") {
     contentType(ContentType.Application.Json)
     setBody(bodyString)
   }

@@ -1,13 +1,5 @@
-19:22:56.130 [main] INFO  parse.App - Starting coroutines...
-19:22:56.544 [AWT-EventQueue-0] DEBUG util.extension.RobotUtils - File already exists at C:\Users\Malefic\ParseButPro\voicePreferences.txt
-19:22:56.574 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences loaded from C:\Users\Malefic\ParseButPro\voicePreferences.txt
-19:22:58.966 [DefaultDispatcher-worker-1] DEBUG parse.audio.LiveMic - Leopard version: 2.0.0
-19:22:58.966 [DefaultDispatcher-worker-1] INFO  parse.audio.LiveMic - Ready...
-19:23:00.790 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Language set to: en
-19:23:00.790 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Country set to: US
-19:23:00.790 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Gender set to: MALE
-19:23:00.790 [AWT-EventQueue-0] DEBUG parse.visual.GUI - Max Words set to: 40
-19:23:00.790 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences saved to C:\Users\Malefic\ParseButPro\voicePreferences.txt
-19:23:03.209 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Bytes read: 66664
-19:23:03.210 [DefaultDispatcher-worker-1] INFO  util.audio.PorcupineUtilsKt - Processing audio buffer of size 33332
-19:23:03.281 [DefaultDispatcher-worker-1] DEBUG util.audio.PorcupineUtilsKt - Conversion: 
+21:25:51.811 [main] INFO  parse.App - Starting coroutines...
+21:25:52.306 [AWT-EventQueue-0] DEBUG util.extension.RobotUtils - File already exists at C:\Users\Malefic\ParseButPro\voicePreferences.txt
+21:25:52.350 [AWT-EventQueue-0] DEBUG util.audio.NativeTTS - Voice preferences loaded from C:\Users\Malefic\ParseButPro\voicePreferences.txt
+21:25:55.698 [DefaultDispatcher-worker-1] DEBUG parse.audio.LiveMic - Leopard version: 2.0.0
+21:25:55.698 [DefaultDispatcher-worker-1] INFO  parse.audio.LiveMic - Ready...
