@@ -66,6 +66,14 @@ class LiveMic {
           Robot().rightClick()
         }
 
+        input.trueContains("windows shift") -> {
+          Robot().windows{r1 -> r1.shift{r2 -> r2.type(input.replace("windows shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}}
+        }
+
+        input.trueContains("windows") -> {
+          Robot().windows{r -> r.type(input.replace("windows", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}
+        }
+
         input.trueContains("command shift") -> {
           Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).replaceSpecial().trim {it <= ' '}.lowercase())}}
         }
