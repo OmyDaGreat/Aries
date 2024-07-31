@@ -34,7 +34,7 @@ class GUI {
         JFrame.setDefaultLookAndFeelDecorated(true)
         val frame = JFrame("Aries").apply {
           defaultCloseOperation = if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-          setSize(500, 590)
+          setSize(500, 680)
           setLocationRelativeTo(null)
         }
 
@@ -132,7 +132,13 @@ private val commandInfo = """
   Mouse Commands:<br/>
   - "left click": Performs a left mouse click.<br/>
   - "right click": Performs a right mouse click.<br/>
+  - "left press": Presses the left mouse button.<br/>
+  - "left release": Releases the left mouse button.<br/>
+  - "right press": Presses the right mouse button.<br/>
+  - "right release": Releases the right mouse button.<br/>
+  - "middle click": Performs a middle mouse click.<br/>
   - "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
+  - "scroll [direction]": Scrolls the mouse wheel in the specified direction.<br/>
   Notepad-specific commands:<br/>
   - "open notepad": Opens the notepad.<br/>
   - "close notepad": Closes the notepad.<br/>
