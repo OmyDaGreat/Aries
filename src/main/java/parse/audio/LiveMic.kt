@@ -4,6 +4,8 @@ import ai.picovoice.leopard.*
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
 import util.*
+import util.Keys.get
+import util.ResourcePath.getLocalResourcePath
 import util.audio.*
 import util.extension.*
 import util.extension.RobotUtils.special
@@ -21,9 +23,15 @@ import javax.swing.JOptionPane
 class LiveMic {
   companion object {
     private val n = NotepadProcessor()
+    lateinit var leopardthing: Leopard.Builder
 
     @JvmField
     var maxWords = 40
+
+    private suspend fun initializeLeopard() {
+      val modelPath = downloadFile(pv, getLocalResourcePath("Aries.pv")).absolutePath
+      leopardthing = Leopard.Builder().setAccessKey(get("pico")).setModelPath(modelPath)
+    }
 
     private fun process(input: String) {
       when {
@@ -54,8 +62,8 @@ class LiveMic {
 
         input.trueContainsAny("switch window") -> {
           input.replace("switch window", "", ignoreCase = true).trim().split(" ").forEach {
-            it.replaceSpecial().toIntOrNull()?.let { n ->
-              Robot().alt{repeat(n) {Robot().tab()}}
+            it.replaceSpecial().toIntOrNull()?.let {n ->
+              Robot().alt {repeat(n) {Robot().tab()}}
             }
           }
         }
@@ -92,31 +100,59 @@ class LiveMic {
         }
 
         input.trueContains("alte f") -> {
-          Robot().alt{it.f(input.replace("alte f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())}
+          Robot().alt {it.f(input.replace("alte f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())}
         }
 
         input.trueContains("windows shift") -> {
-          Robot().windows{r1 -> r1.shift{r2 -> r2.type(input.replace("windows shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
+          Robot().windows {r1 ->
+            r1.shift {r2 ->
+              r2.type(
+                input.replace("windows shift", "", ignoreCase = true).replaceSpecial().trim().lowercase()
+              )
+            }
+          }
         }
 
         input.trueContains("windows") -> {
-          Robot().windows{r -> r.type(input.replace("windows", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
+          Robot().windows {r ->
+            r.type(
+              input.replace("windows", "", ignoreCase = true).replaceSpecial().trim().lowercase()
+            )
+          }
         }
 
         input.trueContains("command shift") -> {
-          Robot().command{r1 -> r1.shift{r2 -> r2.type(input.replace("command shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
+          Robot().command {r1 ->
+            r1.shift {r2 ->
+              r2.type(
+                input.replace("command shift", "", ignoreCase = true).replaceSpecial().trim().lowercase()
+              )
+            }
+          }
         }
 
         input.trueContainsAny("control shift", "controlled shift") -> {
-          Robot().control{r1 -> r1.shift{r2 -> r2.type(input.replace("control shift", "", ignoreCase = true).replace("controlled shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}}
+          Robot().control {r1 ->
+            r1.shift {r2 ->
+              r2.type(
+                input.replace("control shift", "", ignoreCase = true).replace("controlled shift", "", ignoreCase = true)
+                  .replaceSpecial().trim().lowercase()
+              )
+            }
+          }
         }
 
         input.trueContains("shift") -> {
-          Robot().shift{r -> r.type(input.replace("shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
+          Robot().shift {r -> r.type(input.replace("shift", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
         }
 
         input.trueContainsAny("control", "controlled") -> {
-          Robot().control{r -> r.type(input.replace("control", "", ignoreCase = true).replace("controlled", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
+          Robot().control {r ->
+            r.type(
+              input.replace("control", "", ignoreCase = true).replace("controlled", "", ignoreCase = true)
+                .replaceSpecial().trim().lowercase()
+            )
+          }
         }
 
         input.trueContains("f") -> {
@@ -124,12 +160,19 @@ class LiveMic {
         }
 
         input.trueContainsAny("command") -> {
-          Robot().command{r -> r.type(input.replace("command", "", ignoreCase = true).replaceSpecial().trim().lowercase())}
+          Robot().command {r ->
+            r.type(
+              input.replace("command", "", ignoreCase = true).replaceSpecial().trim().lowercase()
+            )
+          }
         }
 
         input.trueContains("search") -> {
-          open("https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim().removeForIfFirst()
-            .replace(" ", "+"))
+          open(
+            "https://www.google.com/search?q=" + input.replace("search", "", ignoreCase = true).trim()
+              .removeForIfFirst()
+              .replace(" ", "+")
+          )
         }
 
         input.trueContains("mouse") -> {
@@ -137,7 +180,8 @@ class LiveMic {
         }
 
         input.trueContainsAny("scroll", "scrolled") -> {
-          Robot().scroll(input.replace("scroll", "", ignoreCase = true).replace("scrolled", "", ignoreCase = true).trim { it <= ' ' })
+          Robot().scroll(
+            input.replace("scroll", "", ignoreCase = true).replace("scrolled", "", ignoreCase = true).trim {it <= ' '})
         }
 
         input.trueContainsAny("open notepad", "opened notepad") -> {
@@ -201,6 +245,11 @@ class LiveMic {
     }
 
     fun startRecognition() {
+      if (!::leopardthing.isInitialized) {
+        runBlocking {
+          initializeLeopard()
+        }
+      }
       val leopard = leopardthing.build()
       var recorder: Recorder? = null
       println("Aries is ready.")

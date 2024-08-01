@@ -1,8 +1,7 @@
 package util.audio
 
 import ai.picovoice.leopard.Leopard
-import util.Keys.get
-import util.ResourcePath.getResourcePath
+import parse.audio.LiveMic.Companion.leopardthing
 import util.extension.trueContainsAny
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -10,9 +9,6 @@ import java.time.Duration
 import java.time.Instant
 import javax.sound.sampled.*
 import kotlin.math.abs
-
-val leopardthing: Leopard.Builder =
-  Leopard.Builder().setAccessKey(get("pico")).setModelPath(getResourcePath("Aries.pv"))
 
 fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
   val info = DataLine.Info(TargetDataLine::class.java, null)
