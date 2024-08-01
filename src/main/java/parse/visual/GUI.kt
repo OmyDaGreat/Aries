@@ -9,9 +9,10 @@ import util.audio.NativeTTS
 import util.extension.RobotUtils.special
 import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.extension.addAll
-import util.extension.copyFileIfNotExists
 import java.awt.Dimension
 import java.awt.SystemTray
+import java.io.File
+import java.io.FileWriter
 import javax.swing.*
 
 class GUI {
@@ -85,7 +86,7 @@ class GUI {
 
         frame.apply {
           add(panel)
-          copyFileIfNotExists("voicePreferences.txt", getLocalResourcePath("voicePreferences.txt"))
+          writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
           NativeTTS.loadVoicePreferences()
           updateGUIFromPreferences()
           isVisible = true
@@ -122,6 +123,22 @@ class GUI {
       cbCountry.selectedItem = preferences.country
       cbGender.selectedItem = preferences.gender.name
       spMaxWords.value = LiveMic.maxWords
+    }
+
+    private fun writeVoicePreferencesToFile(filePath: String) {
+      val content = """
+        language=en
+        country=US
+        gender=MALE
+        maxWords=40
+      """.trimIndent()
+      val file = File(filePath)
+      if (!file.exists()) {
+        file.createNewFile()
+        FileWriter(file).use {writer ->
+          writer.write(content)
+        }
+      }
     }
   }
 }

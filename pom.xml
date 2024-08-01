@@ -58,16 +58,6 @@
 			<version>2.0.13</version>
 		</dependency>
 		<dependency>
-			<groupId>com.tagtraum</groupId>
-			<artifactId>japlscript-runtime</artifactId>
-			<version>3.4.13</version>
-		</dependency>
-		<dependency>
-			<groupId>com.tagtraum</groupId>
-			<artifactId>japlscript-generator</artifactId>
-			<version>3.4.13</version>
-		</dependency>
-		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<version>9.0.0</version>
