@@ -18,10 +18,6 @@ const val pv =
 const val props =
   "https://www.dropbox.com/scl/fi/uhod5m8oqvhoq89ank0tf/db.properties?rlkey=iwvuaq617j5099zgjqgzm9bjm&st=ge9s493z&dl=1"
 
-// URL of the newNote.scpt file
-const val newNote =
-  "https://www.dropbox.com/scl/fi/9fah438uatw7kxrahbw2o/newNote.scpt?rlkey=x1ehtsy93t4ctcv691pnh03z7&st=jacemofp&dl=1"
-
 // URL of the openNotepad.scpt file
 const val openNotepad =
   "https://www.dropbox.com/scl/fi/lppie7xcxbzloo860t7qg/openNotepad.scpt?rlkey=xv413n4dclvsjj6hdj580u0s6&st=1uk85psv&dl=1"

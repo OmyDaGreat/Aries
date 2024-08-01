@@ -1,6 +1,10 @@
 package util
 
+import kotlinx.coroutines.runBlocking
 import lombok.Cleanup
+import util.ResourcePath.getLocalResourcePath
+import util.extension.downloadFile
+import java.io.FileInputStream
 import java.sql.*
 import java.util.*
 
@@ -9,29 +13,17 @@ import java.util.*
  * It provides functionality to load database properties and retrieve API keys by service name.
  */
 object Keys {
-  private lateinit var props: Properties
+  private var props: Properties
 
   /**
    * Initializes the Keys object by loading database connection properties.
    */
   init {
-    loadProperties()
-  }
-
-  /**
-   * Loads database connection properties from the `db.properties` file.
-   * Logs an error if the properties file cannot be found or loaded.
-   */
-  private fun loadProperties() {
-    try {
-      val resourceStream = javaClass.classLoader.getResourceAsStream("db.properties")
-      if (resourceStream != null) {
-        props = Properties().apply {
-          load(resourceStream)
-        }
+    runBlocking {
+      val resourceStream = FileInputStream(downloadFile(util.extension.props, getLocalResourcePath("db.properties")))
+      props = Properties().apply {
+        load(resourceStream)
       }
-    } catch (e: Exception) {
-      e.printStackTrace()
     }
   }
 
