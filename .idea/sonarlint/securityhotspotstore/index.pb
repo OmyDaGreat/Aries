@@ -28,10 +28,6 @@ N
 src/main/java/util/Platform.kt,b\c\bc581b19b5ea223094e52502ee81753ae96dc161
 J
 src/main/java/util/Keys.kt,1\5\15df504a497c8a2d5d5e01a7148deb5888012fd7
-U
-%src/test/java/parse/ShowProperties.kt,e\8\e8dbba1f8388442c984c06c715c1f2f834eac492
-R
-"src/test/java/parse/LiveMicDemo.kt,7\3\73998efba78f719a15326a25928f151231250b89
 <
 logs/app.log,1\9\19551365d5d85d08cf06f31af46de9860d5f5240
 X
