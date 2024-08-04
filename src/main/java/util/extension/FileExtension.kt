@@ -5,6 +5,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import util.audio.NativeTTS
 import java.io.File
 
 // URL of the icon image
@@ -35,6 +36,7 @@ const val openNotepad =
 suspend fun downloadFile(fileURL: String, destinationPath: String): File {
   return File(destinationPath).apply {
     if (!exists()) {
+      NativeTTS.tts("Downloading file ${destinationPath.split(File.separator).last()}.")
       HttpClient(CIO){
         install(HttpTimeout) {
           requestTimeoutMillis = 120000 // 2 minutes
