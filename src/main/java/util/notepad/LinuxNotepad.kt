@@ -11,7 +11,7 @@ class LinuxNotepad: Notepad {
   private var process: Process? = null
 
   companion object {
-    val homeDirectory = System.getProperty("user.home") + File.separator + "ParseButPro"
+    val homeDirectory = System.getProperty("user.home") + File.separator + "Aries"
   }
 
   @Throws(IOException::class)
