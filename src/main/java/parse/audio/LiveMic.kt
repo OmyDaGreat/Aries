@@ -243,9 +243,9 @@ class LiveMic {
             NativeTTS.tts(gemini)
           }
         }
-        launch {
-          showScrollableMessageDialog(null, gemini, "Gemini is responding to $input", JOptionPane.INFORMATION_MESSAGE)
-        }
+        Thread {
+          showScrollableMessageDialog(null, gemini, "Gemini is responding to ${input.replace("Answer the request while staying concise but without contractions: ", "")}", JOptionPane.INFORMATION_MESSAGE)
+        }.start()
       }
     }
 
