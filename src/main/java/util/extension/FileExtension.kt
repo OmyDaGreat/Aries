@@ -9,7 +9,7 @@ import java.io.File
 
 // URL of the icon image
 const val icon =
-  "https://www.dropbox.com/scl/fi/woan0cno18kodgghthbn9/java.png?rlkey=rnxt8unmblb476lfgsena00lb&st=2ktqz7ef&dl=1"
+  "https://www.dropbox.com/scl/fi/x4zl6mzfpm2g8j9d461z3/icon.png?rlkey=l63vlj7hywe1p97p9mcgdwc2k&st=83ot1zd3&dl=1"
 
 // URL of the Aries.pv file
 const val pv =

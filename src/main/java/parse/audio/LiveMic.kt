@@ -234,9 +234,9 @@ class LiveMic {
             NativeTTS.tts(gemini)
           }
         }
-        Thread {
+        launch {
           showScrollableMessageDialog(null, gemini, "Gemini is responding to $input", JOptionPane.INFORMATION_MESSAGE)
-        }.start()
+        }
       }
     }
 

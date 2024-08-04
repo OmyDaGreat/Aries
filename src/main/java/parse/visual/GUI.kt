@@ -2,18 +2,19 @@ package parse.visual
 
 import com.formdev.flatlaf.FlatDarkLaf
 import io.github.jonelo.tts.engines.VoicePreferences
+import kotlinx.coroutines.runBlocking
 import net.miginfocom.swing.MigLayout
 import parse.audio.LiveMic
 import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
+import util.extension.*
 import util.extension.RobotUtils.special
 import util.extension.ScrollOption.Companion.showScrollableMessageDialog
-import util.extension.addAll
-import java.awt.Dimension
-import java.awt.SystemTray
+import java.awt.*
 import java.io.File
 import java.io.FileWriter
 import java.util.*
+import javax.imageio.ImageIO
 import javax.swing.*
 
 class GUI {
@@ -23,6 +24,7 @@ class GUI {
     private lateinit var cbCountry: JComboBox<String>
     private lateinit var cbGender: JComboBox<String>
     private lateinit var spMaxWords: JSpinner
+    lateinit var image: Image
 
     fun run() {
       SwingUtilities.invokeLater {setupGUI}
@@ -83,6 +85,13 @@ class GUI {
             infoPanel to span2wrap,
             specialKeysButton to span2wrap
           )
+        }
+
+        runBlocking {
+          ImageIO.read(downloadFile(icon, getLocalResourcePath("icon.png")))
+            .getScaledInstance(16, 16, Image.SCALE_SMOOTH).let {
+              frame.iconImage = it
+            }
         }
 
         frame.apply {
