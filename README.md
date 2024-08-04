@@ -1,5 +1,5 @@
 
-# ParseButPro
+# Aries
 
 Dictation-controlled computer actions.
 
@@ -7,8 +7,7 @@ Dictation-controlled computer actions.
 ## Features
 
 - **Voice-Controlled Notepad**: Open, edit, and manage documents in notepad applications using only your voice.
-- **Browser Control**: Easily control your browser and search the web using only your voice.
-- **Customizable Commands**: Tailor the application to recognize your unique voice commands for various actions.
+- **Mouse and Keyboard Control**: Easily do anything, even without direct support, using only your voice.
 - **Cross-Platform Compatibility**: Works seamlessly across Windows, Linux, and Mac.
 - **Gemini**: Using Google Gemini
 
