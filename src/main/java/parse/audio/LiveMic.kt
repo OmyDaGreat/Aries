@@ -244,7 +244,7 @@ class LiveMic {
           }
         }
         Thread {
-          showScrollableMessageDialog(null, gemini, "Gemini is responding to ${input.replace("Answer the request while staying concise but without contractions: ", "")}", JOptionPane.INFORMATION_MESSAGE)
+          showScrollableMessageDialog(null, gemini, "Gemini is responding to ${input.replace("Answer the request while staying concise but without contractions: ", "").replaceFirst("Translate ", "").replaceFirst(" to ${cbLanguage.selectedItem}", "")}", JOptionPane.INFORMATION_MESSAGE)
         }.start()
       }
     }
