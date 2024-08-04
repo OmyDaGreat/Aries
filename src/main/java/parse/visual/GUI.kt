@@ -13,6 +13,7 @@ import java.awt.Dimension
 import java.awt.SystemTray
 import java.io.File
 import java.io.FileWriter
+import java.util.*
 import javax.swing.*
 
 class GUI {
@@ -38,10 +39,10 @@ class GUI {
           setLocationRelativeTo(null)
         }
 
-        val languages = arrayOf("en", "es", "zh", "hi", "ar", "fr")
+        val languages = Locale.getISOLanguages()
         cbLanguage = JComboBox<String>(languages)
 
-        val countries = arrayOf("US", "GB", "CN", "IN", "MX", "CA")
+        val countries = Locale.getISOCountries()
         cbCountry = JComboBox<String>(countries)
 
         val gender = arrayOf("MALE", "FEMALE")
