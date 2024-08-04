@@ -5,7 +5,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import util.audio.NativeTTS
 import java.io.File
 
 // URL of the icon image
@@ -24,6 +23,18 @@ const val props =
 const val openNotepad =
   "https://www.dropbox.com/scl/fi/lppie7xcxbzloo860t7qg/openNotepad.scpt?rlkey=xv413n4dclvsjj6hdj580u0s6&st=1uk85psv&dl=1"
 
+// URL of leopard library for windows
+const val leolibwin =
+  "https://www.dropbox.com/scl/fi/mztcz5q5p8qiv91vfchi8/libpv_leopard_jni.dll?rlkey=9aumenejyt39iewm2d8kwze6b&st=qaw0fewr&dl=1"
+
+// URL of leopard library for windows
+const val leolibmac =
+  "https://www.dropbox.com/scl/fi/vq8h75rpfbdxac89cer1k/libpv_leopard_jni.dylib?rlkey=zsidzj6mxbg4s5vnsbw2irx14&st=xjd6ft5p&dl=1"
+
+// URL of leopard library for windows
+const val leoliblin =
+  "https://www.dropbox.com/scl/fi/v12jnksld7bhepd40tp0s/libpv_leopard_jni.so?rlkey=w6votdishp3bre7t4d9dmhstf&st=oz8rmcti&dl=1"
+
 /**
  * Downloads a file from the specified URL to the given destination path.
  * If the file already exists at the destination, it will not be downloaded again.
@@ -36,7 +47,7 @@ const val openNotepad =
 suspend fun downloadFile(fileURL: String, destinationPath: String): File {
   return File(destinationPath).apply {
     if (!exists()) {
-      NativeTTS.tts("Downloading file ${destinationPath.split(File.separator).last()}.")
+      println("Downloading file ${destinationPath.split(File.separator).last()}.")
       HttpClient(CIO){
         install(HttpTimeout) {
           requestTimeoutMillis = 120000 // 2 minutes
