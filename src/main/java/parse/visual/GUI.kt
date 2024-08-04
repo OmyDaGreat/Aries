@@ -18,7 +18,7 @@ import javax.swing.*
 class GUI {
 
   companion object {
-    private lateinit var cbLanguage: JComboBox<String>
+    lateinit var cbLanguage: JComboBox<String>
     private lateinit var cbCountry: JComboBox<String>
     private lateinit var cbGender: JComboBox<String>
     private lateinit var spMaxWords: JSpinner

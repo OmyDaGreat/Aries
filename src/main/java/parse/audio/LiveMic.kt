@@ -3,6 +3,7 @@ package parse.audio
 import ai.picovoice.leopard.*
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
+import parse.visual.GUI.Companion.cbLanguage
 import util.*
 import util.Keys.get
 import util.ResourcePath.getLocalResourcePath
@@ -222,7 +223,10 @@ class LiveMic {
 
     private fun ask(input: String) {
       runBlocking {
-        val gemini = generateContent(input).replace("*", "")
+        var gemini = generateContent(input).replace("*", "")
+        if (cbLanguage.selectedItem!! != "en") {
+          gemini = generateContent("Translate $gemini to ${cbLanguage.selectedItem}")
+        }
         launch {
           if (gemini.split(" ").size > maxWords) {
             NativeTTS.tts("The response is over $maxWords words.")
@@ -231,17 +235,13 @@ class LiveMic {
           }
         }
         Thread {
-          showScrollableMessageDialog(null, gemini, "Gemini", JOptionPane.INFORMATION_MESSAGE)
+          showScrollableMessageDialog(null, gemini, "Gemini is responding to $input", JOptionPane.INFORMATION_MESSAGE)
         }.start()
       }
     }
 
     private fun String.removeForIfFirst(): String {
-      return if (startsWith("for ")) {
-        removePrefix("for ").trimStart()
-      } else {
-        this
-      }
+      return removePrefix("for ").trimStart()
     }
 
     fun startRecognition() {

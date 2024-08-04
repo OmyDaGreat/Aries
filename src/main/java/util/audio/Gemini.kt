@@ -5,7 +5,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -37,10 +36,6 @@ suspend fun generateContent(prompt: String): String {
   val firstCandidateText = jsonResponse.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text ?: ""
 
   return firstCandidateText
-}
-
-fun main(): Unit = runBlocking {
-  println(generateContent("Hello, world!"))
 }
 
 @Serializable
