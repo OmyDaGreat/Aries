@@ -24,7 +24,6 @@ class GUI {
     private lateinit var cbCountry: JComboBox<String>
     private lateinit var cbGender: JComboBox<String>
     private lateinit var spMaxWords: JSpinner
-    lateinit var image: Image
 
     fun run() {
       SwingUtilities.invokeLater {setupGUI}
@@ -173,6 +172,7 @@ private const val commandInfo = """
   - "windows shift [text]": Types text with Windows + Shift modifier.<br/>
   - "windows [text]": Types text with Windows modifier.<br/>
   - "command shift [text]": Types text with Command + Shift modifier.<br/>
+  - "enter": Presses the enter key.<br/>
   <strong>Mouse Commands:</strong><br/>
   - "left click": Performs a left mouse click.<br/>
   - "right click": Performs a right mouse click.<br/>
@@ -188,6 +188,5 @@ private const val commandInfo = """
   - "close notepad": Closes the notepad.<br/>
   - "open new": Opens a new file in notepad.<br/>
   - "delete everything": Deletes all text in notepad.<br/>
-  - "save file [name]": Saves the file with the specified name.<br/>
-  - "enter": Adds a new line in notepad.
+  - "save file [name]": Saves the file with the specified name.
 """
