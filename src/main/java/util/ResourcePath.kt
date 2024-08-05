@@ -1,6 +1,6 @@
 package util
 
-import java.io.File
+import java.io.File.separator
 
 /**
  * Utility object for handling resource paths.
@@ -14,6 +14,6 @@ object ResourcePath {
    * @return The absolute path to the resource in the user's home directory.
    */
   fun getLocalResourcePath(path: String): String {
-    return System.getProperty("user.home") + File.separator + "Aries" + File.separator + path
+    return "${System.getProperty("user.home")}${separator}Aries$separator$path"
   }
 }

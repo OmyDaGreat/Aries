@@ -35,6 +35,10 @@ const val leolibmac =
 const val leoliblin =
   "https://www.dropbox.com/scl/fi/v12jnksld7bhepd40tp0s/libpv_leopard_jni.so?rlkey=w6votdishp3bre7t4d9dmhstf&st=oz8rmcti&dl=1"
 
+// URL of beep
+const val beep =
+  "https://www.dropbox.com/scl/fi/2le9oihdhpg417iz7ovmx/beep.mp3?rlkey=bo0usio4gdadt8vdn1i4yxtrt&st=t1p6i258&dl=1"
+
 /**
  * Downloads a file from the specified URL to the given destination path.
  * If the file already exists at the destination, it will not be downloaded again.

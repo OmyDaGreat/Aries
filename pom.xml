@@ -102,6 +102,11 @@
 			<artifactId>kotlinx-coroutines-swing</artifactId>
 			<version>1.8.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.umjammer</groupId>
+			<artifactId>jlayer</artifactId>
+			<version>1.0.3</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

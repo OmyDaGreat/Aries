@@ -40,14 +40,9 @@ class GUI {
           setLocationRelativeTo(null)
         }
 
-        val languages = Locale.getISOLanguages()
-        cbLanguage = JComboBox<String>(languages)
-
-        val countries = Locale.getISOCountries()
-        cbCountry = JComboBox<String>(countries)
-
-        val gender = arrayOf("MALE", "FEMALE")
-        cbGender = JComboBox<String>(gender)
+        cbLanguage = JComboBox<String>(Locale.getISOLanguages())
+        cbCountry = JComboBox<String>(Locale.getISOCountries())
+        cbGender = JComboBox<String>(arrayOf("MALE", "FEMALE"))
 
         spMaxWords = JSpinner(SpinnerNumberModel(40, 1, 100000, 1))
 
