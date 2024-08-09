@@ -1,7 +1,6 @@
 package parse.audio
 
 import ai.picovoice.leopard.*
-import javazoom.jl.player.advanced.AdvancedPlayer
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
 import parse.visual.GUI.Companion.cbLanguage
@@ -16,11 +15,11 @@ import util.notepad.NotepadProcessor
 import java.awt.*
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
-import java.io.FileInputStream
 import java.io.IOException
 import java.net.URI
 import java.util.*
 import javax.swing.JOptionPane
+import kotlin.time.Duration
 
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {
@@ -34,35 +33,32 @@ class LiveMic {
         private suspend fun initializeLeopard() {
             NativeTTS.tts("Initializing Leopard.")
             leopardthing = Leopard.Builder().setAccessKey(get("pico"))
-                .setModelPath(downloadFile(pv, getLocalResourcePath("Aries.pv")).absolutePath).setLibraryPath(
-                    when (Platform.detectPlatform()) {
-                        Platform.WINDOWS -> downloadFile(
-                            leolibwin,
-                            getLocalResourcePath("libpv_leopard_jni.dll")
-                        ).absolutePath
+                .setModelPath(downloadFile(pv, getLocalResourcePath("Aries.pv")).absolutePath)
+                .setLibraryPath(when (Platform.detectPlatform()) {
+                    Platform.WINDOWS -> downloadFile(
+                        leolibwin, getLocalResourcePath("libpv_leopard_jni.dll")
+                    ).absolutePath
 
-                        Platform.MAC -> downloadFile(
-                            leolibmac,
-                            getLocalResourcePath("libpv_leopard_jni.dylib")
-                        ).absolutePath
+                    Platform.MAC -> downloadFile(
+                        leolibmac, getLocalResourcePath("libpv_leopard_jni.dylib")
+                    ).absolutePath
 
-                        Platform.LINUX -> downloadFile(
-                            leoliblin,
-                            getLocalResourcePath("libpv_leopard_jni.so")
-                        ).absolutePath
+                    Platform.LINUX -> downloadFile(
+                        leoliblin, getLocalResourcePath("libpv_leopard_jni.so")
+                    ).absolutePath
 
-                        else -> null.also {
-                            NativeTTS.tts("Leopard is not supported on this platform.")
-                        }
+                    else -> null.also {
+                        NativeTTS.tts("Leopard is not supported on this platform.")
                     }
-                )
+                })
         }
 
         private fun process(input: String) {
             println("input: $input")
-            CoroutineScope(Dispatchers.IO).launch {
+            runBlocking {
                 beep()
             }
+
             when {
                 input.trueContainsAny("write special", "right special") -> {
                     input.split(" ").forEach { c ->
@@ -91,8 +87,7 @@ class LiveMic {
                     println(
                         open(
                             "https://www.google.com/search?q=" + input.replace("search for", "", ignoreCase = true)
-                                .trim()
-                                .replace(" ", "+")
+                                .trim().replace(" ", "+")
                         )
                     )
                 }
@@ -192,8 +187,8 @@ class LiveMic {
                         r1.shift { r2 ->
                             r2.type(
                                 input.replace("control shift", "", ignoreCase = true)
-                                    .replace("controlled shift", "", ignoreCase = true)
-                                    .replaceSpecial().trim().lowercase()
+                                    .replace("controlled shift", "", ignoreCase = true).replaceSpecial().trim()
+                                    .lowercase()
                             )
                         }
                     }
@@ -233,9 +228,8 @@ class LiveMic {
                 }
 
                 input.trueContainsAny("scroll", "scrolled") -> {
-                    Robot().scroll(
-                        input.replace("scroll", "", ignoreCase = true).replace("scrolled", "", ignoreCase = true)
-                            .trim { it <= ' ' })
+                    Robot().scroll(input.replace("scroll", "", ignoreCase = true)
+                        .replace("scrolled", "", ignoreCase = true).trim { it <= ' ' })
                 }
 
                 input.trueContainsAny("open notepad", "opened notepad") -> {
@@ -289,15 +283,11 @@ class LiveMic {
                 }
                 Thread {
                     showScrollableMessageDialog(
-                        null,
-                        gemini,
-                        "Gemini is responding to ${
+                        null, gemini, "Gemini is responding to ${
                             input.replace(
-                                "Answer the request while staying concise but without contractions: ",
-                                ""
+                                "Answer the request while staying concise but without contractions: ", ""
                             ).replaceFirst("Translate ", "").replaceFirst(" to ${cbLanguage.selectedItem}", "")
-                        }",
-                        JOptionPane.INFORMATION_MESSAGE
+                        }", JOptionPane.INFORMATION_MESSAGE
                     )
                 }.start()
             }
@@ -356,11 +346,6 @@ fun open(page: String): String {
 
 /**Plays a beep sound. BEEP!*/
 suspend fun beep() {
-    val file = downloadFile(beep, getLocalResourcePath("beep.mp3"))
-    withContext(Dispatchers.IO) {
-        FileInputStream(file).use { fis ->
-            val player = AdvancedPlayer(fis)
-            player.play()
-        }
-    }
+    NativeTTS.tts("Request confirmed.")
+    delay(Duration.parse("1s"))
 }
