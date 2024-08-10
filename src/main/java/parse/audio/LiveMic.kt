@@ -60,6 +60,10 @@ class LiveMic {
             }
 
             when {
+                input.trueContains("arrow") -> {
+                    Robot().arrow(input.replace("arrow", "", ignoreCase = true).trim())
+                }
+
                 input.contains("Mouse") -> {
                     Robot().mouseMoveString(
                         input.replace("mouse", "", ignoreCase = true).replace("write", "right", ignoreCase = true)
@@ -67,8 +71,20 @@ class LiveMic {
                     )
                 }
 
+                input.trueContainsAny("right press", "write press") -> {
+                    Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
+                }
+
+                input.trueContainsAny("right release", "write release") -> {
+                    Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
+                }
+
+                input.trueContainsAny("right click", "write click") -> {
+                    Robot().rightClick()
+                }
+
                 input.trueContainsAny("write special", "right special") -> {
-                    input.split(" ").forEach { c ->
+                    input.replace("ten", "10").replace("eleven", "11").replace("twelve", "12").split(" ").forEach { c ->
                         if (special.containsKeyFirst(c)) {
                             special.getFromFirst(c).forEach { key ->
                                 Robot().keyPress(key)
@@ -120,20 +136,20 @@ class LiveMic {
                     }
                 }
 
+                input.trueContains("tab") -> {
+                    Robot().tab()
+                }
+
+                input.trueContains("escape") -> {
+                    Robot().esc()
+                }
+
                 input.trueContains("left press") -> {
                     Robot().mousePress(InputEvent.BUTTON1_DOWN_MASK)
                 }
 
                 input.trueContains("left release") -> {
                     Robot().mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-                }
-
-                input.trueContains("right press") -> {
-                    Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
-                }
-
-                input.trueContains("right release") -> {
-                    Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
                 }
 
                 input.trueContains("middle click") -> {
@@ -147,14 +163,18 @@ class LiveMic {
                     Robot().leftClick()
                 }
 
-                input.trueContains("right click") -> {
-                    Robot().rightClick()
-                }
-
                 input.trueContains("alte f") -> {
                     Robot().alt {
                         it.f(
                             input.replace("alte f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull()
+                        )
+                    }
+                }
+
+                input.trueContains("alte of") -> {
+                    Robot().alt {
+                        it.f(
+                            input.replace("alte of", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull()
                         )
                     }
                 }
@@ -218,7 +238,7 @@ class LiveMic {
                     }
                 }
 
-                input.trueContains("f ") && input[0] == 'f' -> {
+                input.trueContains("f ") && (input[0] == 'f' || input[0] == 'F') -> {
                     Robot().f(input.replace("f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())
                 }
 
@@ -267,10 +287,6 @@ class LiveMic {
 
                 input.trueContains("enter") -> {
                     n.addNewLine()
-                }
-
-                input.trueContains("arrow") -> {
-                    Robot().arrow(input.replace("arrow", "", ignoreCase = true).trim())
                 }
 
                 else -> {

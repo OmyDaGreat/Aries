@@ -76,6 +76,11 @@ fun Robot.enter() = type(KeyEvent.VK_ENTER)
 fun Robot.tab() = type(KeyEvent.VK_TAB)
 
 /**
+ * Simulates pressing the TAB key.
+ */
+fun Robot.esc() = type(KeyEvent.VK_ESCAPE)
+
+/**
  * Simulates pressing CONTROL + another key.
  * @param keyCode The integer code of the key to be pressed in combination with the CONTROL key.
  */
@@ -178,9 +183,11 @@ fun Robot.alt(action: (Robot) -> Unit) {
  * @param direction A string specifying the scroll direction ("up" or "down").
  */
 fun Robot.scroll(direction: String) {
-  when (direction.lowercase()) {
-    "up" -> mouseWheel(-1)
-    "down" -> mouseWheel(1)
+  direction.split(" ").forEach { dir ->
+    when (dir.lowercase()) {
+      "up" -> mouseWheel(-1)
+      "down" -> mouseWheel(1)
+    }
   }
 }
 
@@ -196,6 +203,7 @@ fun Robot.arrow(directions: String) {
       "down" -> type(KeyEvent.VK_DOWN)
       "left" -> type(KeyEvent.VK_LEFT)
       "right" -> type(KeyEvent.VK_RIGHT)
+      "write" -> type(KeyEvent.VK_RIGHT)
     }
   }
 }
