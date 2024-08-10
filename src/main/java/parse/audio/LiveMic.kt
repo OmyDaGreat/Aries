@@ -55,11 +55,16 @@ class LiveMic {
 
         private fun process(input: String) {
             println("input: $input")
+            println("bool: ${input.trueContains("save file as")}")
             runBlocking {
                 beep()
             }
 
             when {
+                input.contains("Mouse") -> {
+                    Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).replace("write", "right", ignoreCase = true).trim())
+                }
+
                 input.trueContainsAny("write special", "right special") -> {
                     input.split(" ").forEach { c ->
                         if (special.containsKeyFirst(c)) {
@@ -211,7 +216,7 @@ class LiveMic {
                     }
                 }
 
-                input.trueContains("f") -> {
+                input.trueContains("f ") && input[0] == 'f' -> {
                     Robot().f(input.replace("f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())
                 }
 
@@ -221,10 +226,6 @@ class LiveMic {
                             input.replace("command", "", ignoreCase = true).replaceSpecial().trim().lowercase()
                         )
                     }
-                }
-
-                input.trueContains("mouse") -> {
-                    Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).trim())
                 }
 
                 input.trueContainsAny("scroll", "scrolled") -> {
@@ -248,9 +249,21 @@ class LiveMic {
                     n.deleteText()
                 }
 
-                input.trueContains("save file") -> {
+                input.trueContains("save file as") -> {
+                    println("saving file as")
                     n.saveFileAs(
-                        input.replace("save file", "", ignoreCase = true).trim().removeForIfFirst().replace(" ", "_")
+                        input.replace("save file as", "", ignoreCase = true).trim().replace(" ", "_").also {
+                            println("saving file as $it")
+                        }
+                    )
+                }
+
+                input.trueContains("save file") -> {
+                    println("saving file")
+                    n.saveFileAs(
+                        input.replace("save file", "", ignoreCase = true).trim().replace(" ", "_").also {
+                            println("saving file as $it")
+                        }
                     )
                 }
 
@@ -291,10 +304,6 @@ class LiveMic {
                     )
                 }.start()
             }
-        }
-
-        private fun String.removeForIfFirst(): String {
-            return this
         }
 
         fun startRecognition() {

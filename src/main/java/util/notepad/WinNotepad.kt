@@ -38,6 +38,7 @@ class WinNotepad: Notepad {
 
   override fun saveFileAs(name: String) {
     robot.apply {
+      println("saving file as $name")
       control(KeyEvent.VK_S)
       delay(1000)
       type(name)
