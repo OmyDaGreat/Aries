@@ -18,7 +18,7 @@ Insert link to demo
 
 ## Authors
 
-- [Om Gupta](https://www.github.com/OmyDaGreat)
-- [Colin Thai](https://www.github.com/totallyacoolguy)
-- [Rishi Mishra](https://www.github.com/Rishthewizard)
-- [Theodore Vang](https://github.com/theo-vang)
+- [Om Gupta](https://www.github.com/OmyDaGreat) - Project Manager and Developer Lead
+- [Colin Thai](https://www.github.com/totallyacoolguy) - Developer
+- [Rishi Mishra](https://www.github.com/Rishthewizard) - Mac support
+- [Theodore Vang](https://github.com/theo-vang) - Customer POV and Beta Tester
