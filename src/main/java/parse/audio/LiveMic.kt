@@ -55,14 +55,16 @@ class LiveMic {
 
         private fun process(input: String) {
             println("input: $input")
-            println("bool: ${input.trueContains("save file as")}")
             runBlocking {
                 beep()
             }
 
             when {
                 input.contains("Mouse") -> {
-                    Robot().mouseMoveString(input.replace("mouse", "", ignoreCase = true).replace("write", "right", ignoreCase = true).trim())
+                    Robot().mouseMoveString(
+                        input.replace("mouse", "", ignoreCase = true).replace("write", "right", ignoreCase = true)
+                            .trim()
+                    )
                 }
 
                 input.trueContainsAny("write special", "right special") -> {
@@ -251,20 +253,16 @@ class LiveMic {
 
                 input.trueContains("save file as") -> {
                     println("saving file as")
-                    n.saveFileAs(
-                        input.replace("save file as", "", ignoreCase = true).trim().replace(" ", "_").also {
-                            println("saving file as $it")
-                        }
-                    )
+                    n.saveFileAs(input.replace("save file as", "", ignoreCase = true).trim().replace(" ", "_").also {
+                        println("saving file as $it")
+                    })
                 }
 
                 input.trueContains("save file") -> {
                     println("saving file")
-                    n.saveFileAs(
-                        input.replace("save file", "", ignoreCase = true).trim().replace(" ", "_").also {
-                            println("saving file as $it")
-                        }
-                    )
+                    n.saveFileAs(input.replace("save file", "", ignoreCase = true).trim().replace(" ", "_").also {
+                        println("saving file as $it")
+                    })
                 }
 
                 input.trueContains("enter") -> {
