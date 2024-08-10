@@ -58,5 +58,5 @@ fun String.replaceSpecial(): String {
   for ((key, _) in special) {
     result = result.replace(key.first, key.second.toString())
   }
-  return result
+  return result.replace("ten", "10").replace("eleven", "11").replace("twelve", "12")
 }

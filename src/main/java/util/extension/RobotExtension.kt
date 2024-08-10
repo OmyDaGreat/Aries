@@ -63,7 +63,7 @@ fun Robot.leftClick() = click(KeyEvent.BUTTON1_DOWN_MASK)
 /**
  * Simulates a right mouse click.
  */
-fun Robot.rightClick() = click(KeyEvent.BUTTON2_DOWN_MASK)
+fun Robot.rightClick() = click(KeyEvent.BUTTON3_DOWN_MASK)
 
 /**
  * Simulates pressing the ENTER key.
@@ -74,11 +74,6 @@ fun Robot.enter() = type(KeyEvent.VK_ENTER)
  * Simulates pressing the TAB key.
  */
 fun Robot.tab() = type(KeyEvent.VK_TAB)
-
-/**
- * Simulates pressing the TAB key.
- */
-fun Robot.esc() = type(KeyEvent.VK_ESCAPE)
 
 /**
  * Simulates pressing CONTROL + another key.

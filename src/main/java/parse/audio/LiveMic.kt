@@ -84,7 +84,7 @@ class LiveMic {
                 }
 
                 input.trueContainsAny("write special", "right special") -> {
-                    input.replace("ten", "10").replace("eleven", "11").replace("twelve", "12").split(" ").forEach { c ->
+                    input.split(" ").forEach { c ->
                         if (special.containsKeyFirst(c)) {
                             special.getFromFirst(c).forEach { key ->
                                 Robot().keyPress(key)
@@ -138,10 +138,6 @@ class LiveMic {
 
                 input.trueContains("tab") -> {
                     Robot().tab()
-                }
-
-                input.trueContains("escape") -> {
-                    Robot().esc()
                 }
 
                 input.trueContains("left press") -> {
@@ -239,7 +235,9 @@ class LiveMic {
                 }
 
                 input.trueContains("f ") && (input[0] == 'f' || input[0] == 'F') -> {
-                    Robot().f(input.replace("f", "", ignoreCase = true).replaceSpecial().trim().toIntOrNull())
+                    Robot().f(input.replace("f", "", ignoreCase = true).trim().replaceSpecial().toIntOrNull().also {
+                        println("f $it")
+                    })
                 }
 
                 input.trueContainsAny("command") -> {

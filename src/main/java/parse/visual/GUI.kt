@@ -7,10 +7,14 @@ import net.miginfocom.swing.MigLayout
 import parse.audio.LiveMic
 import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
-import util.extension.*
 import util.extension.RobotUtils.special
 import util.extension.ScrollOption.Companion.showScrollableMessageDialog
-import java.awt.*
+import util.extension.addAll
+import util.extension.downloadFile
+import util.extension.icon
+import java.awt.Dimension
+import java.awt.Image
+import java.awt.SystemTray
 import java.io.File
 import java.io.FileWriter
 import java.util.*
@@ -148,40 +152,42 @@ class GUI {
 }
 
 private const val commandInfo = """
-  "<strong>Hey Aries..."</strong><br/>
-  - "write special [text]": Writes special characters.<br/>
-  - "write [text]": Writes the specified text.<br/>
-  - "search [query]": Searches Google for the specified query.<br/>
-  - "ask gemini [query]": Queries gemini and processes the response.<br/>
-  - "[query]": Queries gemini and processes the response.<br/>
-  <strong>Keyboard Commands:</strong><br/>
-  - "control shift [text]": Types text with Control + Shift modifier.<br/>
-  - "shift [text]": Types text with Shift modifier.<br/>
-  - "control [text]": Types text with Control modifier.<br/>
-  - "command [text]": Types text with Command modifier (on macOS).<br/>
-  - "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
-  - "cap": Presses the Caps Lock key.<br/>
-  - "switch window [number]": Switches to the specified window.<br/>
-  - "f [number]": Presses the specified function key.<br/>
-  - "alt f [number]": Presses ALT + specified function key.<br/>
-  - "windows shift [text]": Types text with Windows + Shift modifier.<br/>
-  - "windows [text]": Types text with Windows modifier.<br/>
-  - "command shift [text]": Types text with Command + Shift modifier.<br/>
-  - "enter": Presses the enter key.<br/>
-  <strong>Mouse Commands:</strong><br/>
-  - "left click": Performs a left mouse click.<br/>
-  - "right click": Performs a right mouse click.<br/>
-  - "left press": Presses the left mouse button.<br/>
-  - "left release": Releases the left mouse button.<br/>
-  - "right press": Presses the right mouse button.<br/>
-  - "right release": Releases the right mouse button.<br/>
-  - "middle click": Performs a middle mouse click.<br/>
-  - "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
-  - "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).<br/>
-  <strong>Notepad-specific commands:</strong><br/>
-  - "open notepad": Opens the notepad.<br/>
-  - "close notepad": Closes the notepad.<br/>
-  - "open new": Opens a new file in notepad.<br/>
-  - "delete everything": Deletes all text in notepad.<br/>
-  - "save file [name]": Saves the file with the specified name.
+<strong>Hey Aries...</strong><br/>
+- "write special [text]": Writes special characters.<br/>
+- "write [text]": Writes the specified text.<br/>
+- "search [query]": Searches Google for the specified query.<br/>
+- "ask gemini [query]": Queries gemini and processes the response.<br/>
+- "[query]": Queries gemini and processes the response.<br/>
+<strong>Keyboard Commands:</strong><br/>
+- "control shift [text]": Types text with Control + Shift modifier.<br/>
+- "shift [text]": Types text with Shift modifier.<br/>
+- "control [text]": Types text with Control modifier.<br/>
+- "command [text]": Types text with Command modifier (on macOS).<br/>
+- "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
+- "cap": Presses the Caps Lock key.<br/>
+- "switch window [number]": Switches to the specified window.<br/>
+- "f [number]": Presses the specified function key.<br/>
+- "alt f [number]": Presses ALT + specified function key.<br/>
+- "windows shift [text]": Types text with Windows + Shift modifier.<br/>
+- "windows [text]": Types text with Windows modifier.<br/>
+- "command shift [text]": Types text with Command + Shift modifier.<br/>
+- "enter": Presses the enter key.<br/>
+- "tab": Presses the Tab key.<br/>
+<strong>Mouse Commands:</strong><br/>
+- "left click": Performs a left mouse click.<br/>
+- "right click": Performs a right mouse click.<br/>
+- "left press": Presses the left mouse button.<br/>
+- "left release": Releases the left mouse button.<br/>
+- "right press": Presses the right mouse button.<br/>
+- "right release": Releases the right mouse button.<br/>
+- "middle click": Performs a middle mouse click.<br/>
+- "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
+- "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).<br/>
+<strong>Notepad-specific commands:</strong><br/>
+- "open notepad": Opens the notepad.<br/>
+- "close notepad": Closes the notepad.<br/>
+- "open new": Opens a new file in notepad.<br/>
+- "delete everything": Deletes all text in notepad.<br/>
+- "save file [name]": Saves the file with the specified name.<br/>
+- "save file as [name]": Saves the file with the specified name (alternative phrasing).
 """
