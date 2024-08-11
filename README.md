@@ -6,14 +6,15 @@ Dictation-controlled computer actions.
 
 ## Features
 
+- **Browser Support**: Search the web, open websites, and navigate using only your voice.
 - **Voice-Controlled Notepad**: Open, edit, and manage documents in notepad applications using only your voice.
 - **Mouse and Keyboard Control**: Easily do anything, even without direct support, using only your voice.
-- **Cross-Platform Compatibility**: Works seamlessly across Windows, Linux, and Mac.
-- **Gemini**: Using Google Gemini
+- **Gemini AI**: Using Google Gemini to answer queries and provide information.
+
 
 ## Demo
 
-Insert link to demo
+https://www.youtube.com/watch?v=3c3ZzElE39Q
 
 
 ## Authors
