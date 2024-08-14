@@ -19,6 +19,7 @@ https://www.youtube.com/watch?v=3c3ZzElE39Q
 
 ## Authors
 
+Juniors at Oxford Academy
 - [Om Gupta](https://www.github.com/OmyDaGreat) - Project Manager and Developer Lead
 - [Colin Thai](https://www.github.com/totallyacoolguy) - Developer
 - [Rishi Mishra](https://www.github.com/Rishthewizard) - Mac support
