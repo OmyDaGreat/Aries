@@ -2,7 +2,7 @@ package util.audio
 
 import ai.picovoice.leopard.Leopard
 import parse.audio.LiveMic.Companion.leopardthing
-import util.extension.trueContainsAny
+import util.extension.trueContains
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.time.Duration
@@ -43,7 +43,7 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
 
       val conversion = convertAudioToText(buffer, leopard)
 
-      if (conversion.trueContainsAny("Hey Aries", "Aries", "Harry")) {
+      if (conversion.trueContains("Hey Aries", "Aries", "Harry")) {
         line.close()
         keywordDetected()
         silenceFrames = Instant.now()
