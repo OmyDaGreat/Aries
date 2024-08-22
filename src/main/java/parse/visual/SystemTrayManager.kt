@@ -27,13 +27,15 @@ class SystemTrayManager(private val guiFrame: JFrame) {
 
     trayIcon.popupMenu = popupMenu
 
-    trayIcon.addMouseListener(object : MouseAdapter() {
-      override fun mouseClicked(e: MouseEvent) {
-        if (e.button == MouseEvent.BUTTON1) {
-          toggleGuiVisibility()
+    trayIcon.addMouseListener(
+      object : MouseAdapter() {
+        override fun mouseClicked(e: MouseEvent) {
+          if (e.button == MouseEvent.BUTTON1) {
+            toggleGuiVisibility()
+          }
         }
       }
-    })
+    )
 
     SystemTray.getSystemTray().add(trayIcon)
   }

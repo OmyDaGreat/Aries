@@ -1,14 +1,14 @@
 package util.audio
 
 import ai.picovoice.leopard.Leopard
-import parse.audio.LiveMic.Companion.leopardthing
-import util.extension.trueContains
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.time.Duration
 import java.time.Instant
 import javax.sound.sampled.*
 import kotlin.math.abs
+import parse.audio.LiveMic.Companion.leopardthing
+import util.extension.trueContains
 
 fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording: () -> Boolean) {
   val info = DataLine.Info(TargetDataLine::class.java, null)
@@ -53,8 +53,8 @@ fun processAudio(keywordDetected: () -> Unit, onSilence: () -> Unit, isRecording
 }
 
 /**
- * Determines if a given audio buffer contains silence.
- * Silence is defined as having an average amplitude below a specified threshold.
+ * Determines if a given audio buffer contains silence. Silence is defined as having an average
+ * amplitude below a specified threshold.
  *
  * @param buffer The audio buffer to analyze.
  * @param threshold The amplitude threshold below which the audio is considered silent.

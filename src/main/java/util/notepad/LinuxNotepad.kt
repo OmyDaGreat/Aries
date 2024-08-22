@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 import java.io.IOException
 
-class LinuxNotepad: Notepad {
+class LinuxNotepad : Notepad {
   private val robot = Robot()
   private var process: Process? = null
 
@@ -16,13 +16,14 @@ class LinuxNotepad: Notepad {
 
   @Throws(IOException::class)
   override fun openNotepad() {
-    process = ProcessBuilder("notepadqq").start().also {
-      robot.apply {
-        delay(1000)
-        mouseMove(RobotUtils.screenWidth / 2, RobotUtils.screenHeight / 2)
-        leftClick()
+    process =
+      ProcessBuilder("notepadqq").start().also {
+        robot.apply {
+          delay(1000)
+          mouseMove(RobotUtils.screenWidth / 2, RobotUtils.screenHeight / 2)
+          leftClick()
+        }
       }
-    }
   }
 
   override fun writeText(text: String) {
@@ -44,7 +45,7 @@ class LinuxNotepad: Notepad {
     robot.apply {
       type(name)
       control(KeyEvent.VK_S)
-      repeat(7) {type(KeyEvent.VK_TAB)}
+      repeat(7) { type(KeyEvent.VK_TAB) }
       enter()
       type(homeDirectory)
       enter()
@@ -58,6 +59,6 @@ class LinuxNotepad: Notepad {
   @Throws(InterruptedException::class)
   override fun closeNotepad() {
     robot.control(KeyEvent.VK_F4)
-    process?.waitFor()?.also {println("Exited Notepad++ with code: $it")}
+    process?.waitFor()?.also { println("Exited Notepad++ with code: $it") }
   }
 }
