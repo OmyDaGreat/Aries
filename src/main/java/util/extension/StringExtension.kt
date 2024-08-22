@@ -13,7 +13,8 @@ fun String.trueContains(vararg strings: String): Boolean {
 }
 
 /**
- * Helper function to check if the string contains the provided string, considering word boundaries and case insensitivity.
+ * Helper function to check if the string contains the provided string, considering word boundaries
+ * and case insensitivity.
  *
  * @param string The string to check for containment.
  * @return True if the string contains the provided string, false otherwise.

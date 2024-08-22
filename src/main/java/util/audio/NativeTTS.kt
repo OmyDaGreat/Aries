@@ -4,14 +4,14 @@ import io.github.jonelo.tts.engines.SpeechEngineNative
 import io.github.jonelo.tts.engines.VoicePreferences
 import io.github.jonelo.tts.engines.VoicePreferences.Gender
 import io.github.jonelo.tts.engines.exceptions.SpeechEngineCreationException
-import parse.audio.LiveMic
-import util.ResourcePath.getLocalResourcePath
 import java.io.*
 import java.net.URISyntaxException
+import parse.audio.LiveMic
+import util.ResourcePath.getLocalResourcePath
 
 /**
- * Utility class for text-to-speech (TTS) functionalities.
- * This class provides methods to convert text into speech using the native speech engine.
+ * Utility class for text-to-speech (TTS) functionalities. This class provides methods to convert
+ * text into speech using the native speech engine.
  */
 class NativeTTS {
 
@@ -19,12 +19,12 @@ class NativeTTS {
     val voicePreferences: VoicePreferences = VoicePreferences()
 
     /**
-     * Converts text to speech using the preferred voice settings.
-     * If the preferred voice is not found, it uses the first available voice.
+     * Converts text to speech using the preferred voice settings. If the preferred voice is not
+     * found, it uses the first available voice.
      *
      * @param text The text to be converted to speech.
      * @throws SpeechEngineCreationException If there is an error creating the speech engine.
-     * @throws IOException                   If there is an input/output error.
+     * @throws IOException If there is an input/output error.
      */
     @JvmStatic
     @Throws(SpeechEngineCreationException::class, IOException::class)
@@ -74,7 +74,7 @@ class NativeTTS {
     fun saveVoicePreferences() {
       val filePath = getLocalResourcePath(PREFERENCES_FILE)
       try {
-        BufferedWriter(FileWriter(filePath)).use {writer ->
+        BufferedWriter(FileWriter(filePath)).use { writer ->
           writer.write("language=" + voicePreferences.language + "\n")
           writer.write("country=" + voicePreferences.country + "\n")
           writer.write("gender=" + voicePreferences.gender.name + "\n")
@@ -89,10 +89,10 @@ class NativeTTS {
     fun loadVoicePreferences() {
       val filePath = getLocalResourcePath(PREFERENCES_FILE)
       try {
-        BufferedReader(FileReader(filePath)).use {reader ->
+        BufferedReader(FileReader(filePath)).use { reader ->
           var line: String
-          while ((reader.readLine().also {line = it}) != null) {
-            val parts = line.split("=".toRegex()).dropLastWhile {it.isEmpty()}.toTypedArray()
+          while ((reader.readLine().also { line = it }) != null) {
+            val parts = line.split("=".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (parts.size == 2) {
               when (parts[0]) {
                 "language" -> voicePreferences.language = parts[1]

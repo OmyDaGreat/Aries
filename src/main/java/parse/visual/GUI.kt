@@ -2,24 +2,20 @@ package parse.visual
 
 import com.formdev.flatlaf.FlatDarkLaf
 import io.github.jonelo.tts.engines.VoicePreferences
-import kotlinx.coroutines.runBlocking
-import net.miginfocom.swing.MigLayout
-import parse.audio.LiveMic
-import util.ResourcePath.getLocalResourcePath
-import util.audio.NativeTTS
-import util.extension.RobotUtils.special
-import util.extension.ScrollOption.Companion.showScrollableMessageDialog
-import util.extension.addAll
-import util.extension.downloadFile
-import util.extension.icon
-import java.awt.Dimension
-import java.awt.Image
-import java.awt.SystemTray
+import java.awt.*
 import java.io.File
 import java.io.FileWriter
 import java.util.*
 import javax.imageio.ImageIO
 import javax.swing.*
+import kotlinx.coroutines.runBlocking
+import net.miginfocom.swing.MigLayout
+import parse.audio.LiveMic
+import util.ResourcePath.getLocalResourcePath
+import util.audio.NativeTTS
+import util.extension.*
+import util.extension.RobotUtils.special
+import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 
 class GUI {
 
@@ -30,19 +26,21 @@ class GUI {
     private lateinit var spMaxWords: JSpinner
 
     fun run() {
-      SwingUtilities.invokeLater {setupGUI}
+      SwingUtilities.invokeLater { setupGUI }
     }
 
     private val setupGUI: Unit
       get() {
         FlatDarkLaf.setup()
         JFrame.setDefaultLookAndFeelDecorated(true)
-        val frame = JFrame("Aries").apply {
-          defaultCloseOperation =
-            if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE else WindowConstants.EXIT_ON_CLOSE
-          setSize(500, 600)
-          setLocationRelativeTo(null)
-        }
+        val frame =
+          JFrame("Aries").apply {
+            defaultCloseOperation =
+              if (SystemTray.isSupported()) WindowConstants.HIDE_ON_CLOSE
+              else WindowConstants.EXIT_ON_CLOSE
+            setSize(500, 600)
+            setLocationRelativeTo(null)
+          }
 
         cbLanguage = JComboBox<String>(Locale.getISOLanguages())
         cbCountry = JComboBox<String>(Locale.getISOCountries())
@@ -52,44 +50,46 @@ class GUI {
 
         val btn = getBtn(cbLanguage, cbCountry, cbGender, spMaxWords)
 
-        val specialKeysButton = JButton("Show Special Keys").apply {
-          addActionListener {
-            val specialKeys = special.keys.joinToString("\n") {it.first}
-            showScrollableMessageDialog(null, specialKeys, "Special Keys", JOptionPane.INFORMATION_MESSAGE)
+        val specialKeysButton =
+          JButton("Show Special Keys").apply {
+            addActionListener {
+              val specialKeys = special.keys.joinToString("\n") { it.first }
+              showScrollableMessageDialog(
+                null,
+                specialKeys,
+                "Special Keys",
+                JOptionPane.INFORMATION_MESSAGE,
+              )
+            }
           }
-        }
 
         val textArea = JLabel("<html>$commandInfo</html>")
-        val scrollPane = JScrollPane(textArea).apply {
-          preferredSize = Dimension(450, 350)
-        }
+        val scrollPane = JScrollPane(textArea).apply { preferredSize = Dimension(450, 350) }
 
         val span2wrap = "span 2, wrap"
         val split2span = "split 2, span"
-        val infoPanel = JPanel().apply {
-          add(scrollPane)
-        }
-        val panel = JPanel(MigLayout("center", "[grow,fill]")).apply {
-          addAll(
-            JLabel("Language:") to split2span,
-            cbLanguage to span2wrap,
-            JLabel("Country:") to split2span,
-            cbCountry to span2wrap,
-            JLabel("Gender") to split2span,
-            cbGender to span2wrap,
-            JLabel("Max Words") to split2span,
-            spMaxWords to span2wrap,
-            btn to span2wrap,
-            infoPanel to span2wrap,
-            specialKeysButton to span2wrap
-          )
-        }
+        val infoPanel = JPanel().apply { add(scrollPane) }
+        val panel =
+          JPanel(MigLayout("center", "[grow,fill]")).apply {
+            addAll(
+              JLabel("Language:") to split2span,
+              cbLanguage to span2wrap,
+              JLabel("Country:") to split2span,
+              cbCountry to span2wrap,
+              JLabel("Gender") to split2span,
+              cbGender to span2wrap,
+              JLabel("Max Words") to split2span,
+              spMaxWords to span2wrap,
+              btn to span2wrap,
+              infoPanel to span2wrap,
+              specialKeysButton to span2wrap,
+            )
+          }
 
         runBlocking {
           ImageIO.read(downloadFile(icon, getLocalResourcePath("icon.png")))
-            .getScaledInstance(16, 16, Image.SCALE_SMOOTH).let {
-              frame.iconImage = it
-            }
+            .getScaledInstance(16, 16, Image.SCALE_SMOOTH)
+            .let { frame.iconImage = it }
         }
 
         frame.apply {
@@ -134,24 +134,26 @@ class GUI {
     }
 
     private fun writeVoicePreferencesToFile(filePath: String) {
-      val content = """
+      val content =
+        """
         language=en
         country=US
         gender=MALE
         maxWords=40
-      """.trimIndent()
-      val file = File(filePath)
-      if (!file.exists()) {
-        file.createNewFile()
-        FileWriter(file).use {writer ->
-          writer.write(content)
+      """
+          .trimIndent()
+      File(filePath).apply {
+        if (!exists()) {
+          createNewFile()
+          FileWriter(this).use { it.write(content) }
         }
       }
     }
   }
 }
 
-private const val commandInfo = """
+private const val commandInfo =
+  """
 <strong>Hey Aries...</strong><br/>
 - "write special [text]": Writes special characters.<br/>
 - "write [text]": Writes the specified text.<br/>

@@ -3,8 +3,8 @@ package util
 import org.apache.commons.lang3.SystemUtils
 
 /**
- * Enum representing different platforms on which the application can run.
- * Provides utility methods to detect the current operating system.
+ * Enum representing different platforms on which the application can run. Provides utility methods
+ * to detect the current operating system.
  */
 enum class Platform {
   WINDOWS, // Represents the Windows operating system
@@ -18,8 +18,8 @@ enum class Platform {
      *
      * @return The detected platform as a [Platform] enum.
      */
-    fun detectPlatform(): Platform {
-      return when {
+    val currentPlatform: Platform by lazy {
+      when {
         SystemUtils.IS_OS_WINDOWS -> WINDOWS
         SystemUtils.IS_OS_LINUX -> LINUX
         SystemUtils.IS_OS_MAC -> MAC

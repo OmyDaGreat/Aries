@@ -1,17 +1,20 @@
 package util.notepad
 
-import kotlinx.coroutines.runBlocking
-import util.extension.*
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.IOException
-//test
-class MacNotepad: Notepad {
+import kotlinx.coroutines.runBlocking
+import util.extension.*
+
+// test
+class MacNotepad : Notepad {
   private val robot = Robot()
 
   override fun openNotepad() {
     runBlocking {
-      ProcessBuilder("osascript", downloadFile(openNotepad, "openNotepad.scpt").absolutePath).start().waitFor()
+      ProcessBuilder("osascript", downloadFile(openNotepad, "openNotepad.scpt").absolutePath)
+        .start()
+        .waitFor()
     }
   }
 
@@ -35,12 +38,17 @@ class MacNotepad: Notepad {
   override fun openNewFile() {
     try {
       ProcessBuilder(
-        "osascript", "-e", """
+          "osascript",
+          "-e",
+          """
             tell application \"System Events\"
                 click menu item \"New Note\" of menu 1 of menu bar item \"File\" of menu bar 1 of application \"Notes\"
             end tell
-        """.trimIndent()
-      ).start().waitFor()
+        """
+            .trimIndent(),
+        )
+        .start()
+        .waitFor()
     } catch (e: Exception) {
       e.printStackTrace()
     }

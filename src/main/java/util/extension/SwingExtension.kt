@@ -1,14 +1,7 @@
 package util.extension
 
-import javax.swing.*
-
-fun JTextArea.transformLabel() {
-  setLineWrap(true)
-  wrapStyleWord = true
-  isEditable = false
-  isOpaque = false
-  isFocusable = false
-}
+import javax.swing.JComponent
+import javax.swing.JPanel
 
 fun JPanel.addAll(vararg components: Pair<JComponent, String>) {
   for ((component1, constraints) in components) {

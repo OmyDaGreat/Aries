@@ -1,18 +1,19 @@
 package util.notepad
 
-import util.Platform
 import java.awt.AWTException
 import java.io.IOException
+import util.Platform
 
 class NotepadProcessor {
-  private val notepad: Notepad = when (val p = Platform.detectPlatform()) {
-    Platform.WINDOWS -> WinNotepad()
-    Platform.LINUX -> LinuxNotepad()
-    Platform.MAC -> MacNotepad()
-    else -> {
-      error("Platform not supported")
+  private val notepad: Notepad =
+    when (val p = Platform.currentPlatform) {
+      Platform.WINDOWS -> WinNotepad()
+      Platform.LINUX -> LinuxNotepad()
+      Platform.MAC -> MacNotepad()
+      else -> {
+        error("Platform not supported")
+      }
     }
-  }
 
   @Throws(IOException::class, InterruptedException::class, AWTException::class)
   fun openNotepad() = notepad.openNotepad()
@@ -27,6 +28,5 @@ class NotepadProcessor {
 
   fun openNewFile() = notepad.openNewFile()
 
-  @Throws(InterruptedException::class)
-  fun closeNotepad() = notepad.closeNotepad()
+  @Throws(InterruptedException::class) fun closeNotepad() = notepad.closeNotepad()
 }
