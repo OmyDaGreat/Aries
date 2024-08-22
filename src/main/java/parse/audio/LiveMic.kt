@@ -1,10 +1,6 @@
 package parse.audio
 
 import ai.picovoice.leopard.*
-import java.awt.*
-import java.io.IOException
-import java.net.URI
-import java.util.*
 import kotlinx.coroutines.*
 import lombok.experimental.ExtensionMethod
 import util.*
@@ -12,6 +8,10 @@ import util.Keys.get
 import util.ResourcePath.getLocalResourcePath
 import util.audio.*
 import util.extension.*
+import java.awt.*
+import java.io.IOException
+import java.net.URI
+import java.util.*
 
 @ExtensionMethod(RobotUtils::class)
 class LiveMic {

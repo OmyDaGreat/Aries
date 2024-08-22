@@ -9,13 +9,15 @@ import kotlinx.coroutines.*
 import parse.audio.LiveMic.Companion.maxWords
 import parse.visual.GUI.Companion.cbLanguage
 import util.audio.NativeTTS
-import util.audio.generateContent
+import util.generateContent
 import util.extension.*
 import util.extension.RobotUtils.special
 import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.notepad.NotepadProcessor
+import util.*
 
 private val n = NotepadProcessor()
+private val scope = CoroutineScope(Dispatchers.Default)
 
 /**
  * Processes the given input string and performs various actions based on the content of the input.
@@ -199,6 +201,12 @@ fun process(input: String) {
 
     input.trueContains("enter") -> {
       n.addNewLine()
+    }
+
+    input.trueContains("set alarm for ") -> {
+      val time = input.remove("set alarm for ").trim()
+      println("setting alarm for $time")
+      scope.launch { setAlarm(time) }
     }
 
     else -> {

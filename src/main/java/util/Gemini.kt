@@ -1,4 +1,4 @@
-package util.audio
+package util
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -8,7 +8,6 @@ import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import util.Keys
 
 suspend fun generateContent(prompt: String): String {
   val body = mapOf("contents" to listOf(mapOf("parts" to listOf(mapOf("text" to prompt)))))

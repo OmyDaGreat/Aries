@@ -50,8 +50,8 @@ suspend fun downloadFile(fileURL: String, destinationPath: String): File {
             requestTimeoutMillis = 120000 // 2 minutes
           }
         }
-        .use { client ->
-          val fileBytes: ByteArray = client.get(fileURL).readBytes()
+        .use {
+          val fileBytes: ByteArray = it.get(fileURL).readBytes()
           writeBytes(fileBytes)
           println("File downloaded successfully.")
         }
