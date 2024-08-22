@@ -13,7 +13,7 @@ object ResourcePath {
    */
   fun getLocalResourcePath(path: String): String {
     return "${
-      if (Platform.detectPlatform() == Platform.MAC) "" else System.getProperty("user.home")
+      if (Platform.currentPlatform == Platform.MAC) "${System.getProperty("user.home")}${separator}Documents" else System.getProperty("user.home")
     }${separator}Aries$separator$path"
   }
 }
