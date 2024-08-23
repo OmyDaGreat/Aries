@@ -1,4 +1,4 @@
-package util
+package util.process
 
 import kotlinx.coroutines.*
 import kotlinx.datetime.Clock
@@ -8,8 +8,8 @@ import parse.visual.GUI.Companion.cbLanguage
 import util.audio.NativeTTS
 import util.extension.ScrollOption.Companion.showScrollableMessageDialog
 import util.extension.remove
+import util.generateContent
 import javax.swing.JOptionPane
-import kotlin.time.Duration
 
 suspend fun setAlarm(time: String) {
   val validationPrompt =
