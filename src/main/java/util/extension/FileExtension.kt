@@ -23,7 +23,7 @@ const val openNotepad =
 const val leolibwin =
   "https://www.dropbox.com/scl/fi/mztcz5q5p8qiv91vfchi8/libpv_leopard_jni.dll?rlkey=9aumenejyt39iewm2d8kwze6b&st=qaw0fewr&dl=1"
 
-// URL of leopard library for mac
+// URL of leopard library for mac (arm64 rn)
 const val leolibmac =
   "https://www.dropbox.com/scl/fi/7gs2bjxi7tn3ec4aomvwg/libpv_leopard_jni.dylib?rlkey=eutb46ojy2jih7sdq89t43ay8&st=en3ds800&dl=1"
 
