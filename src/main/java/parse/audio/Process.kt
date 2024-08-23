@@ -1,256 +1,210 @@
 package parse.audio
 
+import kotlinx.coroutines.*
+import util.*
+import util.extension.*
+import util.extension.RobotUtils.special
+import util.notepad.NotepadProcessor
 import java.awt.Robot
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
-import javax.swing.JOptionPane
-import kotlin.time.Duration
-import kotlinx.coroutines.*
-import parse.audio.LiveMic.Companion.maxWords
-import parse.visual.GUI.Companion.cbLanguage
-import util.audio.NativeTTS
-import util.generateContent
-import util.extension.*
-import util.extension.RobotUtils.special
-import util.extension.ScrollOption.Companion.showScrollableMessageDialog
-import util.notepad.NotepadProcessor
-import util.*
 
 private val n = NotepadProcessor()
 private val scope = CoroutineScope(Dispatchers.Default)
 
-/**
- * Processes the given input string and performs various actions based on the content of the input.
- *
- * @param input The input string to process.
- */
 fun process(input: String) {
   println("input: $input")
-  runBlocking { beep() }
+  beep()
 
   when {
-    input.trueContains("arrow") -> {
-      Robot().arrow(input.remove("arrow").trim())
-    }
+    input.trueContains("arrow") -> handleArrow(input)
+    input.trueContains("mouse") -> handleMouse(input)
+    input.trueContains("right press", "write press", "right release", "write release", "right click", "write click") -> handleRightPress(input)
+    input.trueContains("left press", "left release", "left click") -> handleLeftPress(input)
+    input.trueContains("write special", "right special") -> handleSpecial(input)
+    input.trueContains("write", "right") -> handleWrite(input)
+    input.trueContains("ask gemini") -> handleAskGemini(input)
+    input.trueContains("search for") -> handleSearchFor(input)
+    input.trueContains("search") -> handleSearch(input)
+    input.trueContains("cap") -> handleCap()
+    input.trueContains("switch window") -> handleSwitchWindow(input)
+    input.trueContains("tab") -> handleTab()
+    input.trueContains("middle click") -> handleMiddleClick()
+    input.trueContains("alte f", "alte of") -> handleAlteF(input)
+    input.trueContains("windows shift") -> handleWindowsShift(input)
+    input.trueContains("windows") -> handleWindows(input)
+    input.trueContains("command shift") -> handleCommandShift(input)
+    input.trueContains("control shift", "controlled shift") -> handleControlShift(input)
+    input.trueContains("shift") -> handleShift(input)
+    input.trueContains("control", "controlled") -> handleControl(input)
+    input.trueContains("f ") -> handleF(input)
+    input.trueContains("command") -> handleCommand(input)
+    input.trueContains("scroll", "scrolled") -> handleScroll(input)
+    input.trueContains("open notepad", "opened notepad", "close notepad", "closed notepad", "clothes notepad") -> handleNotepad(input)
+    input.trueContains("open new", "open knew") -> handleOpenNew()
+    input.trueContains("delete everything") -> handleDeleteEverything()
+    input.trueContains("save file as", "save file") -> handleSaveFile(input)
+    input.trueContains("enter") -> handleEnter()
+    input.trueContains("set alarm", "set alarm for ") -> handleSetAlarm(input)
+    else -> handleDefault(input)
+  }
+}
 
-    input.trueContains("mouse") -> {
-      Robot()
-        .mouseMoveString(input.remove("mouse").replace("write", "right", ignoreCase = true).trim())
-    }
+private fun handleArrow(input: String) {
+  Robot().arrow(input.remove("arrow").trim())
+}
 
-    input.trueContains(
-      "right press",
-      "write press",
-      "right release",
-      "write release",
-      "right click",
-      "write click",
-    ) -> {
-      when {
-        input.trueContains("right press", "write press") ->
-          Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
-        input.trueContains("right release", "write release") ->
-          Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
+private fun handleMouse(input: String) {
+  Robot().mouseMoveString(input.remove("mouse").replace("write", "right", ignoreCase = true).trim())
+}
 
-        input.trueContains("right click", "write click") -> Robot().rightClick()
-      }
-    }
+private fun handleRightPress(input: String) {
+  when {
+    input.trueContains("right press", "write press") -> Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
+    input.trueContains("right release", "write release") -> Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
+    input.trueContains("right click", "write click") -> Robot().rightClick()
+  }
+}
 
-    input.trueContains("left press", "left release", "left click") -> {
-      when {
-        input.trueContains("left press") -> Robot().mousePress(InputEvent.BUTTON1_DOWN_MASK)
-        input.trueContains("left release") -> Robot().mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-        input.trueContains("left click") -> Robot().leftClick()
-      }
-    }
+private fun handleLeftPress(input: String) {
+  when {
+    input.trueContains("left press") -> Robot().mousePress(InputEvent.BUTTON1_DOWN_MASK)
+    input.trueContains("left release") -> Robot().mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+    input.trueContains("left click") -> Robot().leftClick()
+  }
+}
 
-    input.trueContains("write special", "right special") -> {
-      input.split(" ").forEach { c ->
-        if (special.containsKeyFirst(c)) {
-          special.getFromFirst(c).forEach { key -> Robot().keyPress(key) }
-          special.getFromFirst(c).reversed().forEach { key -> Robot().keyRelease(key) }
-        }
-      }
-    }
-
-    input.trueContains("write", "right") -> {
-      Robot().type(input.remove("write", "right").trim())
-    }
-
-    input.trueContains("ask gemini") -> {
-      ask("Answer the request while staying concise but without contractions: $input")
-    }
-
-    input.trueContains("search for") -> {
-      println(
-        open(
-          "https://www.google.com/search?q=${input.remove("search for").trim().replace(" ", "+")}"
-        )
-      )
-    }
-
-    input.trueContains("search") -> {
-      println(
-        open("https://www.google.com/search?q=${input.remove("search ").trim().replace(" ", "+")}")
-      )
-    }
-
-    input.trueContains("cap") -> {
-      Robot().type(KeyEvent.VK_CAPS_LOCK)
-    }
-
-    input.trueContains("switch window") -> {
-      input.remove("switch window").trim().split(" ").forEach {
-        it.replaceSpecial().toIntOrNull()?.let { n -> Robot().alt { repeat(n) { Robot().tab() } } }
-      }
-    }
-
-    input.trueContains("tab") -> {
-      Robot().tab()
-    }
-
-    input.trueContains("middle click") -> {
-      Robot().apply {
-        mousePress(InputEvent.BUTTON2_DOWN_MASK)
-        mouseRelease(InputEvent.BUTTON2_DOWN_MASK)
-      }
-    }
-
-    input.trueContains("alte f", "alte of") -> {
-      Robot().alt { it.f(input.remove("alte f", "alte of").replaceSpecial().trim().toIntOrNull()) }
-    }
-
-    input.trueContains("windows shift") -> {
-      Robot().windows { r1 ->
-        r1.shift { r2 ->
-          r2.type(input.remove("windows shift").replaceSpecial().trim().lowercase())
-        }
-      }
-    }
-
-    input.trueContains("windows") -> {
-      Robot().windows { r -> r.type(input.remove("windows").replaceSpecial().trim().lowercase()) }
-    }
-
-    input.trueContains("command shift") -> {
-      Robot().command { r1 ->
-        r1.shift { r2 ->
-          r2.type(input.remove("command shift").replaceSpecial().trim().lowercase())
-        }
-      }
-    }
-
-    input.trueContains("control shift", "controlled shift") -> {
-      Robot().control { r1 ->
-        r1.shift { r2 ->
-          r2.type(
-            input.remove("control shift", "controlled shift").replaceSpecial().trim().lowercase()
-          )
-        }
-      }
-    }
-
-    input.trueContains("shift") -> {
-      Robot().shift { r -> r.type(input.remove("shift").replaceSpecial().trim().lowercase()) }
-    }
-
-    input.trueContains("control", "controlled") -> {
-      Robot().control { r ->
-        r.type(input.remove("control", "controlled").replaceSpecial().trim().lowercase())
-      }
-    }
-
-    input.trueContains("f ") -> {
-      Robot().f(input.remove("f").trim().replaceSpecial().toIntOrNull().also { println("f $it") })
-    }
-
-    input.trueContains("command") -> {
-      Robot().command { r -> r.type(input.remove("command").replaceSpecial().trim().lowercase()) }
-    }
-
-    input.trueContains("scroll", "scrolled") -> {
-      Robot().scroll(input.remove("scroll", "scrolled").trim { it <= ' ' })
-    }
-
-    input.trueContains(
-      "open notepad",
-      "opened notepad",
-      "close notepad",
-      "closed notepad",
-      "clothes notepad",
-    ) -> {
-      when {
-        input.trueContains("open notepad", "opened notepad") -> n.openNotepad()
-        input.trueContains("close notepad", "closed notepad", "clothes notepad") -> n.closeNotepad()
-      }
-    }
-
-    input.trueContains("open new", "open knew") -> {
-      n.openNewFile()
-    }
-
-    input.trueContains("delete everything") -> {
-      n.deleteText()
-    }
-
-    input.trueContains("save file as", "save file") -> {
-      val fileName = input.remove("save file as", "save file").trim().replace(" ", "_")
-      println("saving file as $fileName")
-      n.saveFileAs(fileName)
-    }
-
-    input.trueContains("enter") -> {
-      n.addNewLine()
-    }
-
-    input.trueContains("set alarm for ") -> {
-      val time = input.remove("set alarm for ").trim()
-      println("setting alarm for $time")
-      scope.launch { setAlarm(time) }
-    }
-
-    else -> {
-      ask("Answer the request while staying concise but without contractions: $input")
+private fun handleSpecial(input: String) {
+  input.split(" ").forEach { c ->
+    if (special.containsKeyFirst(c)) {
+      special.getFromFirst(c).forEach { key -> Robot().keyPress(key) }
+      special.getFromFirst(c).reversed().forEach { key -> Robot().keyRelease(key) }
     }
   }
 }
 
-/**
- * Sends a request to Gemini and handles the response.
- *
- * @param input The input string to send to Gemini.
- */
-private fun ask(input: String) {
-  runBlocking {
-    var gemini = generateContent(input).replace("*", "")
-    if (cbLanguage.selectedItem!! != "en") {
-      gemini = generateContent("Translate $gemini to ${cbLanguage.selectedItem}")
-    }
-    launch {
-      if (gemini.split(" ").size > maxWords) {
-        NativeTTS.tts("The response is over $maxWords words.")
-      } else {
-        NativeTTS.tts(gemini)
-      }
-    }
-    Thread {
-        showScrollableMessageDialog(
-          null,
-          gemini,
-          "Gemini is responding to ${
-          input.remove(
-            "Answer the request while staying concise but without contractions: "
-          ).replaceFirst("Translate ", "").replaceFirst(" to ${cbLanguage.selectedItem}", "")
-        }",
-          JOptionPane.INFORMATION_MESSAGE,
-        )
-      }
-      .start()
+private fun handleWrite(input: String) {
+  Robot().type(input.remove("write", "right").trim())
+}
+
+private fun handleAskGemini(input: String) {
+  ask("Answer the request while staying concise but without contractions: $input")
+}
+
+private fun handleSearchFor(input: String) {
+  println(open("https://www.google.com/search?q=${input.remove("search for").trim().replace(" ", "+")}"))
+}
+
+private fun handleSearch(input: String) {
+  println(open("https://www.google.com/search?q=${input.remove("search ").trim().replace(" ", "+")}"))
+}
+
+private fun handleCap() {
+  Robot().type(KeyEvent.VK_CAPS_LOCK)
+}
+
+private fun handleSwitchWindow(input: String) {
+  input.remove("switch window").trim().split(" ").forEach {
+    it.replaceSpecial().toIntOrNull()?.let { n -> Robot().alt { repeat(n) { Robot().tab() } } }
   }
 }
 
-/** Plays a "Request Confirmed" sound to confirm the request. */
-suspend fun beep() {
-  NativeTTS.tts("Request Confirmed")
-  delay(Duration.parse("1s"))
+private fun handleTab() {
+  Robot().tab()
+}
+
+private fun handleMiddleClick() {
+  Robot().apply {
+    mousePress(InputEvent.BUTTON2_DOWN_MASK)
+    mouseRelease(InputEvent.BUTTON2_DOWN_MASK)
+  }
+}
+
+private fun handleAlteF(input: String) {
+  Robot().alt { it.f(input.remove("alte f", "alte of").replaceSpecial().trim().toIntOrNull()) }
+}
+
+private fun handleWindowsShift(input: String) {
+  Robot().windows { r1 ->
+    r1.shift { r2 ->
+      r2.type(input.remove("windows shift").replaceSpecial().trim().lowercase())
+    }
+  }
+}
+
+private fun handleWindows(input: String) {
+  Robot().windows { r -> r.type(input.remove("windows").replaceSpecial().trim().lowercase()) }
+}
+
+private fun handleCommandShift(input: String) {
+  Robot().command { r1 ->
+    r1.shift { r2 ->
+      r2.type(input.remove("command shift").replaceSpecial().trim().lowercase())
+    }
+  }
+}
+
+private fun handleControlShift(input: String) {
+  Robot().control { r1 ->
+    r1.shift { r2 ->
+      r2.type(input.remove("control shift", "controlled shift").replaceSpecial().trim().lowercase())
+    }
+  }
+}
+
+private fun handleShift(input: String) {
+  Robot().shift { r -> r.type(input.remove("shift").replaceSpecial().trim().lowercase()) }
+}
+
+private fun handleControl(input: String) {
+  Robot().control { r ->
+    r.type(input.remove("control", "controlled").replaceSpecial().trim().lowercase())
+  }
+}
+
+private fun handleF(input: String) {
+  Robot().f(input.remove("f").trim().replaceSpecial().toIntOrNull().also { println("f $it") })
+}
+
+private fun handleCommand(input: String) {
+  Robot().command { r -> r.type(input.remove("command").replaceSpecial().trim().lowercase()) }
+}
+
+private fun handleScroll(input: String) {
+  Robot().scroll(input.remove("scroll", "scrolled").trim { it <= ' ' })
+}
+
+private fun handleNotepad(input: String) {
+  when {
+    input.trueContains("open notepad", "opened notepad") -> n.openNotepad()
+    input.trueContains("close notepad", "closed notepad", "clothes notepad") -> n.closeNotepad()
+  }
+}
+
+private fun handleOpenNew() {
+  n.openNewFile()
+}
+
+private fun handleDeleteEverything() {
+  n.deleteText()
+}
+
+private fun handleSaveFile(input: String) {
+  val fileName = input.remove("save file as", "save file").trim().replace(" ", "_")
+  println("saving file as $fileName")
+  n.saveFileAs(fileName)
+}
+
+private fun handleEnter() {
+  n.addNewLine()
+}
+
+private fun handleSetAlarm(input: String) {
+  val time = input.remove("set alarm ", "set alarm for ").trim()
+  println("Setting alarm for $time")
+  scope.launch { setAlarm(time) }
+}
+
+private fun handleDefault(input: String) {
+  ask("Answer the request while staying concise but without contractions: $input")
 }
