@@ -30,6 +30,21 @@ class LiveMic {
         Leopard.Builder()
           .setAccessKey(get("pico"))
           .setModelPath(downloadFile(pv, getLocalResourcePath("Aries.pv")).absolutePath)
+          .setLibraryPath(
+            when (Platform.currentPlatform) {
+              Platform.WINDOWS ->
+                downloadFile(leolibwin, getLocalResourcePath("libpv_leopard_jni.dll")).absolutePath
+
+              Platform.MAC ->
+                downloadFile(leolibmac, getLocalResourcePath("libpv_leopard_jni.dylib"))
+                  .absolutePath
+
+              Platform.LINUX ->
+                downloadFile(leoliblin, getLocalResourcePath("libpv_leopard_jni.so")).absolutePath
+
+              else -> null.also { NativeTTS.tts("Leopard is not supported on this platform.") }
+            }
+          )
     }
 
     /**
