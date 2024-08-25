@@ -11,20 +11,34 @@ import util.extension.remove
 import util.generateContent
 import javax.swing.JOptionPane
 
+@OptIn(DelicateCoroutinesApi::class)
 suspend fun setAlarm(time: String) {
-  val validationPrompt =
-    "Convert the given time string to ISO-8601 format. If just a time was given, use today's date with the given time (unless the time has passed, in which case you should use tomorrow): $time"
-  val validationResponse = generateContent(validationPrompt).trim()
-  val delayDuration = Instant.parse(validationResponse) - Clock.System.now()
+  val alarmTime = convertToMilliseconds(time)
 
-  if (delayDuration.inWholeMilliseconds > 0) {
-    println("Setting alarm for $time")
-    delay(delayDuration.inWholeMilliseconds)
-    NativeTTS.tts("Alarm ringing for $time")
-  } else {
-    println("The specified time has already passed.")
-    NativeTTS.tts("The specified time has already passed.")
+  // Create a Job to manage the alarm
+  val job = Job()
+
+  // Launch the alarm coroutine
+  GlobalScope.launch(job) {
+    try {
+      delay(alarmTime)
+      println("Alarm triggered!")
+      NativeTTS.tts("Alarm triggered!")
+    } catch (e: InterruptedException) {
+      println("Alarm interrupted")
+    } catch (e: Exception) {
+      println("Error occurred in alarm: ${e.message}")
+    }
   }
+
+  // Cancel the job after the alarm has been launched
+  job.cancel()
+}
+
+fun convertToMilliseconds(time: String): Long {
+  val seconds = time.split(":")
+  return  time.toLong() * 1000
+  //h.toLong() * 3600000 + m.toLong() * 60000
 }
 
 /** Plays a "Request Confirmed" sound to confirm the request. */
