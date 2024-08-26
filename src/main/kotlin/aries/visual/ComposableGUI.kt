@@ -35,6 +35,10 @@ fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
     var selectedCountry by remember { mutableStateOf("") }
     var selectedGender by remember { mutableStateOf("") }
 
+    var languageDropdownExpanded by remember { mutableStateOf(false) }
+    var countryDropdownExpanded by remember { mutableStateOf(false) }
+    var genderDropdownExpanded by remember { mutableStateOf(false) }
+
     updateGUIFromPreferences(
       setSelectedLanguage = { selectedLanguage = it },
       setSelectedCountry = { selectedCountry = it },
@@ -45,49 +49,69 @@ fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
     val countries = Locale.getISOCountries().toList()
     val genders = listOf("MALE", "FEMALE")
 
-    selectedLanguage = languages[0]
-    selectedCountry = countries[0]
-    selectedGender = genders[0]
-
-    // Update SharedState with the selected language and country
-    SharedState.selectedLanguage = selectedLanguage
-    SharedState.selectedCountry = selectedCountry
-
     Column(modifier = Modifier.padding(16.dp)) {
-      DropdownMenu(expanded = true, onDismissRequest = {}) {
-        languages.forEach { language ->
-          DropdownMenuItem(
-            onClick = {
-              selectedLanguage = language
-              SharedState.selectedLanguage = language // Update SharedState
-            }
-          ) {
-            Text(language)
+      Text("Voice Preferences", style = MaterialTheme.typography.h6, modifier = Modifier.padding(bottom = 8.dp))
+
+      Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+        Text("Language: ", modifier = Modifier.alignByBaseline())
+        Box {
+          Button(onClick = { languageDropdownExpanded = true }) {
+            Text(selectedLanguage)
           }
-        }
-      }
-      Box {
-        DropdownMenu(expanded = false, onDismissRequest = {}) {
-          countries.forEach { country ->
-            DropdownMenuItem(
-              onClick = {
-                selectedCountry = country
-                SharedState.selectedCountry = country // Update SharedState
+          DropdownMenu(expanded = languageDropdownExpanded, onDismissRequest = { languageDropdownExpanded = false }) {
+            languages.forEach { language ->
+              DropdownMenuItem(onClick = {
+                selectedLanguage = language
+                SharedState.selectedLanguage = language
+                languageDropdownExpanded = false
+              }) {
+                Text(language)
               }
-            ) {
-              Text(country)
             }
           }
         }
       }
-      Box {
-        DropdownMenu(expanded = false, onDismissRequest = {}) {
-          genders.forEach { gender ->
-            DropdownMenuItem(onClick = { selectedGender = gender }) { Text(gender) }
+
+      Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+        Text("Country: ", modifier = Modifier.alignByBaseline())
+        Box {
+          Button(onClick = { countryDropdownExpanded = true }) {
+            Text(selectedCountry)
+          }
+          DropdownMenu(expanded = countryDropdownExpanded, onDismissRequest = { countryDropdownExpanded = false }) {
+            countries.forEach { country ->
+              DropdownMenuItem(onClick = {
+                selectedCountry = country
+                SharedState.selectedCountry = country
+                countryDropdownExpanded = false
+              }) {
+                Text(country)
+              }
+            }
           }
         }
       }
-      Text(commandInfo.toRichHtmlString())
+
+      Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+        Text("Gender: ", modifier = Modifier.alignByBaseline())
+        Box {
+          Button(onClick = { genderDropdownExpanded = true }) {
+            Text(selectedGender)
+          }
+          DropdownMenu(expanded = genderDropdownExpanded, onDismissRequest = { genderDropdownExpanded = false }) {
+            genders.forEach { gender ->
+              DropdownMenuItem(onClick = {
+                selectedGender = gender
+                genderDropdownExpanded = false
+              }) {
+                Text(gender)
+              }
+            }
+          }
+        }
+      }
+
+      Text(commandInfo.toRichHtmlString(), modifier = Modifier.padding(bottom = 8.dp))
 
       Button(
         onClick = {
@@ -95,7 +119,8 @@ fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
           NativeTTS.voiceCountry(selectedCountry)
           NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
           NativeTTS.saveVoicePreferences()
-        }
+        },
+        modifier = Modifier.padding(bottom = 8.dp)
       ) {
         Text("Apply Settings")
       }
@@ -116,8 +141,7 @@ private fun writeVoicePreferencesToFile(filePath: String) {
         country=US
         gender=MALE
         maxWords=40
-      """
-      .trimIndent()
+        """.trimIndent()
   File(filePath).apply {
     if (!exists()) {
       createNewFile()
