@@ -53,7 +53,7 @@ dependencies {
 
 compose.desktop {
   application {
-    mainClass = "aries.MainKt"
+    mainClass = "aries.AppKt"
 
     nativeDistributions {
       targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

@@ -1,17 +1,15 @@
 package aries.visual
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
-import io.github.jonelo.tts.engines.VoicePreferences
+import androidx.compose.ui.window.Window
 import aries.audio.LiveMic.Companion.maxWords
+import io.github.jonelo.tts.engines.VoicePreferences
 import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
 import util.audio.NativeTTS.Companion.loadVoicePreferences
@@ -28,73 +26,86 @@ object SharedState {
 
 @Composable
 @Preview
-fun ComposeGUI() {
-  writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
-  loadVoicePreferences()
+fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
+  Window(onCloseRequest = onCloseRequest, icon = icon) {
+    writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
+    loadVoicePreferences()
 
-  var selectedLanguage by remember { mutableStateOf("") }
-  var selectedCountry by remember { mutableStateOf("") }
-  var selectedGender by remember { mutableStateOf("") }
+    var selectedLanguage by remember { mutableStateOf("") }
+    var selectedCountry by remember { mutableStateOf("") }
+    var selectedGender by remember { mutableStateOf("") }
 
-  updateGUIFromPreferences(
-    setSelectedLanguage = { selectedLanguage = it },
-    setSelectedCountry = { selectedCountry = it },
-    setSelectedGender = { selectedGender = it }
-  )
-
-  val languages = Locale.getISOLanguages().toList()
-  val countries = Locale.getISOCountries().toList()
-  val genders = listOf("MALE", "FEMALE")
-
-  selectedLanguage = languages[0]
-  selectedCountry = countries[0]
-  selectedGender = genders[0]
-
-  // Update SharedState with the selected language and country
-  SharedState.selectedLanguage = selectedLanguage
-  SharedState.selectedCountry = selectedCountry
-
-  Column(modifier = Modifier.padding(16.dp)) {
-    DropdownMenu(expanded = true, onDismissRequest = {}) {
-      languages.forEach { language ->
-        DropdownMenuItem(onClick = {
-          selectedLanguage = language
-          SharedState.selectedLanguage = language // Update SharedState
-        }) { Text(language) }
-      }
-    }
-    DropdownMenu(expanded = true, onDismissRequest = {}) {
-      countries.forEach { country ->
-        DropdownMenuItem(onClick = {
-          selectedCountry = country
-          SharedState.selectedCountry = country // Update SharedState
-        }) { Text(country) }
-      }
-    }
-    DropdownMenu(expanded = true, onDismissRequest = {}) {
-      genders.forEach { gender ->
-        DropdownMenuItem(onClick = { selectedGender = gender }) { Text(gender) }
-      }
-    }
-
-    Text(commandInfo.toRichHtmlString())
-
-    Button(
-      onClick = {
-        NativeTTS.voiceLanguage(selectedLanguage)
-        NativeTTS.voiceCountry(selectedCountry)
-        NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
-        NativeTTS.saveVoicePreferences()
-      }
-    ) {
-      Text("Apply Settings")
-    }
-
-    Spinner(
-      value = maxWords,
-      onValueChange = { newValue -> maxWords = newValue },
-      range = 1..100000,
+    updateGUIFromPreferences(
+      setSelectedLanguage = { selectedLanguage = it },
+      setSelectedCountry = { selectedCountry = it },
+      setSelectedGender = { selectedGender = it },
     )
+
+    val languages = Locale.getISOLanguages().toList()
+    val countries = Locale.getISOCountries().toList()
+    val genders = listOf("MALE", "FEMALE")
+
+    selectedLanguage = languages[0]
+    selectedCountry = countries[0]
+    selectedGender = genders[0]
+
+    // Update SharedState with the selected language and country
+    SharedState.selectedLanguage = selectedLanguage
+    SharedState.selectedCountry = selectedCountry
+
+    Column(modifier = Modifier.padding(16.dp)) {
+      DropdownMenu(expanded = true, onDismissRequest = {}) {
+        languages.forEach { language ->
+          DropdownMenuItem(
+            onClick = {
+              selectedLanguage = language
+              SharedState.selectedLanguage = language // Update SharedState
+            }
+          ) {
+            Text(language)
+          }
+        }
+      }
+      Box {
+        DropdownMenu(expanded = false, onDismissRequest = {}) {
+          countries.forEach { country ->
+            DropdownMenuItem(
+              onClick = {
+                selectedCountry = country
+                SharedState.selectedCountry = country // Update SharedState
+              }
+            ) {
+              Text(country)
+            }
+          }
+        }
+      }
+      Box {
+        DropdownMenu(expanded = false, onDismissRequest = {}) {
+          genders.forEach { gender ->
+            DropdownMenuItem(onClick = { selectedGender = gender }) { Text(gender) }
+          }
+        }
+      }
+      Text(commandInfo.toRichHtmlString())
+
+      Button(
+        onClick = {
+          NativeTTS.voiceLanguage(selectedLanguage)
+          NativeTTS.voiceCountry(selectedCountry)
+          NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
+          NativeTTS.saveVoicePreferences()
+        }
+      ) {
+        Text("Apply Settings")
+      }
+
+      Spinner(
+        value = maxWords,
+        onValueChange = { newValue -> maxWords = newValue },
+        range = 1..100000,
+      )
+    }
   }
 }
 
@@ -118,7 +129,7 @@ private fun writeVoicePreferencesToFile(filePath: String) {
 private fun updateGUIFromPreferences(
   setSelectedLanguage: (String) -> Unit,
   setSelectedCountry: (String) -> Unit,
-  setSelectedGender: (String) -> Unit
+  setSelectedGender: (String) -> Unit,
 ) {
   val preferences = NativeTTS.voicePreferences
   setSelectedLanguage(preferences.language)
