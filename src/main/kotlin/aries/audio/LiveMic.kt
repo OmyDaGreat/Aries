@@ -1,6 +1,7 @@
 package aries.audio
 
 import ai.picovoice.leopard.*
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.*
 import util.*
 import util.Keys.get
@@ -55,7 +56,7 @@ class LiveMic {
       }
       val leopard = leopardthing.build()
       var recorder: Recorder? = null
-      println("Aries is ready.")
+      Logger.i("Aries is ready.")
       NativeTTS.tts("Aries is ready.")
       try {
         processAudio(

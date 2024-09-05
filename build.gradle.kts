@@ -14,6 +14,7 @@ val coroutinesCoreVersion = "1.9.0-RC"
 val ktorVersion = "2.3.12"
 val serializationJsonVersion = "1.7.1"
 val datetimeJvmVersion = "0.6.1"
+val kermitV = "2.0.4"
 
 plugins {
   kotlin("jvm")
@@ -48,6 +49,7 @@ dependencies {
   implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
   implementation("io.ktor:ktor-client-cio-jvm:$ktorVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:$datetimeJvmVersion")
+  implementation("co.touchlab:kermit:$kermitV")
   implementation(compose.desktop.currentOs)
 }
 
