@@ -38,6 +38,6 @@ fun process(input: String) {
     input.trueContains("save file as", "save file") -> handleSaveFile(input)
     input.trueContains("enter") -> handleEnter()
     input.trueContains("set alarm", "set alarm for ") -> handleSetAlarm(input)
-    else -> handleDefault(input)
+    else -> handleAskGemini(input)
   }
 }

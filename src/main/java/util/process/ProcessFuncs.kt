@@ -1,5 +1,6 @@
 package util.process
 
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.*
 import parse.audio.*
 import util.extension.*
@@ -50,6 +51,7 @@ fun handleWrite(input: String) {
 }
 
 fun handleAskGemini(input: String) {
+  Logger.i("Asking Gemini: $input")
   ask("Answer the request while staying concise but without contractions: $input")
 }
 
@@ -165,8 +167,4 @@ fun handleSetAlarm(input: String) {
   val time = input.remove("set alarm ", "set alarm for ").trim()
   println("Setting alarm for $time")
   scope.launch { setAlarm(time) }
-}
-
-fun handleDefault(input: String) {
-  ask("Answer the request while staying concise but without contractions: $input")
 }
