@@ -50,6 +50,7 @@ dependencies {
   implementation("io.ktor:ktor-client-cio-jvm:$ktorVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:$datetimeJvmVersion")
   implementation("co.touchlab:kermit:$kermitV")
+  implementation("io.ktor:ktor-client-content-negotiation-jvm:$ktorVersion")
   implementation(compose.desktop.currentOs)
 }
 
