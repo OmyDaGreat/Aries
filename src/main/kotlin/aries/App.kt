@@ -8,6 +8,8 @@ import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.application
 import aries.audio.LiveMic
 import aries.visual.ComposableGUI
+import co.touchlab.kermit.Logger
+import co.touchlab.kermit.Severity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import util.ResourcePath.getLocalResourcePath
@@ -23,27 +25,27 @@ val trayIcon by lazy {
   )
 }
 
-suspend fun main() = runBlocking {
+fun main() = runBlocking {
+  Logger.setMinSeverity(Severity.Verbose)
   val job2 = launch {
-    println("Starting app")
+    Logger.d("Starting app")
     application {
       val gui = remember { mutableStateOf(true) }
-      println("Starting tray")
+      Logger.d("Starting tray")
       Tray(icon = trayIcon) {
         Item("Toggle GUI", onClick = { gui.value = !gui.value })
         Item("Exit", onClick = { exitApplication() })
       }
-      println("Tray is open")
-
+      Logger.d("Tray is open")
       if (gui.value) {
-        println("Opening GUI")
+        Logger.d("Opening GUI")
         ComposableGUI(onCloseRequest = { gui.value = false }, icon = trayIcon)
       }
     }
   }
 
   launch {
-    println("Starting recognition")
+    Logger.d("Starting recognition")
     LiveMic.startRecognition()
   }
 
