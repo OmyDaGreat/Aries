@@ -41,7 +41,7 @@ object SharedState {
 @Composable
 @Preview
 fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
-  Window(onCloseRequest = onCloseRequest, icon = icon) {
+  Window(onCloseRequest = onCloseRequest, icon = icon, title = "Aries Settings GUI") {
     writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
     loadVoicePreferences()
 
@@ -55,12 +55,18 @@ fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
     val countries = Locale.getISOCountries().toList()
     val genders = listOf("MALE", "FEMALE")
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
       Text(
         "Voice Preferences",
         style = MaterialTheme.typography.h6,
         modifier = Modifier.padding(bottom = 8.dp),
       )
+
+      Box(
+        modifier = Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState()).padding(vertical = 16.dp)
+      ) {
+        Text(commandInfo.toRichHtmlString())
+      }
 
       ScrollableDropdownMenu(
         options = languages,
@@ -92,18 +98,9 @@ fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
       )
 
-      Box(
-        modifier =
-          Modifier.fillMaxWidth()
-            .height(200.dp)
-            .verticalScroll(rememberScrollState())
-            .padding(vertical = 16.dp)
-      ) {
-        Text(commandInfo.toRichHtmlString())
-      }
+      Spacer(modifier = Modifier.height(16.dp))
 
       Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Button(

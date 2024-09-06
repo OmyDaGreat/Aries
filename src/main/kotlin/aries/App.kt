@@ -1,7 +1,12 @@
 package aries
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.window.Tray
@@ -39,7 +44,14 @@ fun main() = runBlocking {
       Logger.d("Tray is open")
       if (gui.value) {
         Logger.d("Opening GUI")
-        ComposableGUI(onCloseRequest = { gui.value = false }, icon = trayIcon)
+        MaterialTheme(
+          colors = lightColors(
+            primary = Color.Red,
+            secondary = Color.Red,
+          )
+        ) {
+          ComposableGUI(onCloseRequest = { gui.value = false }, icon = trayIcon)
+        }
       }
     }
   }
