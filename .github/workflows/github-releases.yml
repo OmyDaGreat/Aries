@@ -32,9 +32,6 @@ jobs:
       - name: Build JAR
         run: ./gradlew build
 
-      - name: Build native distributions
-        run: ./gradlew package
-
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -55,33 +52,3 @@ jobs:
           asset_path: build/libs/Aries-1.7.0.jar
           asset_name: Aries-1.7.0.jar
           asset_content_type: application/java-archive
-
-      - name: Upload DMG to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/compose/binaries/main/dmg/Aries-1.7.0.dmg
-          asset_name: Aries-1.7.0.dmg
-          asset_content_type: application/x-apple-diskimage
-
-      - name: Upload MSI to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/compose/binaries/main/msi/Aries-1.7.0.msi
-          asset_name: Aries-1.7.0.msi
-          asset_content_type: application/x-msi
-
-      - name: Upload DEB to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/compose/binaries/main/deb/Aries-1.7.0.deb
-          asset_name: Aries-1.7.0.deb
-          asset_content_type: application/vnd.debian.binary-package
