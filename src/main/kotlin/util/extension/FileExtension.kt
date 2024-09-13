@@ -25,7 +25,7 @@ const val leolibwin =
 
 // URL of leopard library for mac (arm64 rn)
 const val leolibmac =
-  "https://www.dropbox.com/scl/fi/yinqb8gs898zabs9m1aja/arm64.dylib?rlkey=7i0myt6o8um7ltpkh6dop7xl4&st=su1m0z95&dl=1"
+  "https://www.dropbox.com/scl/fi/x0qk73f1i1roal45j8m5y/arm64.dylib?rlkey=g776duwkn61n0zsi0j9bocob1&st=nwq78i3n&dl=1"
 
 // URL of leopard library for linux
 const val leoliblin =
