@@ -1,8 +1,6 @@
 package aries
 
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember

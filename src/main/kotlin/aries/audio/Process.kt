@@ -12,7 +12,7 @@ fun process(input: String) {
     input.trueContains("arrow") -> handleArrow(input)
     input.trueContains("mouse") -> handleMouse(input)
     input.trueContains("right press", "write press", "right release", "write release", "right click", "write click") -> handleRightPress(input)
-    input.trueContains("left press", "left release", "left click") -> handleLeftPress(input)
+    input.trueContains("left press", "left release", "left click", "left to click") -> handleLeftPress(input)
     input.trueContains("write special", "right special") -> handleSpecial(input)
     input.trueContains("write", "right") -> handleWrite(input)
     input.trueContains("ask gemini") -> handleAskGemini(input)
