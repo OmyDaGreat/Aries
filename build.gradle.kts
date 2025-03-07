@@ -20,7 +20,7 @@ plugins {
   kotlin("jvm")
   id("org.jetbrains.compose")
   id("org.jetbrains.kotlin.plugin.compose")
-  kotlin("plugin.serialization") version "2.0.0"
+  kotlin("plugin.serialization") version "2.1.10"
 }
 
 group = "programatica.aries"
