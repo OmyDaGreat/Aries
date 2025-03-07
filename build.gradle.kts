@@ -2,7 +2,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val kotlinVersion = "2.1.10"
 val serializationVersion = "2.0.0"
-val richeditorVersion = "1.0.0-rc06"
+val richeditorVersion = "1.0.0-rc12"
 val commonsLangVersion = "3.17.0"
 val leopardJavaVersion = "2.0.4"
 val flatlafVersion = "3.5.4"
