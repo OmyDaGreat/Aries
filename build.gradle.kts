@@ -13,7 +13,7 @@ val jAdapterForNativeTTSVersion = "0.12.1"
 val coroutinesCoreVersion = "1.10.1"
 val ktorVersion = "2.3.13"
 val serializationJsonVersion = "1.8.0"
-val datetimeJvmVersion = "0.6.1"
+val datetimeJvmVersion = "0.6.2"
 val kermitV = "2.0.5"
 
 plugins {
