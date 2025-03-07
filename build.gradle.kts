@@ -1,6 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-val kotlinVersion = "2.0.0"
+val kotlinVersion = "2.1.10"
 val serializationVersion = "2.0.0"
 val richeditorVersion = "1.0.0-rc06"
 val commonsLangVersion = "3.17.0"
