@@ -14,7 +14,7 @@ val coroutinesCoreVersion = "1.9.0-RC"
 val ktorVersion = "2.3.12"
 val serializationJsonVersion = "1.7.1"
 val datetimeJvmVersion = "0.6.1"
-val kermitV = "2.0.4"
+val kermitV = "2.0.5"
 
 plugins {
   kotlin("jvm")
