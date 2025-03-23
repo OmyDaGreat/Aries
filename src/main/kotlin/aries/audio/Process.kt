@@ -1,5 +1,6 @@
 package aries.audio
 
+import co.touchlab.kermit.Logger
 import util.extension.trueContains
 import util.process.beep
 import util.process.handleAlteF
@@ -33,7 +34,7 @@ import util.process.handleWindowsShift
 import util.process.handleWrite
 
 fun process(input: String) {
-    println("input: $input")
+    Logger.d("input: $input")
     beep()
 
     when {

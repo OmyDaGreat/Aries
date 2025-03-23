@@ -2,9 +2,8 @@ package util.process
 
 import aries.audio.open
 import co.touchlab.kermit.Logger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.DelicateCoroutinesApi
+import util.ai.ask
 import util.extension.RobotUtils.special
 import util.extension.alt
 import util.extension.arrow
@@ -30,7 +29,6 @@ import java.awt.event.InputEvent
 import java.awt.event.KeyEvent.VK_CAPS_LOCK
 
 private val n = NotepadProcessor()
-private val scope = CoroutineScope(Dispatchers.Default)
 
 fun handleArrow(input: String) {
     Robot().arrow(input.remove("arrow").trim())
@@ -75,11 +73,11 @@ fun handleAskGemini(input: String) {
 }
 
 fun handleSearchFor(input: String) {
-    println(open("https://www.google.com/search?q=${input.remove("search for").trim().replace(" ", "+")}"))
+    Logger.d(open("https://www.google.com/search?q=${input.remove("search for").trim().replace(" ", "+")}"))
 }
 
 fun handleSearch(input: String) {
-    println(open("https://www.google.com/search?q=${input.remove("search ").trim().replace(" ", "+")}"))
+    Logger.d(open("https://www.google.com/search?q=${input.remove("search ").trim().replace(" ", "+")}"))
 }
 
 fun handleCap() {
@@ -200,7 +198,7 @@ fun handleF(input: String) {
             .trim()
             .replaceSpecial()
             .toIntOrNull()
-            .also { println("f $it") },
+            .also { Logger.d("f $it") },
     )
 }
 
@@ -245,8 +243,9 @@ fun handleEnter() {
     n.addNewLine()
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 fun handleSetAlarm(input: String) {
     val time = input.remove("set alarm ", "set alarm for ").trim()
     println("Setting alarm for $time")
-    scope.launch { setAlarm(time) }
+    setAlarm(time)
 }

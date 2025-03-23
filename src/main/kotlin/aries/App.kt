@@ -12,7 +12,7 @@ import androidx.compose.ui.window.application
 import aries.audio.LiveMic
 import aries.visual.ComposableGUI
 import co.touchlab.kermit.Logger
-import co.touchlab.kermit.Severity
+import co.touchlab.kermit.Severity.Verbose
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import util.ResourcePath.getLocalResourcePath
@@ -30,7 +30,7 @@ val trayIcon by lazy {
 
 fun main() =
     runBlocking {
-        Logger.setMinSeverity(Severity.Verbose)
+        Logger.setMinSeverity(Verbose)
         val job2 =
             launch {
                 Logger.d("Starting app")

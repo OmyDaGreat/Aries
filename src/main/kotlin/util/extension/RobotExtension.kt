@@ -1,5 +1,6 @@
 package util.extension
 
+import co.touchlab.kermit.Logger
 import util.emu.Direction.Companion.fromString
 import util.extension.RobotUtils.special
 import java.awt.MouseInfo.getPointerInfo
@@ -43,7 +44,7 @@ fun Robot.mouseMoveString(direction: String) {
 fun Robot.type(keys: String) {
     keys.forEach { c ->
         when {
-            c == CHAR_UNDEFINED -> println("Warning: Key code not found for character '\$c'")
+            c == CHAR_UNDEFINED -> Logger.e("Warning: Key code not found for character '\$c'")
             special.containsKeySecond(c) -> special.getFromSecond(c).forEach { key -> type(key) }
             c.isUpperCase() -> shift(KeyEvent.getExtendedKeyCodeForChar(c.code))
             else -> type(KeyEvent.getExtendedKeyCodeForChar(c.code))

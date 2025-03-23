@@ -1,5 +1,6 @@
 package util.extension
 
+import co.touchlab.kermit.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
@@ -45,11 +46,11 @@ suspend fun downloadFile(
     val file = File(destinationPath)
     file.parentFile?.mkdirs()
     if (file.exists()) {
-        println("File already exists.")
+        Logger.d("File already exists.")
         return file
     }
 
-    println("Downloading file ${file.name}.")
+    Logger.d("Downloading file ${file.name}.")
     HttpClient(CIO) {
         install(HttpTimeout) {
             requestTimeoutMillis = 120000 // 2 minutes
@@ -57,7 +58,7 @@ suspend fun downloadFile(
     }.use { client ->
         val fileBytes: ByteArray = client.get(fileURL).readRawBytes()
         file.writeBytes(fileBytes)
-        println("File downloaded successfully.")
+        Logger.d("File downloaded successfully.")
     }
     return file
 }

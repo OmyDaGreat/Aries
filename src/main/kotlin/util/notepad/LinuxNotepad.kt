@@ -1,5 +1,6 @@
 package util.notepad
 
+import co.touchlab.kermit.Logger
 import util.extension.RobotUtils
 import util.extension.control
 import util.extension.enter
@@ -63,6 +64,6 @@ class LinuxNotepad : Notepad {
     @Throws(InterruptedException::class)
     override fun closeNotepad() {
         robot.control(KeyEvent.VK_F4)
-        process?.waitFor()?.also { println("Exited Notepad++ with code: $it") }
+        process?.waitFor()?.also { Logger.d("Exited Notepad++ with code: $it") }
     }
 }

@@ -2,6 +2,8 @@ package util.audio
 
 import ai.picovoice.leopard.Leopard
 import aries.audio.LiveMic.Companion.leopardBuild
+import co.touchlab.kermit.Logger
+import util.extension.then
 import util.extension.trueContains
 import java.nio.ByteBuffer
 import java.nio.ByteOrder.LITTLE_ENDIAN
@@ -17,6 +19,10 @@ import kotlin.math.abs
 
 /**
  * Configuration for audio processing.
+ *
+ * @property onKeywordDetected Callback function to be invoked when a keyword is detected.
+ * @property onSilence Callback function to be invoked when silence is detected.
+ * @property isRecording Function to check if audio is being recorded.
  */
 class AudioProcessingConfig {
     var onKeywordDetected: () -> Unit = {}
@@ -43,7 +49,7 @@ fun processAudio(block: AudioProcessingConfig.() -> Unit) {
         line.start()
         val buffer = ShortArray(33332)
         val byteBuffer = ByteArray(buffer.size * 2)
-        var silenceFrames: Instant? = null
+        var silenceFrames: Instant? = Instant.now()
 
         while (true) {
             if (isRecording()) {
@@ -51,7 +57,7 @@ fun processAudio(block: AudioProcessingConfig.() -> Unit) {
                     silenceFrames = it
                 }
             } else {
-                handleNonRecording(byteBuffer, buffer, line, leopard, onKeywordDetected)
+                handleNonRecording(byteBuffer, buffer, line, leopard, onKeywordDetected then { silenceFrames = Instant.now() })
             }
         }
     }
@@ -76,12 +82,16 @@ private fun handleRecording(
     setSilence: (Instant) -> Unit,
 ) {
     if (buffer.isSilence(1000)) {
-        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 7) {
+        Logger.d("Silence frame is $silenceFrames")
+        Logger.d("Silence detected for ${Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds()} seconds.")
+        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 4) {
+            Logger.d("Silence for 4 seconds, running onSilence.")
             onSilence()
             line.open(format)
             line.start()
         }
     } else {
+        Logger.d("Noise detected, resetting silence timer.")
         setSilence(Instant.now())
     }
 }
