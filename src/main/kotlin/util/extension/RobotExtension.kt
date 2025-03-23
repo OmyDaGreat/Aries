@@ -1,9 +1,29 @@
 package util.extension
 
-import java.awt.MouseInfo
-import java.awt.Robot
-import java.awt.event.KeyEvent
+import util.emu.Direction.Companion.fromString
 import util.extension.RobotUtils.special
+import java.awt.MouseInfo.getPointerInfo
+import java.awt.Robot
+import java.awt.event.InputEvent.BUTTON1_DOWN_MASK
+import java.awt.event.InputEvent.BUTTON3_DOWN_MASK
+import java.awt.event.KeyEvent
+import java.awt.event.KeyEvent.CHAR_UNDEFINED
+import java.awt.event.KeyEvent.VK_CONTROL
+import java.awt.event.KeyEvent.VK_ENTER
+import java.awt.event.KeyEvent.VK_F1
+import java.awt.event.KeyEvent.VK_F10
+import java.awt.event.KeyEvent.VK_F11
+import java.awt.event.KeyEvent.VK_F12
+import java.awt.event.KeyEvent.VK_F2
+import java.awt.event.KeyEvent.VK_F3
+import java.awt.event.KeyEvent.VK_F4
+import java.awt.event.KeyEvent.VK_F5
+import java.awt.event.KeyEvent.VK_F6
+import java.awt.event.KeyEvent.VK_F7
+import java.awt.event.KeyEvent.VK_F8
+import java.awt.event.KeyEvent.VK_F9
+import java.awt.event.KeyEvent.VK_S
+import java.awt.event.KeyEvent.VK_TAB
 
 /**
  * Moves the mouse cursor based on the specified directions.
@@ -12,13 +32,7 @@ import util.extension.RobotUtils.special
  *   cursor. Each direction should be separated by a space.
  */
 fun Robot.mouseMoveString(direction: String) {
-  direction.split(" ").forEach { dir ->
-    RobotUtils.directionActions[dir]?.accept(
-      MouseInfo.getPointerInfo().location.x,
-      MouseInfo.getPointerInfo().location.y,
-      this,
-    )
-  }
+    direction.split(" ").mapNotNull { fromString(it) }.forEach { it.tri(getPointerInfo().location.x, getPointerInfo().location.y, this) }
 }
 
 /**
@@ -27,25 +41,14 @@ fun Robot.mouseMoveString(direction: String) {
  * @param keys A string where each character represents a key to be typed by the robot.
  */
 fun Robot.type(keys: String) {
-  keys.forEach { c ->
-    when {
-      c == KeyEvent.CHAR_UNDEFINED -> {
-        throw IllegalArgumentException("Key code not found for character '$c'")
-      }
-
-      special.containsKeySecond(c) -> {
-        special.getFromSecond(c).forEach { key -> type(key) }
-      }
-
-      c.isUpperCase() -> {
-        shift(KeyEvent.getExtendedKeyCodeForChar(c.code))
-      }
-
-      else -> {
-        type(KeyEvent.getExtendedKeyCodeForChar(c.code))
-      }
+    keys.forEach { c ->
+        when {
+            c == CHAR_UNDEFINED -> println("Warning: Key code not found for character '\$c'")
+            special.containsKeySecond(c) -> special.getFromSecond(c).forEach { key -> type(key) }
+            c.isUpperCase() -> shift(KeyEvent.getExtendedKeyCodeForChar(c.code))
+            else -> type(KeyEvent.getExtendedKeyCodeForChar(c.code))
+        }
     }
-  }
 }
 
 /**
@@ -54,21 +57,21 @@ fun Robot.type(keys: String) {
  * @param keyCode The integer code of the key to be pressed and released.
  */
 fun Robot.type(keyCode: Int) {
-  keyPress(keyCode)
-  keyRelease(keyCode)
+    keyPress(keyCode)
+    keyRelease(keyCode)
 }
 
 /** Simulates a left mouse click. */
-fun Robot.leftClick() = click(KeyEvent.BUTTON1_DOWN_MASK)
+fun Robot.leftClick() = click(BUTTON1_DOWN_MASK)
 
 /** Simulates a right mouse click. */
-fun Robot.rightClick() = click(KeyEvent.BUTTON3_DOWN_MASK)
+fun Robot.rightClick() = click(BUTTON3_DOWN_MASK)
 
 /** Simulates pressing the ENTER key. */
-fun Robot.enter() = type(KeyEvent.VK_ENTER)
+fun Robot.enter() = type(VK_ENTER)
 
 /** Simulates pressing the TAB key. */
-fun Robot.tab() = type(KeyEvent.VK_TAB)
+fun Robot.tab() = type(VK_TAB)
 
 /**
  * Simulates pressing CONTROL + another key.
@@ -76,9 +79,9 @@ fun Robot.tab() = type(KeyEvent.VK_TAB)
  * @param keyCode The integer code of the key to be pressed in combination with the CONTROL key.
  */
 fun Robot.control(keyCode: Int) {
-  keyPress(KeyEvent.VK_CONTROL)
-  type(keyCode)
-  keyRelease(KeyEvent.VK_CONTROL)
+    keyPress(VK_CONTROL)
+    type(keyCode)
+    keyRelease(VK_CONTROL)
 }
 
 /**
@@ -87,27 +90,27 @@ fun Robot.control(keyCode: Int) {
  * @param action The function to be done in combination with the CONTROL key.
  */
 fun Robot.control(action: (Robot) -> Unit) {
-  keyPress(KeyEvent.VK_CONTROL)
-  action(this)
-  keyRelease(KeyEvent.VK_CONTROL)
+    keyPress(VK_CONTROL)
+    action(this)
+    keyRelease(VK_CONTROL)
 }
 
 fun Robot.f(i: Int?) {
-  if (i == null) return
-  when (i) {
-    1 -> type(KeyEvent.VK_F1)
-    2 -> type(KeyEvent.VK_F2)
-    3 -> type(KeyEvent.VK_F3)
-    4 -> type(KeyEvent.VK_F4)
-    5 -> type(KeyEvent.VK_F5)
-    6 -> type(KeyEvent.VK_F6)
-    7 -> type(KeyEvent.VK_F7)
-    8 -> type(KeyEvent.VK_F8)
-    9 -> type(KeyEvent.VK_F9)
-    10 -> type(KeyEvent.VK_F10)
-    11 -> type(KeyEvent.VK_F11)
-    12 -> type(KeyEvent.VK_F12)
-  }
+    if (i == null) return
+    when (i) {
+        1 -> type(VK_F1)
+        2 -> type(VK_F2)
+        3 -> type(VK_F3)
+        4 -> type(VK_F4)
+        5 -> type(VK_F5)
+        6 -> type(VK_F6)
+        7 -> type(VK_F7)
+        8 -> type(VK_F8)
+        9 -> type(VK_F9)
+        10 -> type(VK_F10)
+        11 -> type(VK_F11)
+        12 -> type(VK_F12)
+    }
 }
 
 /**
@@ -116,9 +119,9 @@ fun Robot.f(i: Int?) {
  * @param keyCode The integer code of the key to be pressed in combination with the COMMAND key.
  */
 fun Robot.command(keyCode: Int) {
-  keyPress(KeyEvent.VK_META)
-  type(keyCode)
-  keyRelease(KeyEvent.VK_META)
+    keyPress(KeyEvent.VK_META)
+    type(keyCode)
+    keyRelease(KeyEvent.VK_META)
 }
 
 /**
@@ -127,9 +130,9 @@ fun Robot.command(keyCode: Int) {
  * @param action The function to be done in combination with the CMD key.
  */
 fun Robot.command(action: (Robot) -> Unit) {
-  keyPress(KeyEvent.VK_META)
-  action(this)
-  keyRelease(KeyEvent.VK_META)
+    keyPress(KeyEvent.VK_META)
+    action(this)
+    keyRelease(KeyEvent.VK_META)
 }
 
 /**
@@ -138,9 +141,9 @@ fun Robot.command(action: (Robot) -> Unit) {
  * @param keyCode The integer code of the key to be pressed in combination with the SHIFT key.
  */
 fun Robot.shift(keyCode: Int) {
-  keyPress(KeyEvent.VK_SHIFT)
-  type(keyCode)
-  keyRelease(KeyEvent.VK_SHIFT)
+    keyPress(KeyEvent.VK_SHIFT)
+    type(keyCode)
+    keyRelease(KeyEvent.VK_SHIFT)
 }
 
 /**
@@ -149,9 +152,9 @@ fun Robot.shift(keyCode: Int) {
  * @param action The function to be done in combination with the SHIFT key.
  */
 fun Robot.shift(action: (Robot) -> Unit) {
-  keyPress(KeyEvent.VK_SHIFT)
-  action(this)
-  keyRelease(KeyEvent.VK_SHIFT)
+    keyPress(KeyEvent.VK_SHIFT)
+    action(this)
+    keyRelease(KeyEvent.VK_SHIFT)
 }
 
 /**
@@ -160,9 +163,9 @@ fun Robot.shift(action: (Robot) -> Unit) {
  * @param action The function to be done in combination with the WINDOWS key.
  */
 fun Robot.windows(action: (Robot) -> Unit) {
-  keyPress(KeyEvent.VK_WINDOWS)
-  action(this)
-  keyRelease(KeyEvent.VK_WINDOWS)
+    keyPress(KeyEvent.VK_WINDOWS)
+    action(this)
+    keyRelease(KeyEvent.VK_WINDOWS)
 }
 
 /**
@@ -171,9 +174,9 @@ fun Robot.windows(action: (Robot) -> Unit) {
  * @param action The function to be done in combination with the ALT key.
  */
 fun Robot.alt(action: (Robot) -> Unit) {
-  keyPress(KeyEvent.VK_ALT)
-  action(this)
-  keyRelease(KeyEvent.VK_ALT)
+    keyPress(KeyEvent.VK_ALT)
+    action(this)
+    keyRelease(KeyEvent.VK_ALT)
 }
 
 /**
@@ -182,12 +185,12 @@ fun Robot.alt(action: (Robot) -> Unit) {
  * @param direction A string specifying the scroll direction ("up" or "down").
  */
 fun Robot.scroll(direction: String) {
-  direction.split(" ").forEach { dir ->
-    when (dir.lowercase()) {
-      "up" -> mouseWheel(-1)
-      "down" -> mouseWheel(1)
+    direction.split(" ").forEach { dir ->
+        when (dir.lowercase()) {
+            "up" -> mouseWheel(-1)
+            "down" -> mouseWheel(1)
+        }
     }
-  }
 }
 
 /**
@@ -197,19 +200,19 @@ fun Robot.scroll(direction: String) {
  *   cursor. Each direction should be separated by a space.
  */
 fun Robot.arrow(directions: String) {
-  directions.split(" ").forEach { direction ->
-    when (direction.lowercase()) {
-      "up" -> type(KeyEvent.VK_UP)
-      "down" -> type(KeyEvent.VK_DOWN)
-      "left" -> type(KeyEvent.VK_LEFT)
-      "right" -> type(KeyEvent.VK_RIGHT)
-      "write" -> type(KeyEvent.VK_RIGHT)
+    directions.split(" ").forEach { direction ->
+        when (direction.lowercase()) {
+            "up" -> type(KeyEvent.VK_UP)
+            "down" -> type(KeyEvent.VK_DOWN)
+            "left" -> type(KeyEvent.VK_LEFT)
+            "right" -> type(KeyEvent.VK_RIGHT)
+            "write" -> type(KeyEvent.VK_RIGHT)
+        }
     }
-  }
 }
 
 /** Simulates saving something by pressing CONTROL + S. */
-fun Robot.save() = control(KeyEvent.VK_S)
+fun Robot.save() = control(VK_S)
 
 /**
  * Helper function to simulate mouse clicks.
@@ -217,6 +220,6 @@ fun Robot.save() = control(KeyEvent.VK_S)
  * @param mask The mask for the mouse button to be clicked.
  */
 private fun Robot.click(mask: Int) {
-  mousePress(mask)
-  mouseRelease(mask)
+    mousePress(mask)
+    mouseRelease(mask)
 }

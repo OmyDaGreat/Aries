@@ -10,9 +10,7 @@ package util.extension
  * @return true if the map contains at least one key with the specified second element, false
  *   otherwise. </V></B></A>
  */
-fun <A, B, V> Map<Pair<A, B>, V>.containsKeyFirst(key: A): Boolean {
-  return keys.stream().anyMatch { pair: Pair<A, B> -> pair.first == key }
-}
+fun <A, B, V> Map<Pair<A, B>, V>.containsKeyFirst(key: A): Boolean = keys.stream().anyMatch { pair: Pair<A, B> -> pair.first == key }
 
 /**
  * Checks if a map contains a key with the specified second element.
@@ -24,9 +22,7 @@ fun <A, B, V> Map<Pair<A, B>, V>.containsKeyFirst(key: A): Boolean {
  * @return true if the map contains at least one key with the specified second element, false
  *   otherwise. </V></B></A>
  */
-fun <A, B, V> Map<Pair<A, B>, V>.containsKeySecond(key: B): Boolean {
-  return keys.stream().anyMatch { pair: Pair<A, B> -> pair.second == key }
-}
+fun <A, B, V> Map<Pair<A, B>, V>.containsKeySecond(key: B): Boolean = keys.stream().anyMatch { pair: Pair<A, B> -> pair.second == key }
 
 /**
  * Retrieves the value associated with a key that has the specified first element. If multiple keys
@@ -40,10 +36,9 @@ fun <A, B, V> Map<Pair<A, B>, V>.containsKeySecond(key: B): Boolean {
  * @throws NoSuchElementException if no key with the specified second element is found. </V></B></A>
  */
 @Throws(NoSuchElementException::class)
-fun <A, B, V> Map<Pair<A, B>, V>.getFromFirst(key: A): V {
-  return this.entries.firstOrNull { it.key.first == key }?.value
-    ?: throw NoSuchElementException("No value associated with key having first element $key")
-}
+fun <A, B, V> Map<Pair<A, B>, V>.getFromFirst(key: A): V =
+    this.entries.firstOrNull { it.key.first == key }?.value
+        ?: throw NoSuchElementException("No value associated with key having first element $key")
 
 /**
  * Retrieves the value associated with a key that has the specified second element. If multiple keys
@@ -57,7 +52,6 @@ fun <A, B, V> Map<Pair<A, B>, V>.getFromFirst(key: A): V {
  * @throws NoSuchElementException if no key with the specified second element is found. </V></B></A>
  */
 @Throws(NoSuchElementException::class)
-fun <A, B, V> Map<Pair<A, B>, V>.getFromSecond(key: B): V {
-  return this.entries.firstOrNull { it.key.second == key }?.value
-    ?: throw NoSuchElementException("No value associated with key having second element $key")
-}
+fun <A, B, V> Map<Pair<A, B>, V>.getFromSecond(key: B): V =
+    this.entries.firstOrNull { it.key.second == key }?.value
+        ?: throw NoSuchElementException("No value associated with key having second element $key")

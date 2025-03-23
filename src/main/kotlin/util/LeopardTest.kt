@@ -7,39 +7,41 @@ import util.Keys.get
 import util.audio.NativeTTS
 
 fun main() {
-  val accessKey = get("pico") // Replace with your Picovoice Leopard access key
-
-  try {
-    val leopard = Leopard.Builder()
-      .setAccessKey(accessKey)
-      .build()
-
-    var recorder: Recorder?
-    println("Aries is ready.")
-    NativeTTS.tts("Aries is ready.")
+    val accessKey = get("pico") // Replace with your Picovoice Leopard access key
 
     try {
-      while(true) {
-        NativeTTS.tts("Yes?")
-        recorder = Recorder(-1)
-        recorder.start()
+        val leopard =
+            Leopard
+                .Builder()
+                .setAccessKey(accessKey)
+                .build()
 
-        // Simulate some delay to capture audio
-        Thread.sleep(5000)
+        var recorder: Recorder?
+        println("Aries is ready.")
+        NativeTTS.tts("Aries is ready.")
 
-        recorder.end()
-        recorder.join()
-        val pcm = recorder.pcm
+        try {
+            while (true) {
+                NativeTTS.tts("Yes?")
+                recorder = Recorder(-1)
+                recorder.start()
 
-        val transcript = leopard.process(pcm)
-        println("Transcription: ${transcript.transcriptString}")
-      }
-    } catch (e: Exception) {
-      e.printStackTrace()
-    } finally {
-      leopard.delete()
+                // Simulate some delay to capture audio
+                Thread.sleep(5000)
+
+                recorder.end()
+                recorder.join()
+                val pcm = recorder.pcm
+
+                val transcript = leopard.process(pcm)
+                println("Transcription: ${transcript.transcriptString}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            leopard.delete()
+        }
+    } catch (e: LeopardException) {
+        e.printStackTrace()
     }
-  } catch (e: LeopardException) {
-    e.printStackTrace()
-  }
 }

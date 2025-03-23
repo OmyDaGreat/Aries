@@ -1,7 +1,15 @@
 package aries.visual
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -9,7 +17,11 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -30,145 +42,152 @@ import util.extension.ScrollableDropdownMenu
 import util.extension.toRichHtmlString
 import java.io.File
 import java.io.FileWriter
-import java.util.*
+import java.util.Locale
 
 object SharedState {
-  var selectedLanguage: String = ""
-  var selectedCountry: String = ""
-  var selectedGender: String = ""
+    var selectedLanguage: String = ""
+    var selectedCountry: String = ""
+    var selectedGender: String = ""
 }
 
 @Composable
 @Preview
-fun ComposableGUI(onCloseRequest: () -> Unit, icon: BitmapPainter) {
-  Window(onCloseRequest = onCloseRequest, icon = icon, title = "Aries Settings GUI") {
-    writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
-    loadVoicePreferences()
+fun ComposableGUI(
+    onCloseRequest: () -> Unit,
+    icon: BitmapPainter,
+) {
+    Window(onCloseRequest = onCloseRequest, icon = icon, title = "Aries Settings GUI") {
+        writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
+        loadVoicePreferences()
 
-    updateGUIFromPreferences(
-      setSelectedLanguage = { selectedLanguage = it },
-      setSelectedCountry = { selectedCountry = it },
-      setSelectedGender = { selectedGender = it },
-    )
-
-    val languages = Locale.getISOLanguages().toList()
-    val countries = Locale.getISOCountries().toList()
-    val genders = listOf("MALE", "FEMALE")
-
-    Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
-      Text(
-        "Voice Preferences",
-        style = MaterialTheme.typography.h6,
-        modifier = Modifier.padding(bottom = 8.dp),
-      )
-
-      Box(
-        modifier = Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState()).padding(vertical = 16.dp)
-      ) {
-        Text(commandInfo.toRichHtmlString())
-      }
-
-      ScrollableDropdownMenu(
-        options = languages,
-        initialSelectedItem = selectedLanguage,
-        onItemSelected = {
-          Logger.d("Selected language set to: $it")
-          selectedLanguage = it
-        },
-        modifier = Modifier.fillMaxWidth(),
-      )
-
-      ScrollableDropdownMenu(
-        options = countries,
-        initialSelectedItem = selectedCountry,
-        onItemSelected = {
-          Logger.d("Selected country set to: $it")
-          selectedCountry = it
-        },
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-      )
-
-      ScrollableDropdownMenu(
-        options = genders,
-        initialSelectedItem = selectedGender,
-        onItemSelected = {
-          Logger.d("Selected gender set to: $it")
-          selectedGender = it
-        },
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-      )
-
-      Spacer(modifier = Modifier.height(16.dp))
-
-      Row(
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        Button(
-          onClick = {
-            NativeTTS.voiceLanguage(selectedLanguage)
-            NativeTTS.voiceCountry(selectedCountry)
-            NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
-            saveVoicePreferences()
-            Logger.i("Selected language: $selectedLanguage")
-            Logger.i("Selected country: $selectedCountry")
-            Logger.i("Selected gender: $selectedGender")
-          },
-          modifier = Modifier.weight(1f),
-        ) {
-          Text("Apply Settings")
-        }
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        var maxWordsText by remember { mutableStateOf(maxWords.toString()) }
-        TextField(
-          value = maxWordsText,
-          onValueChange = { newNum ->
-            Logger.d("New max words: $newNum")
-            val newValue = newNum.toIntOrNull()?.coerceIn(1..100000) ?: maxWords
-            maxWordsText = newValue.toString()
-            maxWords = newValue
-            saveVoicePreferences()
-          },
-          label = { Text("Maximum Words") },
-          modifier = Modifier.weight(1f),
-          keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        updateGUIFromPreferences(
+            setSelectedLanguage = { selectedLanguage = it },
+            setSelectedCountry = { selectedCountry = it },
+            setSelectedGender = { selectedGender = it },
         )
-      }
+
+        val languages = Locale.getISOLanguages().toList()
+        val countries = Locale.getISOCountries().toList()
+        val genders = listOf("MALE", "FEMALE")
+
+        Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
+            Text(
+                "Voice Preferences",
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .padding(vertical = 16.dp),
+            ) {
+                Text(COMMAND_INFO.toRichHtmlString())
+            }
+
+            ScrollableDropdownMenu(
+                options = languages,
+                initialSelectedItem = selectedLanguage,
+                onItemSelected = {
+                    Logger.d("Selected language set to: $it")
+                    selectedLanguage = it
+                },
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            ScrollableDropdownMenu(
+                options = countries,
+                initialSelectedItem = selectedCountry,
+                onItemSelected = {
+                    Logger.d("Selected country set to: $it")
+                    selectedCountry = it
+                },
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+            )
+
+            ScrollableDropdownMenu(
+                options = genders,
+                initialSelectedItem = selectedGender,
+                onItemSelected = {
+                    Logger.d("Selected gender set to: $it")
+                    selectedGender = it
+                },
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Button(
+                    onClick = {
+                        NativeTTS.voiceLanguage(selectedLanguage)
+                        NativeTTS.voiceCountry(selectedCountry)
+                        NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
+                        saveVoicePreferences()
+                        Logger.i("Selected language: $selectedLanguage")
+                        Logger.i("Selected country: $selectedCountry")
+                        Logger.i("Selected gender: $selectedGender")
+                    },
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text("Apply Settings")
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                var maxWordsText by remember { mutableStateOf(maxWords.toString()) }
+                TextField(
+                    value = maxWordsText,
+                    onValueChange = { newNum ->
+                        Logger.d("New max words: $newNum")
+                        val newValue = newNum.toIntOrNull()?.coerceIn(1..100000) ?: maxWords
+                        maxWordsText = newValue.toString()
+                        maxWords = newValue
+                        saveVoicePreferences()
+                    },
+                    label = { Text("Maximum Words") },
+                    modifier = Modifier.weight(1f),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                )
+            }
+        }
     }
-  }
 }
 
 private fun writeVoicePreferencesToFile(filePath: String) {
-  val content =
-    """
+    val content =
+        """
         language=en
         country=US
         gender=MALE
         maxWords=40
-        """
-      .trimIndent()
-  File(filePath).apply {
-    if (!exists()) {
-      createNewFile()
-      FileWriter(this).use { it.write(content) }
+        """.trimIndent()
+    File(filePath).apply {
+        if (!exists()) {
+            createNewFile()
+            FileWriter(this).use { it.write(content) }
+        }
     }
-  }
 }
 
 private fun updateGUIFromPreferences(
-  setSelectedLanguage: (String) -> Unit,
-  setSelectedCountry: (String) -> Unit,
-  setSelectedGender: (String) -> Unit,
+    setSelectedLanguage: (String) -> Unit,
+    setSelectedCountry: (String) -> Unit,
+    setSelectedGender: (String) -> Unit,
 ) {
-  val preferences = NativeTTS.voicePreferences
-  setSelectedLanguage(preferences.language)
-  setSelectedCountry(preferences.country)
-  setSelectedGender(preferences.gender.name)
+    val preferences = NativeTTS.voicePreferences
+    setSelectedLanguage(preferences.language)
+    setSelectedCountry(preferences.country)
+    setSelectedGender(preferences.gender.name)
 }
 
-private const val commandInfo =
-  """
+private const val COMMAND_INFO =
+    """
 <strong>Hey Aries...</strong><br/>
 - "write special [text]": Writes special characters.<br/>
 - "write [text]": Writes the specified text.<br/>
