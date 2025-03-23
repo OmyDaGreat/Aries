@@ -5,55 +5,71 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+private val client = HttpClient(CIO)
+private val json = Json { ignoreUnknownKeys = true }
+
+/**
+ * Generates content using Google's Gemini model.
+ *
+ * @param prompt The text prompt to send to Gemini
+ * @return The generated text response
+ */
 suspend fun generateContent(prompt: String): String {
     Logger.d("Generating content for prompt: $prompt")
-    val body = mapOf("contents" to listOf(mapOf("parts" to listOf(mapOf("text" to prompt)))))
 
-    val json = Json { ignoreUnknownKeys = true }
-    val bodyString = json.encodeToString(body)
+    val request =
+        GeminiRequest(
+            contents =
+                listOf(
+                    Content(parts = listOf(Part(text = prompt))),
+                ),
+        )
 
-    val client = HttpClient(CIO)
-    val response: HttpResponse =
+    val response =
         client.post(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${Keys.get("gemini")}",
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Keys["gemini"]}",
         ) {
             contentType(ContentType.Application.Json)
-            setBody(bodyString)
+            setBody(json.encodeToString(GeminiRequest.serializer(), request))
         }
 
-    val responseBody = response.bodyAsText()
-    val jsonResponse = json.decodeFromString<Response>(responseBody)
-
-    val firstCandidateText =
-        jsonResponse.candidates
-            .firstOrNull()
-            ?.content
-            ?.parts
-            ?.firstOrNull()
-            ?.text ?: ""
-
-    return firstCandidateText
+    val responseData = json.decodeFromString<GeminiResponse>(response.bodyAsText())
+    return responseData.candidates
+        .firstOrNull()
+        ?.content
+        ?.parts
+        ?.firstOrNull()
+        ?.text
+        .orEmpty()
 }
 
-@Serializable data class Part(
-    val text: String,
+@Serializable
+private data class GeminiRequest(
+    val contents: List<Content>,
 )
 
-@Serializable data class Content(
+@Serializable
+data class Content(
     val parts: List<Part>,
 )
 
-@Serializable data class Candidate(
-    val content: Content,
+@Serializable
+data class Part(
+    val text: String,
 )
 
-@Serializable data class Response(
+@Serializable
+private data class GeminiResponse(
     val candidates: List<Candidate>,
+)
+
+@Serializable
+data class Candidate(
+    val content: Content,
 )

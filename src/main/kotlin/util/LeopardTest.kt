@@ -3,11 +3,10 @@ package util
 import ai.picovoice.leopard.Leopard
 import ai.picovoice.leopard.LeopardException
 import aries.audio.Recorder
-import util.Keys.get
 import util.audio.NativeTTS
 
 fun main() {
-    val accessKey = get("pico") // Replace with your Picovoice Leopard access key
+    val accessKey = Keys["pico"]
 
     try {
         val leopard =

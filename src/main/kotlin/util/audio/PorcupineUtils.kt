@@ -1,7 +1,7 @@
 package util.audio
 
 import ai.picovoice.leopard.Leopard
-import aries.audio.LiveMic.Companion.leopardthing
+import aries.audio.LiveMic.Companion.leopardBuild
 import util.extension.trueContains
 import java.nio.ByteBuffer
 import java.nio.ByteOrder.LITTLE_ENDIAN
@@ -16,38 +16,43 @@ import javax.sound.sampled.TargetDataLine
 import kotlin.math.abs
 
 /**
+ * Configuration for audio processing.
+ */
+class AudioProcessingConfig {
+    var onKeywordDetected: () -> Unit = {}
+    var onSilence: () -> Unit = {}
+    var isRecording: () -> Boolean = { false }
+}
+
+/**
  * Processes audio input, detecting keywords and handling silence.
  *
- * @param keywordDetected Callback function to be invoked when a keyword is detected.
- * @param onSilence Callback function to be invoked when silence is detected.
- * @param isRecording Function to check if recording is active.
+ * @param block Configuration for audio processing.
  * @throws LineUnavailableException If no matching audio line is found.
  */
-fun processAudio(
-    keywordDetected: () -> Unit,
-    onSilence: () -> Unit,
-    isRecording: () -> Boolean,
-) {
-    val info = DataLine.Info(TargetDataLine::class.java, null)
-    if (!AudioSystem.isLineSupported(info)) {
-        throw LineUnavailableException("No line matching provided info found.")
-    }
-    val leopard = leopardthing.build()
-    val line = AudioSystem.getLine(info) as TargetDataLine
-    val format = AudioFormat(PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
-    line.open(format)
-    line.start()
-    val buffer = ShortArray(33332)
-    val byteBuffer = ByteArray(buffer.size * 2)
-    var silenceFrames: Instant? = null
+fun processAudio(block: AudioProcessingConfig.() -> Unit) {
+    AudioProcessingConfig().apply(block).apply {
+        val info = DataLine.Info(TargetDataLine::class.java, null)
+        if (!AudioSystem.isLineSupported(info)) {
+            throw LineUnavailableException("No line matching provided info found.")
+        }
+        val leopard = leopardBuild.build()
+        val line = AudioSystem.getLine(info) as TargetDataLine
+        val format = AudioFormat(PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
+        line.open(format)
+        line.start()
+        val buffer = ShortArray(33332)
+        val byteBuffer = ByteArray(buffer.size * 2)
+        var silenceFrames: Instant? = null
 
-    while (true) {
-        if (isRecording()) {
-            handleRecording(buffer, silenceFrames, onSilence, line, format) {
-                silenceFrames = it
+        while (true) {
+            if (isRecording()) {
+                handleRecording(buffer, silenceFrames, onSilence, line, format) {
+                    silenceFrames = it
+                }
+            } else {
+                handleNonRecording(byteBuffer, buffer, line, leopard, onKeywordDetected)
             }
-        } else {
-            handleNonRecording(byteBuffer, buffer, line, leopard, keywordDetected)
         }
     }
 }
