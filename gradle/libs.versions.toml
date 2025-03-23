@@ -13,7 +13,7 @@ ktor = "3.1.1"
 serializationJson = "1.8.0"
 datetimeJvm = "0.6.2"
 kermit = "2.0.5"
-compose = "1.8.0+check"
+compose = "1.7.3"
 
 [libraries]
 richeditor = { module = "com.mohamedrejeb.richeditor:richeditor-compose-desktop", version.ref = "richeditor" }
