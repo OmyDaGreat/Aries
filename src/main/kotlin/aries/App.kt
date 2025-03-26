@@ -2,10 +2,8 @@ package aries
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.window.Tray
@@ -14,6 +12,8 @@ import aries.audio.LiveMic
 import aries.visual.ComposableGUI
 import co.touchlab.kermit.Logger
 import co.touchlab.kermit.Severity.Verbose
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -30,26 +30,17 @@ val trayIcon by lazy {
     )
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 fun main() {
     Logger.setMinSeverity(Verbose)
     Logger.d("Starting app")
 
-    // Start application on main thread
     application {
         val gui = remember { mutableStateOf(true) }
 
-        // Launch LiveMic in a separate coroutine AFTER Compose is initialized
-        val scope = rememberCoroutineScope()
-
-        DisposableEffect(Unit) {
-            val job =
-                scope.launch {
-                    Logger.d("Starting recognition")
-                    LiveMic.startRecognition()
-                }
-            onDispose {
-                job.cancel()
-            }
+        GlobalScope.launch {
+            Logger.d("Starting recognition")
+            LiveMic.startRecognition()
         }
 
         Logger.d("Starting tray")

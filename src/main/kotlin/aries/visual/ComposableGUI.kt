@@ -55,6 +55,7 @@ fun ComposableGUI(
     onCloseRequest: () -> Unit,
     icon: BitmapPainter,
 ) {
+    Logger.d("ComposableGUI called")
     Window(onCloseRequest = onCloseRequest, icon = icon, title = "Aries Settings GUI") {
         writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
         loadVoicePreferences()

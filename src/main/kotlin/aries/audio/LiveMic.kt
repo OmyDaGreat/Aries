@@ -25,11 +25,13 @@ class LiveMic {
          */
         private suspend fun initializeLeopard() {
             NativeTTS.tts("Initializing Leopard.")
+            Logger.d("Initializing Leopard.")
             leopardBuild =
                 Leopard
                     .Builder()
                     .setAccessKey(Keys["pico"])
                     .setModelPath(downloadFile(PV, getLocalResourcePath("Aries.pv")).absolutePath)
+            Logger.d("Leopard initialized.")
         }
 
         /**

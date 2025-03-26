@@ -1,4 +1,6 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi
 
 plugins {
     kotlin("jvm")
@@ -47,7 +49,7 @@ compose.desktop {
         mainClass = "aries.AppKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(Dmg, Msi, Deb)
             packageName = "Aries"
             packageVersion = version.toString()
         }
