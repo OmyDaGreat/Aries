@@ -1,6 +1,5 @@
 package aries.visual
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +37,7 @@ import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
 import util.audio.NativeTTS.Companion.loadVoicePreferences
 import util.audio.NativeTTS.Companion.saveVoicePreferences
+import util.extension.ScrollOption
 import util.extension.ScrollableDropdownMenu
 import util.extension.toRichHtmlString
 import java.io.File
@@ -51,7 +51,6 @@ object SharedState {
 }
 
 @Composable
-@Preview
 fun ComposableGUI(
     onCloseRequest: () -> Unit,
     icon: BitmapPainter,
@@ -70,91 +69,96 @@ fun ComposableGUI(
         val countries = Locale.getISOCountries().toList()
         val genders = listOf("MALE", "FEMALE")
 
-        Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
-            Text(
-                "Voice Preferences",
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
+                Text(
+                    "Voice Preferences",
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
 
-            Box(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                        .padding(vertical = 16.dp),
-            ) {
-                Text(COMMAND_INFO.toRichHtmlString())
-            }
-
-            ScrollableDropdownMenu(
-                options = languages,
-                initialSelectedItem = selectedLanguage,
-                onItemSelected = {
-                    Logger.d("Selected language set to: $it")
-                    selectedLanguage = it
-                },
-                modifier = Modifier.fillMaxWidth(),
-            )
-
-            ScrollableDropdownMenu(
-                options = countries,
-                initialSelectedItem = selectedCountry,
-                onItemSelected = {
-                    Logger.d("Selected country set to: $it")
-                    selectedCountry = it
-                },
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-            )
-
-            ScrollableDropdownMenu(
-                options = genders,
-                initialSelectedItem = selectedGender,
-                onItemSelected = {
-                    Logger.d("Selected gender set to: $it")
-                    selectedGender = it
-                },
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Button(
-                    onClick = {
-                        NativeTTS.voiceLanguage(selectedLanguage)
-                        NativeTTS.voiceCountry(selectedCountry)
-                        NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
-                        saveVoicePreferences()
-                        Logger.i("Selected language: $selectedLanguage")
-                        Logger.i("Selected country: $selectedCountry")
-                        Logger.i("Selected gender: $selectedGender")
-                    },
-                    modifier = Modifier.weight(1f),
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .verticalScroll(rememberScrollState())
+                            .padding(vertical = 16.dp),
                 ) {
-                    Text("Apply Settings")
+                    Text(COMMAND_INFO.toRichHtmlString())
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
-
-                var maxWordsText by remember { mutableStateOf(maxWords.toString()) }
-                TextField(
-                    value = maxWordsText,
-                    onValueChange = { newNum ->
-                        Logger.d("New max words: $newNum")
-                        val newValue = newNum.toIntOrNull()?.coerceIn(1..100000) ?: maxWords
-                        maxWordsText = newValue.toString()
-                        maxWords = newValue
-                        saveVoicePreferences()
+                ScrollableDropdownMenu(
+                    options = languages,
+                    initialSelectedItem = selectedLanguage,
+                    onItemSelected = {
+                        Logger.d("Selected language set to: $it")
+                        selectedLanguage = it
                     },
-                    label = { Text("Maximum Words") },
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
                 )
+
+                ScrollableDropdownMenu(
+                    options = countries,
+                    initialSelectedItem = selectedCountry,
+                    onItemSelected = {
+                        Logger.d("Selected country set to: $it")
+                        selectedCountry = it
+                    },
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                )
+
+                ScrollableDropdownMenu(
+                    options = genders,
+                    initialSelectedItem = selectedGender,
+                    onItemSelected = {
+                        Logger.d("Selected gender set to: $it")
+                        selectedGender = it
+                    },
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Button(
+                        onClick = {
+                            NativeTTS.voiceLanguage(selectedLanguage)
+                            NativeTTS.voiceCountry(selectedCountry)
+                            NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
+                            saveVoicePreferences()
+                            Logger.i("Selected language: $selectedLanguage")
+                            Logger.i("Selected country: $selectedCountry")
+                            Logger.i("Selected gender: $selectedGender")
+                        },
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        Text("Apply Settings")
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    var maxWordsText by remember { mutableStateOf(maxWords.toString()) }
+                    TextField(
+                        value = maxWordsText,
+                        onValueChange = { newNum ->
+                            Logger.d("New max words: $newNum")
+                            val newValue = newNum.toIntOrNull()?.coerceIn(1..100000) ?: maxWords
+                            maxWordsText = newValue.toString()
+                            maxWords = newValue
+                            saveVoicePreferences()
+                        },
+                        label = { Text("Maximum Words") },
+                        modifier = Modifier.weight(1f),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    )
+                }
             }
+
+            println("Active dialogs: ${ScrollOption.activeDialogs}")
+            ScrollOption.DialogHost()
         }
     }
 }

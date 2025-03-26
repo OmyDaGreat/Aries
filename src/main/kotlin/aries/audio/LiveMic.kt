@@ -6,9 +6,10 @@ import kotlinx.coroutines.runBlocking
 import util.Keys
 import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
-import util.audio.processAudio
+import util.audio.Recorder
 import util.extension.PV
 import util.extension.downloadFile
+import util.process.process
 import java.awt.Desktop
 import java.net.URI
 
@@ -43,7 +44,7 @@ class LiveMic {
             var recorder: Recorder? = null
             Logger.i("Aries is ready.")
             NativeTTS.tts("Aries is ready.")
-            try {
+            runCatching {
                 processAudio {
                     onKeywordDetected = {
                         NativeTTS.tts("Yes?")
@@ -60,7 +61,7 @@ class LiveMic {
                     }
                     isRecording = { recorder != null }
                 }
-            } finally {
+            }.also {
                 leopard.delete()
                 startRecognition()
             }

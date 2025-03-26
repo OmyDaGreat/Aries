@@ -9,6 +9,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import util.ai.generateContent
 import util.audio.NativeTTS
+import kotlin.time.Duration
 
 /**
  * Sets an alarm for the specified time.
@@ -19,12 +20,20 @@ import util.audio.NativeTTS
 fun setAlarm(time: String) =
     GlobalScope.launch {
         val validationPrompt =
-            "Convert the given time string to ISO-8601 format. If just a time was given, use today's date with the given time (unless the time has passed, in which case you should use tomorrow): $time"
+            "Convert the given time string to ISO-8601 format. If just a time was given, use today's date with the given time (unless the time has passed, in which case you should use tomorrow). Make sure only to print the string in ISO-8601 format with nothing before or after it: $time"
         val validationResponse = generateContent(validationPrompt).trim()
-        val delayDuration = Instant.parse(validationResponse) - Clock.System.now()
+        val delayDuration: Duration?
+        try {
+            delayDuration = Instant.parse(validationResponse) - Clock.System.now()
+        } catch (_: Exception) {
+            Logger.d("The given time string is invalid.")
+            NativeTTS.tts("The given time string is invalid.")
+            return@launch
+        }
 
         if (delayDuration.inWholeMilliseconds > 0) {
             Logger.d("Setting alarm for $time")
+            NativeTTS.tts("Setting alarm for $time")
             delay(delayDuration.inWholeMilliseconds)
             NativeTTS.tts("Alarm ringing for $time")
         } else {

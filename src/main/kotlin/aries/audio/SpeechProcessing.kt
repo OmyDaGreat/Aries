@@ -1,4 +1,4 @@
-package util.audio
+package aries.audio
 
 import ai.picovoice.leopard.Leopard
 import aries.audio.LiveMic.Companion.leopardBuild
@@ -82,8 +82,6 @@ private fun handleRecording(
     setSilence: (Instant) -> Unit,
 ) {
     if (buffer.isSilence(1000)) {
-        Logger.d("Silence frame is $silenceFrames")
-        Logger.d("Silence detected for ${Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds()} seconds.")
         if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 4) {
             Logger.d("Silence for 4 seconds, running onSilence.")
             onSilence()

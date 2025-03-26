@@ -2,8 +2,8 @@ package util
 
 import ai.picovoice.leopard.Leopard
 import ai.picovoice.leopard.LeopardException
-import aries.audio.Recorder
 import util.audio.NativeTTS
+import util.audio.Recorder
 
 fun main() {
     val accessKey = Keys["pico"]

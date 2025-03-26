@@ -1,37 +1,7 @@
-package aries.audio
+package util.process
 
 import co.touchlab.kermit.Logger
 import util.extension.trueContains
-import util.process.beep
-import util.process.handleAlteF
-import util.process.handleArrow
-import util.process.handleAskGemini
-import util.process.handleCap
-import util.process.handleCommand
-import util.process.handleCommandShift
-import util.process.handleControl
-import util.process.handleControlShift
-import util.process.handleDeleteEverything
-import util.process.handleEnter
-import util.process.handleF
-import util.process.handleLeftPress
-import util.process.handleMiddleClick
-import util.process.handleMouse
-import util.process.handleNotepad
-import util.process.handleOpenNew
-import util.process.handleRightPress
-import util.process.handleSaveFile
-import util.process.handleScroll
-import util.process.handleSearch
-import util.process.handleSearchFor
-import util.process.handleSetAlarm
-import util.process.handleShift
-import util.process.handleSpecial
-import util.process.handleSwitchWindow
-import util.process.handleTab
-import util.process.handleWindows
-import util.process.handleWindowsShift
-import util.process.handleWrite
 
 fun process(input: String) {
     Logger.d("input: $input")

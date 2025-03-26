@@ -17,6 +17,15 @@ repositories {
     maven("https://jitpack.io")
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencies {
     implementation(libs.annotations)
     implementation(libs.richeditor)
@@ -29,6 +38,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.log)
+    implementation(compose.components.resources)
     implementation(compose.desktop.currentOs)
 }
 

@@ -1,6 +1,5 @@
-package aries.audio
+package util.audio
 
-import util.audio.NativeTTS
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import javax.sound.sampled.AudioFormat

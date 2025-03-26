@@ -22,12 +22,12 @@ enum class Direction(
          * @param input The string representation of a direction (case-insensitive).
          * @return The corresponding Direction enum value, or null if no match is found.
          */
-        fun fromString(input: String): Direction? =
+        fun fromString(input: String) =
             when (input.lowercase()) {
                 "up" -> UP
                 "down" -> DOWN
                 "left" -> LEFT
-                "right", "write" -> RIGHT // Supporting "write" as seen in other code
+                "right", "write" -> RIGHT
                 else -> null
             }
     }
