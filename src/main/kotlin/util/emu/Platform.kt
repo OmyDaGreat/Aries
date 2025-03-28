@@ -1,6 +1,8 @@
 package util.emu
 
-import org.apache.commons.lang3.SystemUtils
+import org.apache.commons.lang3.SystemUtils.IS_OS_LINUX
+import org.apache.commons.lang3.SystemUtils.IS_OS_MAC
+import org.apache.commons.lang3.SystemUtils.IS_OS_WINDOWS
 
 /**
  * Enum representing different platforms on which the application can run. Provides utility methods
@@ -21,9 +23,9 @@ enum class Platform {
          */
         val currentPlatform: Platform by lazy {
             when {
-                SystemUtils.IS_OS_WINDOWS -> WINDOWS
-                SystemUtils.IS_OS_LINUX -> LINUX
-                SystemUtils.IS_OS_MAC -> MAC
+                IS_OS_WINDOWS -> WINDOWS
+                IS_OS_LINUX -> LINUX
+                IS_OS_MAC -> MAC
                 else -> UNKNOWN
             }
         }

@@ -39,7 +39,6 @@ import util.audio.NativeTTS.Companion.loadVoicePreferences
 import util.audio.NativeTTS.Companion.saveVoicePreferences
 import util.extension.ScrollOption
 import util.extension.ScrollableDropdownMenu
-import util.extension.toRichHtmlString
 import java.io.File
 import java.io.FileWriter
 import java.util.Locale
@@ -86,7 +85,7 @@ fun ComposableGUI(
                             .verticalScroll(rememberScrollState())
                             .padding(vertical = 16.dp),
                 ) {
-                    Text(COMMAND_INFO.toRichHtmlString())
+                    Text(COMMAND_INFO)
                 }
 
                 ScrollableDropdownMenu(

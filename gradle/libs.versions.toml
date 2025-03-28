@@ -1,29 +1,23 @@
 [versions]
 kotlin = "2.1.20"
-richeditor = "1.0.0-rc12"
 commonsLang = "3.17.0"
 leopardJava = "2.0.4"
-flatlaf = "3.5.4"
 annotations = "26.0.2"
 slf4j = "2.0.17"
-mysqlConnector = "9.2.0"
 jAdapterForNativeTTS = "0.12.1"
 coroutines = "1.10.1"
-ktor = "3.1.1"
+ktor = "3.1.2"
 serializationJson = "1.8.0"
 datetimeJvm = "0.6.2"
 kermit = "2.0.5"
 compose = "1.7.3"
 
 [libraries]
-richeditor = { group = "com.mohamedrejeb.richeditor", name = "richeditor-compose-desktop", version.ref = "richeditor" }
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
 leopard = { group = "ai.picovoice", name = "leopard-java", version.ref = "leopardJava" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
-flatlaf = { group = "com.formdev", name = "flatlaf", version.ref = "flatlaf" }
 annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
 slf4j-nop = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
-mysql = { group = "com.mysql", name = "mysql-connector-j", version.ref = "mysqlConnector" }
 tts = { group = "com.github.Darkrai9x", name = "jAdapterForNativeTTS", version.ref = "jAdapterForNativeTTS" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }

@@ -30,11 +30,8 @@ java {
 
 dependencies {
     implementation(libs.annotations)
-    implementation(libs.richeditor)
     implementation(libs.commons)
     implementation(libs.leopard)
-    implementation(libs.flatlaf)
-    implementation(libs.mysql)
     implementation(libs.tts)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.kotlin)
