@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "programatica.aries"
-version = "1.7.0"
+version = "2.0.0"
 
 repositories {
     mavenCentral()

@@ -28,7 +28,7 @@ import java.io.FileInputStream
 @OptIn(ExperimentalResourceApi::class)
 val trayIcon by lazy {
     BitmapPainter(
-        FileInputStream(runBlocking { downloadFile(ICON, getLocalResourcePath("icon.png")) }).readAllBytes().decodeToImageBitmap(),
+        FileInputStream(runBlocking { downloadFile(ICON, getLocalResourcePath("aries.png")) }).readAllBytes().decodeToImageBitmap(),
     )
 }
 
