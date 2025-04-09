@@ -13,14 +13,17 @@ import java.io.IOException
 
 class MacNotepad : Notepad {
     private val robot = Robot()
+    private var process: Process? = null
 
     override fun openNotepad() {
-        runBlocking {
-            ProcessBuilder("osascript", downloadFile(SCPT, "openNotepad.scpt").absolutePath)
-                .start()
-                .waitFor()
+        try {
+            process = ProcessBuilder("open", "-a", "Notes").start()
+            Thread.sleep(2000) // allow app to open before typing
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
+
 
     override fun writeText(text: String) {
         robot.type(text)
