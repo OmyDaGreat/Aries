@@ -16,7 +16,6 @@ compose = "1.7.3"
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
 leopard = { group = "ai.picovoice", name = "leopard-java", version.ref = "leopardJava" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
 slf4j-nop = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
 tts = { group = "com.github.Darkrai9x", name = "jAdapterForNativeTTS", version.ref = "jAdapterForNativeTTS" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }

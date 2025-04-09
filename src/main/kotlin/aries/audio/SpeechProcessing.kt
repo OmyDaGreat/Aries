@@ -82,8 +82,8 @@ private fun handleRecording(
     setSilence: (Instant) -> Unit,
 ) {
     if (buffer.isSilence(1000)) {
-        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 4) {
-            Logger.d("Silence for 4 seconds, running onSilence.")
+        if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 6) {
+            Logger.d("Silence for 6 seconds, running onSilence.")
             onSilence()
             line.open(format)
             line.start()

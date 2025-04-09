@@ -29,7 +29,6 @@ java {
 }
 
 dependencies {
-    implementation(libs.annotations)
     implementation(libs.commons)
     implementation(libs.leopard)
     implementation(libs.tts)
