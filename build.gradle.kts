@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "programatica.aries"
-version = "2.0.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -29,7 +29,6 @@ java {
 }
 
 dependencies {
-    implementation(libs.annotations)
     implementation(libs.commons)
     implementation(libs.leopard)
     implementation(libs.tts)
@@ -49,6 +48,14 @@ compose.desktop {
             targetFormats(Dmg, Msi, Deb)
             packageName = "Aries"
             packageVersion = version.toString()
+
+            windows {
+                shortcut = true
+            }
         }
     }
+}
+
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
