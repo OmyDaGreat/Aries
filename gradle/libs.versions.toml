@@ -10,7 +10,7 @@ ktor = "3.1.3"
 serializationJson = "1.8.1"
 datetimeJvm = "0.6.2"
 kermit = "2.0.5"
-compose = "1.7.3"
+compose = "1.8.0"
 
 [libraries]
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
