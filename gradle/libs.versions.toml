@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 commonsLang = "3.17.0"
 leopardJava = "2.0.4"
 annotations = "26.0.2"
