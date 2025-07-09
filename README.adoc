@@ -1,0 +1,28 @@
+= Aries
+
+Congressional App Challenge Winner 2024,  
+Dictation-controlled computer actions.
+
+== Features
+
+* *Browser Support*: Search the web, open websites, and navigate using only your voice.
+* *Voice-Controlled Notepad*: Open, edit, and manage documents in notepad applications using only your voice.
+* *Mouse and Keyboard Control*: Easily do anything, even without direct support, using only your voice.
+* *Gemini AI*: Using Google Gemini to answer queries and provide information.
+
+== Demo
+
+https://youtu.be/GzjIs1BqSg8?si=E9_RU8OZpwowLa70
+
+== Installation
+
+Download the installer from the latest https://github.com/OmyDaGreat/aries/releases/latest[GitHub Release].
+
+== Authors
+
+Juniors at Oxford Academy
+
+* https://www.github.com/OmyDaGreat[Om Gupta] - Project Manager and Developer Lead
+* https://www.github.com/totallyacoolguy[Colin Thai] - Developer
+* https://www.github.com/Rishthewizard[Rishi Mishra] - Mac support
+* https://github.com/theo-vang[Theodore Vang] - Customer POV and Beta Tester

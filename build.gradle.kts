@@ -29,6 +29,7 @@ java {
 }
 
 dependencies {
+    implementation(libs.material.icons)
     implementation(libs.commons)
     implementation(libs.leopard)
     implementation(libs.tts)

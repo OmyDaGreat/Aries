@@ -2,7 +2,6 @@
 kotlin = "2.2.0"
 commonsLang = "3.17.0"
 leopardJava = "2.0.4"
-annotations = "26.0.2"
 slf4j = "2.0.17"
 jAdapterForNativeTTS = "0.12.1"
 coroutines = "1.10.2"
@@ -11,6 +10,7 @@ serializationJson = "1.9.0"
 datetimeJvm = "0.7.1-0.6.x-compat"
 kermit = "2.0.6"
 compose = "1.8.2"
+icons = "1.7.8"
 
 [libraries]
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
@@ -27,6 +27,7 @@ ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlin
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime-jvm", version.ref = "datetimeJvm" }
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
+material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
