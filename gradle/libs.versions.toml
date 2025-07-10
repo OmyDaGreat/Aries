@@ -10,7 +10,7 @@ serializationJson = "1.9.0"
 datetimeJvm = "0.7.1-0.6.x-compat"
 kermit = "2.0.6"
 compose = "1.8.2"
-icons = "1.7.8"
+hot-reload = "1.0.0-beta03"
 
 [libraries]
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
@@ -27,12 +27,12 @@ ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlin
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime-jvm", version.ref = "datetimeJvm" }
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hot-reload = { id = "org.jetbrains.compose.hot-reload", version.ref = "hot-reload" }
 
 [bundles]
 ktor = ["ktor-client-core", "ktor-client-cio", "ktor-client-content-negotiation", "ktor-serialization-json"]

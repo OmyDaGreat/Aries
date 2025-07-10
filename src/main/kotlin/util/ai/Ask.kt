@@ -22,16 +22,16 @@ fun ask(input: String) =
                 "Translate \"$gemini\" to $selectedLanguage-$selectedCountry if not already in that language. If it is already in that language, return the same text without any precursor.",
             )
         launch {
-            if (gemini.split(" ").size > LiveMic.Companion.maxWords) {
-                NativeTTS.Companion.tts("The response is over ${LiveMic.Companion.maxWords} words.")
+            if (gemini.split(" ").size > LiveMic.maxWords) {
+                NativeTTS.tts("The response is over ${LiveMic.maxWords} words.")
             } else {
-                NativeTTS.Companion.tts(gemini)
+                NativeTTS.tts(gemini)
             }
         }
         ScrollOption.requestScrollableMessageDialog(
-            gemini,
             "Gemini is responding to ${
                 input.remove("Answer the request while staying concise but without contractions: ")
             }",
+            gemini,
         )
     }

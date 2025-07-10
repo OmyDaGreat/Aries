@@ -5,18 +5,19 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import util.ai.generateContent
 import util.audio.NativeTTS
+import kotlin.time.Clock
 import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /**
  * Sets an alarm for the specified time.
  *
  * @param time The time string to set the alarm for.
  */
-@OptIn(DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class, ExperimentalTime::class)
 fun setAlarm(time: String) =
     GlobalScope.launch {
         val validationPrompt =

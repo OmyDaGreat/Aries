@@ -5,6 +5,7 @@ import io.github.jonelo.tts.engines.SpeechEngineNative
 import io.github.jonelo.tts.engines.VoicePreferences
 import io.github.jonelo.tts.engines.VoicePreferences.Gender
 import util.ResourcePath.getLocalResourcePath
+import util.extension.ScrollOption
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.FileReader
@@ -26,10 +27,30 @@ class NativeTTS {
          */
         @JvmStatic
         fun tts(text: String?) {
-            val speechEngine = SpeechEngineNative.getInstance()
-            val voice = speechEngine.findVoiceByPreferences(voicePreferences) ?: speechEngine.availableVoices.first()
-            speechEngine.setVoice(voice.name)
-            speechEngine.say(text)
+            try {
+                val speechEngine = SpeechEngineNative.getInstance()
+                val voice = speechEngine.findVoiceByPreferences(voicePreferences) ?: speechEngine.availableVoices.first()
+                speechEngine.setVoice(voice.name)
+                speechEngine.say(text)
+            } catch (e: Exception) {
+                val isSpdSayError =
+                    e.message?.contains("spd-say", ignoreCase = true) == true ||
+                        e.message?.contains("speech-dispatcher", ignoreCase = true) == true ||
+                        e.cause?.message?.contains("spd-say", ignoreCase = true) == true
+
+                if (isSpdSayError) {
+                    ScrollOption.requestScrollableMessageDialog(
+                        "TTS Error",
+                        "Speech Dispatcher is not installed or not running.\nPlease install it (e.g., 'sudo apt install speech-dispatcher') and try again.",
+                    )
+                } else {
+                    ScrollOption.requestScrollableMessageDialog(
+                        "TTS Error",
+                        "An unexpected error occurred: ${e.message}",
+                    )
+                }
+                e.printStackTrace()
+            }
         }
 
         /**

@@ -3,8 +3,10 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi
 
 plugins {
+    idea
     kotlin("jvm")
     alias(libs.plugins.compose)
+    alias(libs.plugins.hot.reload)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -17,6 +19,7 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
     maven("https://jitpack.io")
+    mavenLocal()
 }
 
 kotlin {
@@ -29,7 +32,6 @@ java {
 }
 
 dependencies {
-    implementation(libs.material.icons)
     implementation(libs.commons)
     implementation(libs.leopard)
     implementation(libs.tts)
@@ -37,8 +39,11 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.log)
+    implementation(compose.materialIconsExtended)
     implementation(compose.components.resources)
     implementation(compose.desktop.currentOs)
+    implementation(compose.material)
+    implementation(compose.ui)
 }
 
 compose.desktop {
@@ -50,6 +55,8 @@ compose.desktop {
             packageName = "Aries"
             packageVersion = version.toString()
 
+            includeAllModules = true
+
             windows {
                 shortcut = true
             }
@@ -59,4 +66,11 @@ compose.desktop {
 
 tasks.withType<Jar> {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
 }
