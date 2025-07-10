@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.0"
-commonsLang = "3.17.0"
+commonsLang = "3.18.0"
 leopardJava = "2.0.4"
 slf4j = "2.0.17"
 jAdapterForNativeTTS = "0.12.1"
