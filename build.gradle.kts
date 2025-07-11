@@ -1,4 +1,4 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.AppImage
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi
 
@@ -51,7 +51,7 @@ compose.desktop {
         mainClass = "aries.AppKt"
 
         nativeDistributions {
-            targetFormats(Dmg, Msi, Deb)
+            targetFormats(Dmg, Msi, AppImage)
             packageName = "Aries"
             packageVersion = version.toString()
 

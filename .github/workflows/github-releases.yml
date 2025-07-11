@@ -172,9 +172,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
-            packageType: deb
+            packageType: AppImage
           - os: windows-latest
-            packageType: exe
+            packageType: msi
           - os: macos-latest
             packageType: dmg
 
@@ -218,9 +218,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
-            packageType: deb
+            packageType: AppImage
           - os: windows-latest
-            packageType: exe
+            packageType: msi
           - os: macos-latest
             packageType: dmg
 
@@ -317,9 +317,9 @@ jobs:
 
             ### Installation
             Download the appropriate package for your operating system:
-            - Windows: `.exe` file
+            - Windows: `.msi` file
             - macOS: `.dmg` file
-            - Linux: `.deb` file
+            - Linux: `.AppImage` file
 
             ### Feedback
             Please report any issues or suggestions on the [GitHub Issues](https://github.com/${{ github.repository }}/issues) page.
