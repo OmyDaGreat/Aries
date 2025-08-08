@@ -64,13 +64,30 @@ compose.desktop {
     }
 }
 
-tasks.withType<Jar> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 idea {
     module {
         isDownloadJavadoc = true
         isDownloadSources = true
+    }
+}
+
+tasks {
+    withType<Jar> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+    register("packageubuntu") {
+        group = "actions"
+        description = "Packages the application for Linux."
+        dependsOn(named("packageAppImage"))
+    }
+    register("packagemacos") {
+        group = "actions"
+        description = "Packages the application for Mac."
+        dependsOn(named("packageDmg"))
+    }
+    register("packagewindows") {
+        group = "actions"
+        description = "Packages the application for Windows."
+        dependsOn(named("packageMsi"))
     }
 }
