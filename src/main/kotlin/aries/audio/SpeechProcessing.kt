@@ -1,7 +1,6 @@
 package aries.audio
 
-import ai.picovoice.leopard.Leopard
-import aries.audio.LiveMic.Companion.leopardBuild
+import aries.audio.LiveMic.Companion.whisperInstance
 import co.touchlab.kermit.Logger
 import util.extension.then
 import util.extension.trueContains
@@ -42,7 +41,7 @@ fun processAudio(block: AudioProcessingConfig.() -> Unit) {
         if (!AudioSystem.isLineSupported(info)) {
             throw LineUnavailableException("No line matching provided info found.")
         }
-        val leopard = leopardBuild.build()
+        val whisper = whisperInstance
         val line = AudioSystem.getLine(info) as TargetDataLine
         val format = AudioFormat(PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
         line.open(format)
@@ -57,7 +56,7 @@ fun processAudio(block: AudioProcessingConfig.() -> Unit) {
                     silenceFrames = it
                 }
             } else {
-                handleNonRecording(byteBuffer, buffer, line, leopard, onKeywordDetected then { silenceFrames = Instant.now() })
+                handleNonRecording(byteBuffer, buffer, line, whisper, onKeywordDetected then { silenceFrames = Instant.now() })
             }
         }
     }
@@ -100,21 +99,21 @@ private fun handleRecording(
  * @param byteBuffer The byte buffer for audio data.
  * @param buffer The audio buffer to analyze.
  * @param line The target data line for audio input.
- * @param leopard The Leopard instance for audio processing.
+ * @param whisper The Whisper instance for audio processing.
  * @param keywordDetected Callback function to be invoked when a keyword is detected.
  */
 private fun handleNonRecording(
     byteBuffer: ByteArray,
     buffer: ShortArray,
     line: TargetDataLine,
-    leopard: Leopard,
+    whisper: WhisperEngine.WhisperInstance,
     keywordDetected: () -> Unit,
 ) {
     val bytesRead = line.read(byteBuffer, 0, byteBuffer.size)
     if (bytesRead <= 0) return
     ByteBuffer.wrap(byteBuffer).order(LITTLE_ENDIAN).asShortBuffer()[buffer]
 
-    val conversion = leopard.convertAudioToText(buffer)
+    val conversion = whisper.convertAudioToText(buffer)
 
     if (conversion.trueContains("Hey Aries", "Aries", "Harry")) {
         line.close()
@@ -122,30 +121,9 @@ private fun handleNonRecording(
     }
 }
 
-/**
- * Checks if the audio buffer contains silence.
- *
- * @param threshold The threshold for silence detection.
- * @return True if the buffer contains silence, false otherwise.
- */
 fun ShortArray.isSilence(threshold: Int): Boolean {
     var sum = 0.0
     for (short in this) sum += abs(short.toInt())
     val average = sum / size
     return average < threshold
 }
-
-/**
- * Converts audio data to text using the Leopard instance.
- *
- * @param buffer The audio buffer to convert.
- * @param this@convertAudioToText The Leopard instance for audio processing.
- * @return The transcribed text.
- */
-fun Leopard.convertAudioToText(buffer: ShortArray?): String =
-    try {
-        process(buffer).transcriptString
-    } catch (e: Exception) {
-        e.printStackTrace()
-        ""
-    }

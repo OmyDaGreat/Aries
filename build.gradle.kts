@@ -33,7 +33,7 @@ java {
 
 dependencies {
     implementation(libs.commons)
-    implementation(libs.leopard)
+    implementation(libs.whisper)
     implementation(libs.tts)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.kotlin)
