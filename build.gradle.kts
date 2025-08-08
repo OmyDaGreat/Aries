@@ -51,7 +51,7 @@ compose.desktop {
         mainClass = "aries.AppKt"
 
         nativeDistributions {
-            targetFormats(Dmg, Msi, AppImage)
+            targetFormats(AppImage, Msi, Dmg)
             packageName = "Aries"
             packageVersion = version.toString()
 
