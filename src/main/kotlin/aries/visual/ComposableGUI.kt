@@ -49,7 +49,6 @@ import util.extension.ScrollOption
 import util.extension.ScrollableDropdownMenu
 import java.io.File
 import java.io.FileWriter
-import java.util.Locale
 
 object SharedState {
     var selectedLanguage: String = ""
@@ -78,17 +77,19 @@ fun ComposableGUI(
         val genders = listOf("Male" to "MALE", "Female" to "FEMALE")
 
         // Find current display names for selected values
-        val selectedLanguageDisplay = languages.find { 
-            LocaleUtils.extractLanguageCode(it) == selectedLanguage 
-        } ?: selectedLanguage
-        val selectedCountryDisplay = countries.find { 
-            LocaleUtils.extractCountryCode(it) == selectedCountry 
-        } ?: selectedCountry
+        val selectedLanguageDisplay =
+            languages.find {
+                LocaleUtils.extractLanguageCode(it) == selectedLanguage
+            } ?: selectedLanguage
+        val selectedCountryDisplay =
+            countries.find {
+                LocaleUtils.extractCountryCode(it) == selectedCountry
+            } ?: selectedCountry
         val selectedGenderDisplay = genders.find { it.second == selectedGender }?.first ?: selectedGender
 
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+            color = MaterialTheme.colors.background,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(modifier = Modifier.padding(24.dp).fillMaxSize()) {
@@ -97,7 +98,7 @@ fun ComposableGUI(
                         modifier = Modifier.fillMaxWidth(),
                         elevation = 4.dp,
                         shape = RoundedCornerShape(12.dp),
-                        backgroundColor = MaterialTheme.colors.primary
+                        backgroundColor = MaterialTheme.colors.primary,
                     ) {
                         Column(modifier = Modifier.padding(20.dp)) {
                             Text(
@@ -120,7 +121,7 @@ fun ComposableGUI(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         elevation = 2.dp,
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
                     ) {
                         Column(modifier = Modifier.padding(20.dp)) {
                             Text(
@@ -188,12 +189,13 @@ fun ComposableGUI(
                                         Logger.i("Selected gender: $selectedGender")
                                     },
                                     modifier = Modifier.weight(1f),
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = MaterialTheme.colors.primary,
-                                        contentColor = MaterialTheme.colors.onPrimary
-                                    ),
+                                    colors =
+                                        ButtonDefaults.buttonColors(
+                                            backgroundColor = MaterialTheme.colors.primary,
+                                            contentColor = MaterialTheme.colors.onPrimary,
+                                        ),
                                     shape = RoundedCornerShape(8.dp),
-                                    elevation = ButtonDefaults.elevation(defaultElevation = 2.dp)
+                                    elevation = ButtonDefaults.elevation(defaultElevation = 2.dp),
                                 ) {
                                     Text("Apply Settings", style = MaterialTheme.typography.button)
                                 }
@@ -213,11 +215,12 @@ fun ComposableGUI(
                                     label = { Text("Max Words") },
                                     modifier = Modifier.weight(1f),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        backgroundColor = MaterialTheme.colors.surface,
-                                        focusedIndicatorColor = MaterialTheme.colors.primary
-                                    ),
-                                    shape = RoundedCornerShape(8.dp)
+                                    colors =
+                                        TextFieldDefaults.textFieldColors(
+                                            backgroundColor = MaterialTheme.colors.surface,
+                                            focusedIndicatorColor = MaterialTheme.colors.primary,
+                                        ),
+                                    shape = RoundedCornerShape(8.dp),
                                 )
                             }
                         }
@@ -227,11 +230,12 @@ fun ComposableGUI(
 
                     // Commands Reference Section
                     Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
                         elevation = 2.dp,
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
                     ) {
                         Column(modifier = Modifier.padding(20.dp)) {
                             Text(
@@ -242,23 +246,23 @@ fun ComposableGUI(
                             )
                             Divider(color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
                             Spacer(modifier = Modifier.height(12.dp))
-                            
+
                             Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                                    .background(
-                                        MaterialTheme.colors.background,
-                                        RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(16.dp)
-                                    .verticalScroll(rememberScrollState())
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f)
+                                        .background(
+                                            MaterialTheme.colors.background,
+                                            RoundedCornerShape(8.dp),
+                                        ).padding(16.dp)
+                                        .verticalScroll(rememberScrollState()),
                             ) {
                                 Text(
                                     COMMAND_INFO,
                                     style = MaterialTheme.typography.body2,
                                     color = MaterialTheme.colors.onBackground,
-                                    lineHeight = MaterialTheme.typography.body2.lineHeight
+                                    lineHeight = MaterialTheme.typography.body2.lineHeight,
                                 )
                             }
                         }

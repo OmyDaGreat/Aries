@@ -4,16 +4,9 @@ import co.touchlab.kermit.Logger
 import io.github.givimad.whisperjni.WhisperContext
 import io.github.givimad.whisperjni.WhisperFullParams
 import io.github.givimad.whisperjni.WhisperJNI
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import util.extension.downloadFile
 import util.ResourcePath.getLocalResourcePath
+import util.extension.downloadFile
 import java.nio.file.Path
-import javax.sound.sampled.AudioFormat
-import javax.sound.sampled.AudioSystem
-import javax.sound.sampled.DataLine
-import javax.sound.sampled.TargetDataLine
 
 /**
  * Whisper-based speech-to-text engine for Aries.
@@ -25,45 +18,46 @@ object WhisperEngine {
     private lateinit var whisper: WhisperJNI
     private lateinit var ctx: WhisperContext
     private var modelPath: Path? = null
-    
+
     /**
      * Initializes the Whisper engine by downloading the model if needed.
      */
     suspend fun initialize() {
         if (isInitialized) return
-        
+
         Logger.d("Initializing Whisper engine.")
-        
+
         try {
             // Download Whisper model if not exists
-            modelPath = downloadFile(
-                "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.en.bin",
-                getLocalResourcePath("whisper-tiny.en.bin")
-            ).toPath()
-            
+            modelPath =
+                downloadFile(
+                    "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.en.bin",
+                    getLocalResourcePath("whisper-tiny.en.bin"),
+                ).toPath()
+
             // Initialize WhisperJNI
             WhisperJNI.loadLibrary()
             WhisperJNI.setLibraryLogger { }
             whisper = WhisperJNI()
-            
+
             // Create context
-            ctx = requireNotNull(whisper.init(modelPath)) {
-                "Failed to initialize Whisper context. Check if model file exists."
-            }
-            
+            ctx =
+                requireNotNull(whisper.init(modelPath)) {
+                    "Failed to initialize Whisper context. Check if model file exists."
+                }
+
             isInitialized = true
             Logger.d("Whisper engine initialized successfully.")
-            
         } catch (e: Exception) {
             Logger.e("Failed to initialize Whisper engine", e)
             throw e
         }
     }
-    
+
     /**
      * Processes audio data and returns the transcribed text.
      * This method is designed to be compatible with the existing Leopard interface.
-     * 
+     *
      * @param audioData The audio data as a ShortArray (16kHz, 16-bit, mono)
      * @return The transcribed text
      */
@@ -72,54 +66,54 @@ object WhisperEngine {
             Logger.w("Whisper engine not initialized or already closed.")
             return ""
         }
-        
+
         return try {
             // Convert ShortArray to FloatArray as required by Whisper
             val floatAudio = audioData.map { it / 32768f }.toFloatArray()
-            
+
             // Set up Whisper parameters
             val params = WhisperFullParams()
-            
+
             // Process audio with Whisper
             val result = whisper.full(ctx, params, floatAudio, floatAudio.size)
             if (result != 0) {
                 Logger.e("Whisper transcription failed with code: $result")
                 return ""
             }
-            
+
             // Extract transcribed text
             val numSegments = whisper.fullNSegments(ctx)
             val transcript = StringBuilder()
-            
+
             for (i in 0 until numSegments) {
                 val segmentText = whisper.fullGetSegmentText(ctx, i).trim()
-                if (segmentText.isNotEmpty() && 
+                if (segmentText.isNotEmpty() &&
                     !segmentText.startsWith("[") && !segmentText.endsWith("]") &&
-                    !segmentText.startsWith("(") && !segmentText.endsWith(")")) {
+                    !segmentText.startsWith("(") && !segmentText.endsWith(")")
+                ) {
                     transcript.append(segmentText).append(" ")
                 }
             }
-            
+
             transcript.toString().trim()
-            
         } catch (e: Exception) {
             Logger.e("Error during Whisper transcription", e)
             ""
         }
     }
-    
+
     /**
      * Creates a new Whisper builder instance.
      * This maintains compatibility with the existing Leopard Builder pattern.
      */
     fun builder(): WhisperBuilder = WhisperBuilder()
-    
+
     /**
      * Closes the Whisper engine and releases resources.
      */
     fun close() {
         if (isClosed || !isInitialized) return
-        
+
         try {
             whisper.free(ctx)
             isClosed = true
@@ -128,7 +122,7 @@ object WhisperEngine {
             Logger.e("Error closing Whisper engine", e)
         }
     }
-    
+
     /**
      * Builder class to maintain compatibility with existing Leopard code structure.
      */
@@ -138,19 +132,19 @@ object WhisperEngine {
             Logger.d("Access key not needed for Whisper (offline model)")
             return this
         }
-        
+
         fun setModelPath(path: String): WhisperBuilder {
             // Custom model path not implemented yet, uses default tiny model
             Logger.d("Custom model path not supported yet, using default tiny model")
             return this
         }
-        
+
         suspend fun build(): WhisperInstance {
             initialize()
             return WhisperInstance()
         }
     }
-    
+
     /**
      * Whisper instance that provides the same interface as Leopard.
      */
@@ -159,17 +153,19 @@ object WhisperEngine {
             val transcript = WhisperEngine.process(audioData)
             return TranscriptResult(transcript)
         }
-        
+
         fun delete() {
             // Instance deletion is handled by the singleton engine
             Logger.d("Whisper instance delete called (handled by singleton)")
         }
     }
-    
+
     /**
      * Result class that mimics Leopard's TranscriptResult.
      */
-    data class TranscriptResult(val transcriptString: String)
+    data class TranscriptResult(
+        val transcriptString: String,
+    )
 }
 
 /**

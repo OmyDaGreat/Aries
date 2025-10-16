@@ -1,11 +1,9 @@
 package aries.audio
 
-import aries.audio.WhisperEngine
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.runBlocking
 import util.audio.NativeTTS
 import util.audio.Recorder
-import util.extension.downloadFile
 import util.process.process
 import java.awt.Desktop
 import java.net.URI
