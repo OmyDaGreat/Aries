@@ -34,9 +34,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -479,7 +482,32 @@ private fun CommandsCard(
                     .verticalScroll(rememberScrollState()),
             ) {
                 Text(
-                    COMMAND_INFO,
+                    text = buildAnnotatedString {
+                        val lines = COMMAND_INFO.split("\n")
+                        lines.forEachIndexed { index, line ->
+                            when {
+                                // Section headers (lines without bullet points and not empty)
+                                line.isNotBlank() && !line.trimStart().startsWith("•") -> {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colors.primary
+                                        )
+                                    ) {
+                                        append(line)
+                                    }
+                                }
+                                // Regular bullet point lines
+                                else -> {
+                                    append(line)
+                                }
+                            }
+                            // Add newline except for the last line
+                            if (index < lines.size - 1) {
+                                append("\n")
+                            }
+                        }
+                    },
                     style = if (isCompact) MaterialTheme.typography.caption else MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onBackground,
                     lineHeight = if (isCompact) 16.sp else 20.sp,
@@ -517,43 +545,44 @@ private fun updateGUIFromPreferences(
 }
 
 private const val COMMAND_INFO =
-    """
-<strong>Hey Aries...</strong><br/>
-- "write special [text]": Writes special characters.<br/>
-- "write [text]": Writes the specified text.<br/>
-- "search [query]": Searches Google for the specified query.<br/>
-- "ask gemini [query]": Queries gemini and processes the response.<br/>
-- "[query]": Queries gemini and processes the response.<br/>
-<strong>Keyboard Commands:</strong><br/>
-- "control shift [text]": Types text with Control + Shift modifier.<br/>
-- "shift [text]": Types text with Shift modifier.<br/>
-- "control [text]": Types text with Control modifier.<br/>
-- "command [text]": Types text with Command modifier (on macOS).<br/>
-- "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).<br/>
-- "cap": Presses the Caps Lock key.<br/>
-- "switch window [number]": Switches to the specified window.<br/>
-- "f [number]": Presses the specified function key.<br/>
-- "alt f [number]": Presses ALT + specified function key.<br/>
-- "windows shift [text]": Types text with Windows + Shift modifier.<br/>
-- "windows [text]": Types text with Windows modifier.<br/>
-- "command shift [text]": Types text with Command + Shift modifier.<br/>
-- "enter": Presses the enter key.<br/>
-- "tab": Presses the Tab key.<br/>
-<strong>Mouse Commands:</strong><br/>
-- "left click": Performs a left mouse click.<br/>
-- "right click": Performs a right mouse click.<br/>
-- "left press": Presses the left mouse button.<br/>
-- "left release": Releases the left mouse button.<br/>
-- "right press": Presses the right mouse button.<br/>
-- "right release": Releases the right mouse button.<br/>
-- "middle click": Performs a middle mouse click.<br/>
-- "mouse [direction(s)]": Moves the mouse in the specified direction(s).<br/>
-- "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).<br/>
-<strong>Notepad-specific commands:</strong><br/>
-- "open notepad": Opens the notepad.<br/>
-- "close notepad": Closes the notepad.<br/>
-- "open new": Opens a new file in notepad.<br/>
-- "delete everything": Deletes all text in notepad.<br/>
-- "save file [name]": Saves the file with the specified name.<br/>
-- "save file as [name]": Saves the file with the specified name (alternative phrasing).
-"""
+    """Hey Aries...
+• "write special [text]": Writes special characters.
+• "write [text]": Writes the specified text.
+• "search [query]": Searches Google for the specified query.
+• "ask gemini [query]": Queries gemini and processes the response.
+• "[query]": Queries gemini and processes the response.
+
+Keyboard Commands:
+• "control shift [text]": Types text with Control + Shift modifier.
+• "shift [text]": Types text with Shift modifier.
+• "control [text]": Types text with Control modifier.
+• "command [text]": Types text with Command modifier (on macOS).
+• "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).
+• "cap": Presses the Caps Lock key.
+• "switch window [number]": Switches to the specified window.
+• "f [number]": Presses the specified function key.
+• "alt f [number]": Presses ALT + specified function key.
+• "windows shift [text]": Types text with Windows + Shift modifier.
+• "windows [text]": Types text with Windows modifier.
+• "command shift [text]": Types text with Command + Shift modifier.
+• "enter": Presses the enter key.
+• "tab": Presses the Tab key.
+
+Mouse Commands:
+• "left click": Performs a left mouse click.
+• "right click": Performs a right mouse click.
+• "left press": Presses the left mouse button.
+• "left release": Releases the left mouse button.
+• "right press": Presses the right mouse button.
+• "right release": Releases the right mouse button.
+• "middle click": Performs a middle mouse click.
+• "mouse [direction(s)]": Moves the mouse in the specified direction(s).
+• "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).
+
+Notepad-specific commands:
+• "open notepad": Opens the notepad.
+• "close notepad": Closes the notepad.
+• "open new": Opens a new file in notepad.
+• "delete everything": Deletes all text in notepad.
+• "save file [name]": Saves the file with the specified name.
+• "save file as [name]": Saves the file with the specified name (alternative phrasing)."""
