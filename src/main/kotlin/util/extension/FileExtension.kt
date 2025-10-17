@@ -12,10 +12,6 @@ import java.io.File
 const val ICON =
     "https://www.dropbox.com/scl/fi/4o3busy75hk1mga2i665g/aries.png?rlkey=fp7yrxl5lz5ldfcjndsiikus2&st=m9ydm8op&dl=1"
 
-// URL of the Aries.pv file
-const val PV =
-    "https://www.dropbox.com/scl/fi/f4370qnb7d05e90odjebo/Aries.pv?rlkey=a1ceeoipvdah4nosr00w3blv6&st=uoc4kwn3&dl=1"
-
 // URL of the openNotepad.scpt file
 const val SCPT =
     "https://www.dropbox.com/scl/fi/lppie7xcxbzloo860t7qg/openNotepad.scpt?rlkey=xv413n4dclvsjj6hdj580u0s6&st=1uk85psv&dl=1"

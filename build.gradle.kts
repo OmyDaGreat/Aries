@@ -33,7 +33,7 @@ java {
 
 dependencies {
     implementation(libs.commons)
-    implementation(libs.leopard)
+    implementation(libs.whisper)
     implementation(libs.tts)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.kotlin)
@@ -51,7 +51,7 @@ compose.desktop {
         mainClass = "aries.AppKt"
 
         nativeDistributions {
-            targetFormats(Dmg, Msi, AppImage)
+            targetFormats(AppImage, Msi, Dmg)
             packageName = "Aries"
             packageVersion = version.toString()
 
@@ -64,13 +64,30 @@ compose.desktop {
     }
 }
 
-tasks.withType<Jar> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 idea {
     module {
         isDownloadJavadoc = true
         isDownloadSources = true
+    }
+}
+
+tasks {
+    withType<Jar> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+    register("packageubuntu") {
+        group = "actions"
+        description = "Packages the application for Linux."
+        dependsOn(named("packageAppImage"))
+    }
+    register("packagemacos") {
+        group = "actions"
+        description = "Packages the application for Mac."
+        dependsOn(named("packageDmg"))
+    }
+    register("packagewindows") {
+        group = "actions"
+        description = "Packages the application for Windows."
+        dependsOn(named("packageMsi"))
     }
 }

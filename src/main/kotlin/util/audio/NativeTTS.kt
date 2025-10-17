@@ -1,6 +1,7 @@
 package util.audio
 
 import aries.audio.LiveMic
+import co.touchlab.kermit.Logger
 import io.github.jonelo.tts.engines.SpeechEngineNative
 import io.github.jonelo.tts.engines.VoicePreferences
 import io.github.jonelo.tts.engines.VoicePreferences.Gender
@@ -26,7 +27,8 @@ class NativeTTS {
          * @param text The text to be converted to speech.
          */
         @JvmStatic
-        fun tts(text: String?) {
+        fun tts(text: String) {
+            Logger.d("TTS") { text }
             try {
                 val speechEngine = SpeechEngineNative.getInstance()
                 val voice = speechEngine.findVoiceByPreferences(voicePreferences) ?: speechEngine.availableVoices.first()
@@ -36,9 +38,13 @@ class NativeTTS {
                 val isSpdSayError =
                     e.message?.contains("spd-say", ignoreCase = true) == true ||
                         e.message?.contains("speech-dispatcher", ignoreCase = true) == true ||
-                        e.cause?.message?.contains("spd-say", ignoreCase = true) == true
+                        e.message?.contains("speech dispatcher", ignoreCase = true) == true ||
+                        e.cause?.message?.contains("spd-say", ignoreCase = true) == true ||
+                        e.cause?.message?.contains("speech-dispatcher", ignoreCase = true) == true ||
+                        e.cause?.message?.contains("speech dispatcher", ignoreCase = true) == true
 
                 if (isSpdSayError) {
+                    Logger.e("TTS", e) { "speech dispatcher error" }
                     ScrollOption.requestScrollableMessageDialog(
                         "TTS Error",
                         "Speech Dispatcher is not installed or not running.\nPlease install it (e.g., 'sudo apt install speech-dispatcher') and try again.",

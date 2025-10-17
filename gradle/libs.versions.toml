@@ -1,7 +1,7 @@
 [versions]
+whisper = "1.7.1"
 kotlin = "2.2.20"
 commonsLang = "3.19.0"
-leopardJava = "2.0.4"
 slf4j = "2.0.17"
 jAdapterForNativeTTS = "0.12.1"
 coroutines = "1.10.2"
@@ -14,7 +14,7 @@ hot-reload = "1.0.0-rc02"
 
 [libraries]
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
-leopard = { group = "ai.picovoice", name = "leopard-java", version.ref = "leopardJava" }
+whisper = { group = "io.github.givimad", name = "whisper-jni", version.ref = "whisper" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 slf4j-nop = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
 tts = { group = "com.github.Darkrai9x", name = "jAdapterForNativeTTS", version.ref = "jAdapterForNativeTTS" }
