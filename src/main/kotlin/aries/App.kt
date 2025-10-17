@@ -1,6 +1,7 @@
 package aries
 
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,20 +72,36 @@ class AriesApplication {
 
             if (gui.value) {
                 Logger.d("Opening GUI")
+                val isDarkTheme = remember { mutableStateOf(true) }
+                
                 MaterialTheme(
-                    colors =
+                    colors = if (isDarkTheme.value) {
+                        darkColors(
+                            primary = Color(0xFF64B5F6), // Light blue for dark theme
+                            primaryVariant = Color(0xFF42A5F5),
+                            secondary = Color(0xFF26C6DA), // Cyan accent
+                            secondaryVariant = Color(0xFF00ACC1),
+                            background = Color(0xFF121212),
+                            surface = Color(0xFF1E1E1E),
+                            onPrimary = Color(0xFF000000),
+                            onSecondary = Color(0xFF000000),
+                            onBackground = Color(0xFFE1E1E1),
+                            onSurface = Color(0xFFE1E1E1),
+                        )
+                    } else {
                         lightColors(
-                            primary = Color(0xFF1976D2), // Modern blue
-                            primaryVariant = Color(0xFF1565C0),
-                            secondary = Color(0xFF03DAC6), // Teal accent
-                            secondaryVariant = Color(0xFF018786),
+                            primary = Color(0xFF2196F3), // Modern blue
+                            primaryVariant = Color(0xFF1976D2),
+                            secondary = Color(0xFF00BCD4), // Cyan accent
+                            secondaryVariant = Color(0xFF0097A7),
                             background = Color(0xFFF5F5F5),
-                            surface = Color.White,
+                            surface = Color(0xFFFFFFFF),
                             onPrimary = Color.White,
-                            onSecondary = Color.Black,
+                            onSecondary = Color.White,
                             onBackground = Color(0xFF212121),
                             onSurface = Color(0xFF212121),
-                        ),
+                        )
+                    }
                 ) {
                     ComposableGUI(onCloseRequest = { gui.value = false }, icon = trayIcon)
                 }
