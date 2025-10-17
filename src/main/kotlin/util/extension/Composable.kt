@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -77,18 +78,24 @@ fun ScrollableDropdownMenu(
     }
 
     Box(modifier = modifier) {
-        // Main dropdown button
+        // Main dropdown button with modern styling
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = !expanded },
-            elevation = if (isFocused || expanded) 4.dp else 2.dp,
-            shape = RoundedCornerShape(8.dp)
+            elevation = if (isFocused || expanded) 6.dp else 3.dp,
+            shape = RoundedCornerShape(12.dp)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .background(
+                        if (expanded) 
+                            MaterialTheme.colors.primary.copy(alpha = 0.05f)
+                        else 
+                            Color.Transparent
+                    )
+                    .padding(horizontal = 16.dp, vertical = 14.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -98,17 +105,18 @@ fun ScrollableDropdownMenu(
                             text = label,
                             style = MaterialTheme.typography.caption,
                             color = MaterialTheme.colors.primary,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.SemiBold
                         )
-                        Spacer(modifier = Modifier.height(2.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                     }
                     Text(
                         text = if (selectedItem.isEmpty()) "Select an option" else selectedItem,
                         style = MaterialTheme.typography.body1,
                         color = if (selectedItem.isEmpty()) 
-                            MaterialTheme.colors.onSurface.copy(alpha = 0.6f) 
+                            MaterialTheme.colors.onSurface.copy(alpha = 0.5f) 
                         else 
                             MaterialTheme.colors.onSurface,
+                        fontWeight = if (selectedItem.isEmpty()) FontWeight.Normal else FontWeight.Medium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -117,12 +125,12 @@ fun ScrollableDropdownMenu(
                     imageVector = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                     contentDescription = if (expanded) "Collapse dropdown" else "Expand dropdown",
                     tint = MaterialTheme.colors.primary,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(28.dp)
                 )
             }
         }
 
-        // Enhanced dropdown menu
+        // Enhanced dropdown menu with modern styling
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { 
@@ -131,14 +139,14 @@ fun ScrollableDropdownMenu(
                 isFocused = false
             },
             modifier = Modifier
-                .width(300.dp)
-                .heightIn(max = 300.dp)
+                .width(320.dp)
+                .heightIn(max = 320.dp)
         ) {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colors.surface,
-                elevation = 8.dp,
-                shape = RoundedCornerShape(8.dp)
+                elevation = 12.dp,
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Column {
                     // Search field (if enabled)
@@ -146,7 +154,12 @@ fun ScrollableDropdownMenu(
                         OutlinedTextField(
                             value = searchText,
                             onValueChange = { searchText = it },
-                            placeholder = { Text("Search...") },
+                            placeholder = { 
+                                Text(
+                                    "Search...",
+                                    style = MaterialTheme.typography.body2
+                                ) 
+                            },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Search,
@@ -159,38 +172,49 @@ fun ScrollableDropdownMenu(
                                     Icon(
                                         Icons.Default.Clear,
                                         contentDescription = "Clear search",
-                                        tint = MaterialTheme.colors.primary,
+                                        tint = MaterialTheme.colors.primary.copy(alpha = 0.7f),
                                         modifier = Modifier.clickable { searchText = "" }
                                     )
                                 }
                             } else null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
+                                .padding(12.dp)
                                 .onFocusChanged { isFocused = it.isFocused },
                             singleLine = true,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(10.dp),
+                            textStyle = MaterialTheme.typography.body2
                         )
-                        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
+                        Divider(
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f),
+                            thickness = 1.dp
+                        )
                     }
 
                     // Options list
                     if (filteredOptions.isEmpty()) {
-                        Text(
-                            text = "No options found",
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp),
-                            style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
-                        )
+                                .padding(20.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "No options found",
+                                style = MaterialTheme.typography.body2,
+                                color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     } else {
                         Column(
                             modifier = Modifier
-                                .heightIn(max = 200.dp)
+                                .heightIn(max = 220.dp)
                                 .verticalScroll(rememberScrollState())
+                                .padding(vertical = 4.dp)
                         ) {
                             filteredOptions.take(maxDisplayItems * 10).forEach { option ->
+                                val isSelected = option == selectedItem
                                 DropdownMenuItem(
                                     onClick = {
                                         selectedItem = option
@@ -201,26 +225,32 @@ fun ScrollableDropdownMenu(
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .background(
-                                            if (option == selectedItem) 
-                                                MaterialTheme.colors.primary.copy(alpha = 0.08f)
-                                            else 
-                                                Color.Transparent,
-                                            RoundedCornerShape(4.dp)
-                                        )
-                                        .padding(horizontal = 4.dp)
+                                        .padding(horizontal = 8.dp, vertical = 2.dp)
                                 ) {
-                                    Text(
-                                        text = option,
-                                        style = MaterialTheme.typography.body2,
-                                        color = if (option == selectedItem) 
-                                            MaterialTheme.colors.primary
-                                        else 
-                                            MaterialTheme.colors.onSurface,
-                                        fontWeight = if (option == selectedItem) FontWeight.Medium else FontWeight.Normal,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(
+                                                if (isSelected) 
+                                                    MaterialTheme.colors.primary.copy(alpha = 0.12f)
+                                                else 
+                                                    Color.Transparent,
+                                                RoundedCornerShape(6.dp)
+                                            )
+                                            .padding(horizontal = 12.dp, vertical = 8.dp)
+                                    ) {
+                                        Text(
+                                            text = option,
+                                            style = MaterialTheme.typography.body2,
+                                            color = if (isSelected) 
+                                                MaterialTheme.colors.primary
+                                            else 
+                                                MaterialTheme.colors.onSurface,
+                                            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
                                 }
                             }
                         }

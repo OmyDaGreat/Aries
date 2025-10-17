@@ -337,14 +337,16 @@ private fun SettingsCard(
                             maxWords = newValue
                             saveVoicePreferences()
                         },
-                        label = { Text("Max Words") },
+                        label = { Text("Max Words", fontWeight = FontWeight.Medium) },
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = MaterialTheme.colors.surface,
+                            backgroundColor = MaterialTheme.colors.background,
                             focusedIndicatorColor = MaterialTheme.colors.primary,
+                            unfocusedIndicatorColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
+                            focusedLabelColor = MaterialTheme.colors.primary,
                         ),
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(10.dp),
                     )
 
                     Button(
@@ -357,15 +359,23 @@ private fun SettingsCard(
                             Logger.i("Selected country: $selectedCountry")
                             Logger.i("Selected gender: $selectedGender")
                         },
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        modifier = Modifier.fillMaxWidth().height(52.dp),
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = MaterialTheme.colors.primary,
                             contentColor = MaterialTheme.colors.onPrimary,
                         ),
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = ButtonDefaults.elevation(defaultElevation = 2.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        elevation = ButtonDefaults.elevation(
+                            defaultElevation = 3.dp,
+                            pressedElevation = 6.dp,
+                            hoveredElevation = 4.dp
+                        ),
                     ) {
-                        Text("Apply Settings", style = MaterialTheme.typography.button)
+                        Text(
+                            "Apply Settings",
+                            style = MaterialTheme.typography.button,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             } else {
@@ -384,14 +394,16 @@ private fun SettingsCard(
                             maxWords = newValue
                             saveVoicePreferences()
                         },
-                        label = { Text("Max Words") },
+                        label = { Text("Max Words", fontWeight = FontWeight.Medium) },
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = MaterialTheme.colors.surface,
+                            backgroundColor = MaterialTheme.colors.background,
                             focusedIndicatorColor = MaterialTheme.colors.primary,
+                            unfocusedIndicatorColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
+                            focusedLabelColor = MaterialTheme.colors.primary,
                         ),
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(10.dp),
                     )
 
                     Button(
@@ -409,10 +421,18 @@ private fun SettingsCard(
                             backgroundColor = MaterialTheme.colors.primary,
                             contentColor = MaterialTheme.colors.onPrimary,
                         ),
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = ButtonDefaults.elevation(defaultElevation = 2.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        elevation = ButtonDefaults.elevation(
+                            defaultElevation = 3.dp,
+                            pressedElevation = 6.dp,
+                            hoveredElevation = 4.dp
+                        ),
                     ) {
-                        Text("Apply Settings", style = MaterialTheme.typography.button)
+                        Text(
+                            "Apply Settings",
+                            style = MaterialTheme.typography.button,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             }
