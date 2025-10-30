@@ -200,7 +200,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Package for ${{ matrix.os }}
-        run: ./gradlew package${{ matrix.os.replace('-latest', '') }}
+        run: |
+          OS='${{ matrix.os }}'
+          OS=${OS/-latest/}
+          ./gradlew package$OS
 
       - name: Upload package as artifact
         uses: actions/upload-artifact@v5
@@ -246,7 +249,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Package for ${{ matrix.os }}
-        run: ./gradlew package${{ matrix.os.replace('-latest', '') }}
+        run: |
+          OS='${{ matrix.os }}'
+          OS=${OS/-latest/}
+          ./gradlew package$OS
 
       - name: Upload package as artifact
         uses: actions/upload-artifact@v5
