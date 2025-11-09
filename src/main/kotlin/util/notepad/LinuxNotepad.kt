@@ -9,7 +9,6 @@ import util.extension.type
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.File
-import java.io.IOException
 
 class LinuxNotepad : Notepad {
     private val robot = Robot()
@@ -19,7 +18,6 @@ class LinuxNotepad : Notepad {
         val homeDirectory = System.getProperty("user.home") + File.separator + "Aries"
     }
 
-    @Throws(IOException::class)
     override fun openNotepad() {
         process =
             ProcessBuilder("notepadqq").start().also {
@@ -29,10 +27,6 @@ class LinuxNotepad : Notepad {
                     leftClick()
                 }
             }
-    }
-
-    override fun writeText(text: String) {
-        robot.type(text)
     }
 
     override fun deleteText() {
@@ -61,7 +55,6 @@ class LinuxNotepad : Notepad {
         robot.control(KeyEvent.VK_N)
     }
 
-    @Throws(InterruptedException::class)
     override fun closeNotepad() {
         robot.control(KeyEvent.VK_F4)
         process?.waitFor()?.also { Logger.d("Exited Notepad++ with code: $it") }

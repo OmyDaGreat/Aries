@@ -21,10 +21,6 @@ class MacNotepad : Notepad {
         }
     }
 
-    override fun writeText(text: String) {
-        robot.type(text)
-    }
-
     override fun deleteText() {
         robot.control(KeyEvent.VK_A)
         robot.type(KeyEvent.VK_BACK_SPACE)

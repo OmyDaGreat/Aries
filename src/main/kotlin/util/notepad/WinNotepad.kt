@@ -7,7 +7,6 @@ import util.extension.type
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.File.separator
-import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -23,13 +22,10 @@ class WinNotepad : Notepad {
         Files.createDirectories(Paths.get(homeDirectory))
     }
 
-    @Throws(IOException::class)
     override fun openNotepad() {
         process = ProcessBuilder("C:\\Program Files\\Notepad++\\notepad++.exe").start()
         robot.delay(1000)
     }
-
-    override fun writeText(text: String) = robot.type(text)
 
     override fun deleteText() {
         robot.control(KeyEvent.VK_A)
@@ -54,7 +50,6 @@ class WinNotepad : Notepad {
 
     override fun openNewFile() = robot.control(KeyEvent.VK_N)
 
-    @Throws(InterruptedException::class)
     override fun closeNotepad() {
         process?.let {
             it.destroy()

@@ -12,10 +12,6 @@ import java.io.File
 const val ICON =
     "https://www.dropbox.com/scl/fi/4o3busy75hk1mga2i665g/aries.png?rlkey=fp7yrxl5lz5ldfcjndsiikus2&st=m9ydm8op&dl=1"
 
-// URL of the openNotepad.scpt file
-const val SCPT =
-    "https://www.dropbox.com/scl/fi/lppie7xcxbzloo860t7qg/openNotepad.scpt?rlkey=xv413n4dclvsjj6hdj580u0s6&st=1uk85psv&dl=1"
-
 /**
  * Downloads a file from the specified URL and saves it to the given destination path.
  *
