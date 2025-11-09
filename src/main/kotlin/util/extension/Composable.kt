@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
@@ -23,7 +22,6 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -40,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -64,13 +61,14 @@ fun ScrollableDropdownMenu(
     var isFocused by remember { mutableStateOf(false) }
 
     // Filter options based on search text
-    val filteredOptions = remember(searchText, options) {
-        if (searchText.isEmpty()) {
-            options
-        } else {
-            options.filter { it.contains(searchText, ignoreCase = true) }
+    val filteredOptions =
+        remember(searchText, options) {
+            if (searchText.isEmpty()) {
+                options
+            } else {
+                options.filter { it.contains(searchText, ignoreCase = true) }
+            }
         }
-    }
 
     // Update selected item when initialSelectedItem changes
     LaunchedEffect(initialSelectedItem) {
@@ -80,24 +78,26 @@ fun ScrollableDropdownMenu(
     Box(modifier = modifier) {
         // Main dropdown button with modern styling
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clickable { expanded = !expanded },
             elevation = if (isFocused || expanded) 6.dp else 3.dp,
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        if (expanded) 
-                            MaterialTheme.colors.primary.copy(alpha = 0.05f)
-                        else 
-                            Color.Transparent
-                    )
-                    .padding(horizontal = 16.dp, vertical = 14.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(
+                            if (expanded) {
+                                MaterialTheme.colors.primary.copy(alpha = 0.05f)
+                            } else {
+                                Color.Transparent
+                            },
+                        ).padding(horizontal = 16.dp, vertical = 14.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     if (label.isNotEmpty()) {
@@ -105,27 +105,29 @@ fun ScrollableDropdownMenu(
                             text = label,
                             style = MaterialTheme.typography.caption,
                             color = MaterialTheme.colors.primary,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                     }
                     Text(
-                        text = if (selectedItem.isEmpty()) "Select an option" else selectedItem,
+                        text = selectedItem.ifEmpty { "Select an option" },
                         style = MaterialTheme.typography.body1,
-                        color = if (selectedItem.isEmpty()) 
-                            MaterialTheme.colors.onSurface.copy(alpha = 0.5f) 
-                        else 
-                            MaterialTheme.colors.onSurface,
+                        color =
+                            if (selectedItem.isEmpty()) {
+                                MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                            } else {
+                                MaterialTheme.colors.onSurface
+                            },
                         fontWeight = if (selectedItem.isEmpty()) FontWeight.Normal else FontWeight.Medium,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
                 Icon(
                     imageVector = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                     contentDescription = if (expanded) "Collapse dropdown" else "Expand dropdown",
                     tint = MaterialTheme.colors.primary,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(28.dp),
                 )
             }
         }
@@ -133,20 +135,21 @@ fun ScrollableDropdownMenu(
         // Enhanced dropdown menu with modern styling
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { 
+            onDismissRequest = {
                 expanded = false
                 searchText = ""
                 isFocused = false
             },
-            modifier = Modifier
-                .width(320.dp)
-                .heightIn(max = 320.dp)
+            modifier =
+                Modifier
+                    .width(320.dp)
+                    .heightIn(max = 320.dp),
         ) {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colors.surface,
                 elevation = 12.dp,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
             ) {
                 Column {
                     // Search field (if enabled)
@@ -154,64 +157,70 @@ fun ScrollableDropdownMenu(
                         OutlinedTextField(
                             value = searchText,
                             onValueChange = { searchText = it },
-                            placeholder = { 
+                            placeholder = {
                                 Text(
                                     "Search...",
-                                    style = MaterialTheme.typography.body2
-                                ) 
+                                    style = MaterialTheme.typography.body2,
+                                )
                             },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Search,
                                     contentDescription = "Search",
-                                    tint = MaterialTheme.colors.primary
+                                    tint = MaterialTheme.colors.primary,
                                 )
                             },
-                            trailingIcon = if (searchText.isNotEmpty()) {
-                                {
-                                    Icon(
-                                        Icons.Default.Clear,
-                                        contentDescription = "Clear search",
-                                        tint = MaterialTheme.colors.primary.copy(alpha = 0.7f),
-                                        modifier = Modifier.clickable { searchText = "" }
-                                    )
-                                }
-                            } else null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp)
-                                .onFocusChanged { isFocused = it.isFocused },
+                            trailingIcon =
+                                if (searchText.isNotEmpty()) {
+                                    {
+                                        Icon(
+                                            Icons.Default.Clear,
+                                            contentDescription = "Clear search",
+                                            tint = MaterialTheme.colors.primary.copy(alpha = 0.7f),
+                                            modifier = Modifier.clickable { searchText = "" },
+                                        )
+                                    }
+                                } else {
+                                    null
+                                },
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp)
+                                    .onFocusChanged { isFocused = it.isFocused },
                             singleLine = true,
                             shape = RoundedCornerShape(10.dp),
-                            textStyle = MaterialTheme.typography.body2
+                            textStyle = MaterialTheme.typography.body2,
                         )
                         Divider(
                             color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f),
-                            thickness = 1.dp
+                            thickness = 1.dp,
                         )
                     }
 
                     // Options list
                     if (filteredOptions.isEmpty()) {
                         Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(20.dp),
-                            contentAlignment = Alignment.Center
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(20.dp),
+                            contentAlignment = Alignment.Center,
                         ) {
                             Text(
                                 text = "No options found",
                                 style = MaterialTheme.typography.body2,
                                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
                             )
                         }
                     } else {
                         Column(
-                            modifier = Modifier
-                                .heightIn(max = 220.dp)
-                                .verticalScroll(rememberScrollState())
-                                .padding(vertical = 4.dp)
+                            modifier =
+                                Modifier
+                                    .heightIn(max = 220.dp)
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(vertical = 4.dp),
                         ) {
                             filteredOptions.take(maxDisplayItems * 10).forEach { option ->
                                 val isSelected = option == selectedItem
@@ -223,32 +232,36 @@ fun ScrollableDropdownMenu(
                                         isFocused = false
                                         onItemSelected(option)
                                     },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 8.dp, vertical = 2.dp)
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 8.dp, vertical = 2.dp),
                                 ) {
                                     Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .background(
-                                                if (isSelected) 
-                                                    MaterialTheme.colors.primary.copy(alpha = 0.12f)
-                                                else 
-                                                    Color.Transparent,
-                                                RoundedCornerShape(6.dp)
-                                            )
-                                            .padding(horizontal = 12.dp, vertical = 8.dp)
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .background(
+                                                    if (isSelected) {
+                                                        MaterialTheme.colors.primary.copy(alpha = 0.12f)
+                                                    } else {
+                                                        Color.Transparent
+                                                    },
+                                                    RoundedCornerShape(6.dp),
+                                                ).padding(horizontal = 12.dp, vertical = 8.dp),
                                     ) {
                                         Text(
                                             text = option,
                                             style = MaterialTheme.typography.body2,
-                                            color = if (isSelected) 
-                                                MaterialTheme.colors.primary
-                                            else 
-                                                MaterialTheme.colors.onSurface,
+                                            color =
+                                                if (isSelected) {
+                                                    MaterialTheme.colors.primary
+                                                } else {
+                                                    MaterialTheme.colors.onSurface
+                                                },
                                             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                                             maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
+                                            overflow = TextOverflow.Ellipsis,
                                         )
                                     }
                                 }

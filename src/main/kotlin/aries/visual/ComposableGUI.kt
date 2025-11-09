@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -38,7 +37,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -111,7 +109,6 @@ fun ComposableGUI(
                 // Responsive calculations based on window size
                 val isCompact = maxWidth < 600.dp
                 val isMedium = maxWidth in 600.dp..900.dp
-                val isExpanded = maxWidth > 900.dp
 
                 val padding =
                     when {
@@ -155,7 +152,7 @@ fun ComposableGUI(
                                     .fillMaxSize()
                                     .verticalScroll(rememberScrollState()),
                         ) {
-                            HeaderCard(headerElevation, cornerRadius, isCompact)
+                            HeaderCard(headerElevation, cornerRadius, true)
                             Spacer(modifier = Modifier.height(spacing))
                             SettingsCard(
                                 languages = languages,
@@ -167,15 +164,15 @@ fun ComposableGUI(
                                 cardElevation = cardElevation,
                                 cornerRadius = cornerRadius,
                                 spacing = spacing,
-                                isCompact = isCompact,
+                                isCompact = true,
                             )
                             Spacer(modifier = Modifier.height(spacing))
-                            CommandsCard(cardElevation, cornerRadius, spacing, isCompact)
+                            CommandsCard(cardElevation, cornerRadius, spacing, true)
                         }
                     } else {
                         // Medium/Expanded layout - use available space efficiently
                         Column(modifier = Modifier.padding(padding).fillMaxSize()) {
-                            HeaderCard(headerElevation, cornerRadius, isCompact)
+                            HeaderCard(headerElevation, cornerRadius, false)
                             Spacer(modifier = Modifier.height(spacing))
 
                             Row(
@@ -199,7 +196,7 @@ fun ComposableGUI(
                                         cardElevation = cardElevation,
                                         cornerRadius = cornerRadius,
                                         spacing = spacing,
-                                        isCompact = isCompact,
+                                        isCompact = false,
                                         modifier = Modifier.fillMaxSize(),
                                     )
                                 }
@@ -215,7 +212,7 @@ fun ComposableGUI(
                                         cardElevation,
                                         cornerRadius,
                                         spacing,
-                                        isCompact,
+                                        false,
                                         modifier = Modifier.fillMaxSize(),
                                     )
                                 }

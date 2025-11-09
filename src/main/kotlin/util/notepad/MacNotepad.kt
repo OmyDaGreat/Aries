@@ -1,10 +1,7 @@
 package util.notepad
 
-import kotlinx.coroutines.runBlocking
-import util.extension.SCPT
 import util.extension.command
 import util.extension.control
-import util.extension.downloadFile
 import util.extension.enter
 import util.extension.type
 import java.awt.Robot
@@ -23,7 +20,6 @@ class MacNotepad : Notepad {
             e.printStackTrace()
         }
     }
-
 
     override fun writeText(text: String) {
         robot.type(text)

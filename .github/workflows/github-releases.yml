@@ -200,7 +200,7 @@ jobs:
         run: chmod +x gradlew
 
       # Replace the single "Package for ${{ matrix.os }}" step with these two steps
-      - name: Package for ${{ matrix.os }} (Windows)
+      - name: Package for ${{ matrix.os }} (windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
@@ -208,7 +208,7 @@ jobs:
           $OS = $OS -replace '-latest',''
           ./gradlew "package$OS"
 
-      - name: Package for ${{ matrix.os }} (Linux / macOS)
+      - name: Package for ${{ matrix.os }} (unix)
         if: runner.os != 'Windows'
         shell: bash
         run: |
@@ -261,7 +261,7 @@ jobs:
         run: chmod +x gradlew
 
       # Replace the single "Package for ${{ matrix.os }}" step with these two steps
-      - name: Package for ${{ matrix.os }} (Windows)
+      - name: Package for ${{ matrix.os }} (windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
@@ -269,7 +269,7 @@ jobs:
           $OS = $OS -replace '-latest',''
           ./gradlew "package$OS"
 
-      - name: Package for ${{ matrix.os }} (Linux / macOS)
+      - name: Package for ${{ matrix.os }} (unix)
         if: runner.os != 'Windows'
         shell: bash
         run: |

@@ -127,18 +127,6 @@ object WhisperEngine {
      * Builder class to maintain compatibility with existing Leopard code structure.
      */
     class WhisperBuilder {
-        fun setAccessKey(key: String?): WhisperBuilder {
-            // Whisper doesn't need an access key, but we maintain the interface for compatibility
-            Logger.d("Access key not needed for Whisper (offline model)")
-            return this
-        }
-
-        fun setModelPath(path: String): WhisperBuilder {
-            // Custom model path not implemented yet, uses default tiny model
-            Logger.d("Custom model path not supported yet, using default tiny model")
-            return this
-        }
-
         suspend fun build(): WhisperInstance {
             initialize()
             return WhisperInstance()
