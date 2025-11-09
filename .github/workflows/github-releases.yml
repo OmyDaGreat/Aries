@@ -201,9 +201,9 @@ jobs:
 
       - name: Package for ${{ matrix.os }}
         run: |
-          OS='${{ matrix.os }}'
-          OS=${OS/-latest/}
-          ./gradlew package$OS
+          $OS = '${{ matrix.os }}'
+          $OS = $OS -replace '-latest',''
+          ./gradlew "package$OS"
 
       - name: Upload package as artifact
         uses: actions/upload-artifact@v5
@@ -250,9 +250,9 @@ jobs:
 
       - name: Package for ${{ matrix.os }}
         run: |
-          OS='${{ matrix.os }}'
-          OS=${OS/-latest/}
-          ./gradlew package$OS
+          $OS = '${{ matrix.os }}'
+          $OS = $OS -replace '-latest',''
+          ./gradlew "package$OS"
 
       - name: Upload package as artifact
         uses: actions/upload-artifact@v5

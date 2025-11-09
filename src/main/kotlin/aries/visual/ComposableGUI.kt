@@ -41,7 +41,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
@@ -114,41 +113,47 @@ fun ComposableGUI(
                 val isMedium = maxWidth in 600.dp..900.dp
                 val isExpanded = maxWidth > 900.dp
 
-                val padding = when {
-                    isCompact -> 12.dp
-                    isMedium -> 16.dp
-                    else -> 24.dp
-                }
+                val padding =
+                    when {
+                        isCompact -> 12.dp
+                        isMedium -> 16.dp
+                        else -> 24.dp
+                    }
 
-                val cardElevation = when {
-                    isCompact -> 1.dp
-                    else -> 2.dp
-                }
+                val cardElevation =
+                    when {
+                        isCompact -> 1.dp
+                        else -> 2.dp
+                    }
 
-                val headerElevation = when {
-                    isCompact -> 2.dp
-                    else -> 4.dp
-                }
+                val headerElevation =
+                    when {
+                        isCompact -> 2.dp
+                        else -> 4.dp
+                    }
 
-                val spacing = when {
-                    isCompact -> 12.dp
-                    isMedium -> 16.dp
-                    else -> 20.dp
-                }
+                val spacing =
+                    when {
+                        isCompact -> 12.dp
+                        isMedium -> 16.dp
+                        else -> 20.dp
+                    }
 
-                val cornerRadius = when {
-                    isCompact -> 8.dp
-                    else -> 12.dp
-                }
+                val cornerRadius =
+                    when {
+                        isCompact -> 8.dp
+                        else -> 12.dp
+                    }
 
                 Box(modifier = Modifier.fillMaxSize()) {
                     if (isCompact) {
                         // Compact layout - single column, scrollable
                         Column(
-                            modifier = Modifier
-                                .padding(padding)
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
+                            modifier =
+                                Modifier
+                                    .padding(padding)
+                                    .fillMaxSize()
+                                    .verticalScroll(rememberScrollState()),
                         ) {
                             HeaderCard(headerElevation, cornerRadius, isCompact)
                             Spacer(modifier = Modifier.height(spacing))
@@ -162,7 +167,7 @@ fun ComposableGUI(
                                 cardElevation = cardElevation,
                                 cornerRadius = cornerRadius,
                                 spacing = spacing,
-                                isCompact = isCompact
+                                isCompact = isCompact,
                             )
                             Spacer(modifier = Modifier.height(spacing))
                             CommandsCard(cardElevation, cornerRadius, spacing, isCompact)
@@ -175,13 +180,14 @@ fun ComposableGUI(
 
                             Row(
                                 modifier = Modifier.weight(1f).fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(spacing)
+                                horizontalArrangement = Arrangement.spacedBy(spacing),
                             ) {
                                 // Left column - Settings
                                 Column(
-                                    modifier = Modifier
-                                        .weight(if (isMedium) 1f else 0.45f)
-                                        .fillMaxHeight()
+                                    modifier =
+                                        Modifier
+                                            .weight(if (isMedium) 1f else 0.45f)
+                                            .fillMaxHeight(),
                                 ) {
                                     SettingsCard(
                                         languages = languages,
@@ -194,22 +200,23 @@ fun ComposableGUI(
                                         cornerRadius = cornerRadius,
                                         spacing = spacing,
                                         isCompact = isCompact,
-                                        modifier = Modifier.fillMaxSize()
+                                        modifier = Modifier.fillMaxSize(),
                                     )
                                 }
 
                                 // Right column - Commands Reference
                                 Column(
-                                    modifier = Modifier
-                                        .weight(if (isMedium) 1f else 0.55f)
-                                        .fillMaxHeight()
+                                    modifier =
+                                        Modifier
+                                            .weight(if (isMedium) 1f else 0.55f)
+                                            .fillMaxHeight(),
                                 ) {
                                     CommandsCard(
                                         cardElevation,
                                         cornerRadius,
                                         spacing,
                                         isCompact,
-                                        modifier = Modifier.fillMaxSize()
+                                        modifier = Modifier.fillMaxSize(),
                                     )
                                 }
                             }
@@ -224,7 +231,11 @@ fun ComposableGUI(
 }
 
 @Composable
-private fun HeaderCard(elevation: Dp, cornerRadius: Dp, isCompact: Boolean) {
+private fun HeaderCard(
+    elevation: Dp,
+    cornerRadius: Dp,
+    isCompact: Boolean,
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = elevation,
@@ -260,7 +271,7 @@ private fun SettingsCard(
     cornerRadius: Dp,
     spacing: Dp,
     isCompact: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -268,9 +279,10 @@ private fun SettingsCard(
         shape = RoundedCornerShape(cornerRadius),
     ) {
         Column(
-            modifier = Modifier
-                .padding(if (isCompact) 12.dp else 16.dp)
-                .then(if (!isCompact) Modifier.verticalScroll(rememberScrollState()) else Modifier)
+            modifier =
+                Modifier
+                    .padding(if (isCompact) 12.dp else 16.dp)
+                    .then(if (!isCompact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
         ) {
             Text(
                 "Voice Preferences",
@@ -328,7 +340,7 @@ private fun SettingsCard(
                 // Vertical layout for compact mode
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     var maxWordsText by remember { mutableStateOf(maxWords.toString()) }
                     TextField(
@@ -343,12 +355,13 @@ private fun SettingsCard(
                         label = { Text("Max Words", fontWeight = FontWeight.Medium) },
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = MaterialTheme.colors.background,
-                            focusedIndicatorColor = MaterialTheme.colors.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
-                            focusedLabelColor = MaterialTheme.colors.primary,
-                        ),
+                        colors =
+                            TextFieldDefaults.textFieldColors(
+                                backgroundColor = MaterialTheme.colors.background,
+                                focusedIndicatorColor = MaterialTheme.colors.primary,
+                                unfocusedIndicatorColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
+                                focusedLabelColor = MaterialTheme.colors.primary,
+                            ),
                         shape = RoundedCornerShape(10.dp),
                     )
 
@@ -363,21 +376,23 @@ private fun SettingsCard(
                             Logger.i("Selected gender: $selectedGender")
                         },
                         modifier = Modifier.fillMaxWidth().height(52.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.primary,
-                            contentColor = MaterialTheme.colors.onPrimary,
-                        ),
+                        colors =
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.primary,
+                                contentColor = MaterialTheme.colors.onPrimary,
+                            ),
                         shape = RoundedCornerShape(10.dp),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 3.dp,
-                            pressedElevation = 6.dp,
-                            hoveredElevation = 4.dp
-                        ),
+                        elevation =
+                            ButtonDefaults.elevation(
+                                defaultElevation = 3.dp,
+                                pressedElevation = 6.dp,
+                                hoveredElevation = 4.dp,
+                            ),
                     ) {
                         Text(
                             "Apply Settings",
                             style = MaterialTheme.typography.button,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                     }
                 }
@@ -385,7 +400,7 @@ private fun SettingsCard(
                 // Horizontal layout for medium/expanded mode
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     var maxWordsText by remember { mutableStateOf(maxWords.toString()) }
                     TextField(
@@ -400,12 +415,13 @@ private fun SettingsCard(
                         label = { Text("Max Words", fontWeight = FontWeight.Medium) },
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = MaterialTheme.colors.background,
-                            focusedIndicatorColor = MaterialTheme.colors.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
-                            focusedLabelColor = MaterialTheme.colors.primary,
-                        ),
+                        colors =
+                            TextFieldDefaults.textFieldColors(
+                                backgroundColor = MaterialTheme.colors.background,
+                                focusedIndicatorColor = MaterialTheme.colors.primary,
+                                unfocusedIndicatorColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
+                                focusedLabelColor = MaterialTheme.colors.primary,
+                            ),
                         shape = RoundedCornerShape(10.dp),
                     )
 
@@ -420,21 +436,23 @@ private fun SettingsCard(
                             Logger.i("Selected gender: $selectedGender")
                         },
                         modifier = Modifier.weight(1f).height(56.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.primary,
-                            contentColor = MaterialTheme.colors.onPrimary,
-                        ),
+                        colors =
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.primary,
+                                contentColor = MaterialTheme.colors.onPrimary,
+                            ),
                         shape = RoundedCornerShape(10.dp),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 3.dp,
-                            pressedElevation = 6.dp,
-                            hoveredElevation = 4.dp
-                        ),
+                        elevation =
+                            ButtonDefaults.elevation(
+                                defaultElevation = 3.dp,
+                                pressedElevation = 6.dp,
+                                hoveredElevation = 4.dp,
+                            ),
                     ) {
                         Text(
                             "Apply Settings",
                             style = MaterialTheme.typography.button,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                     }
                 }
@@ -449,7 +467,7 @@ private fun CommandsCard(
     cornerRadius: Dp,
     spacing: Dp,
     isCompact: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -466,48 +484,50 @@ private fun CommandsCard(
             )
             Divider(
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-                thickness = 1.dp
+                thickness = 1.dp,
             )
             Spacer(modifier = Modifier.height(spacing))
 
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .background(
-                        MaterialTheme.colors.background.copy(alpha = 0.5f),
-                        RoundedCornerShape(8.dp),
-                    )
-                    .padding(if (isCompact) 8.dp else 12.dp)
-                    .verticalScroll(rememberScrollState()),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(
+                            MaterialTheme.colors.background.copy(alpha = 0.5f),
+                            RoundedCornerShape(8.dp),
+                        ).padding(if (isCompact) 8.dp else 12.dp)
+                        .verticalScroll(rememberScrollState()),
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        val lines = COMMAND_INFO.split("\n")
-                        lines.forEachIndexed { index, line ->
-                            when {
-                                // Section headers (lines without bullet points and not empty)
-                                line.isNotBlank() && !line.trimStart().startsWith("•") -> {
-                                    withStyle(
-                                        style = SpanStyle(
-                                            fontWeight = FontWeight.Bold,
-                                            color = MaterialTheme.colors.primary
-                                        )
-                                    ) {
+                    text =
+                        buildAnnotatedString {
+                            val lines = COMMAND_INFO.split("\n")
+                            lines.forEachIndexed { index, line ->
+                                when {
+                                    // Section headers (lines without bullet points and not empty)
+                                    line.isNotBlank() && !line.trimStart().startsWith("•") -> {
+                                        withStyle(
+                                            style =
+                                                SpanStyle(
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = MaterialTheme.colors.primary,
+                                                ),
+                                        ) {
+                                            append(line)
+                                        }
+                                    }
+                                    // Regular bullet point lines
+                                    else -> {
                                         append(line)
                                     }
                                 }
-                                // Regular bullet point lines
-                                else -> {
-                                    append(line)
+                                // Add newline except for the last line
+                                if (index < lines.size - 1) {
+                                    append("\n")
                                 }
                             }
-                            // Add newline except for the last line
-                            if (index < lines.size - 1) {
-                                append("\n")
-                            }
-                        }
-                    },
+                        },
                     style = if (isCompact) MaterialTheme.typography.caption else MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onBackground,
                     lineHeight = if (isCompact) 16.sp else 20.sp,
