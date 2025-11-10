@@ -11,12 +11,9 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 class WinNotepad : Notepad {
+    private val homeDirectory = System.getProperty("user.home") + separator + "Aries"
     private val robot = Robot()
     private var process: Process? = null
-
-    companion object {
-        val homeDirectory = System.getProperty("user.home") + separator + "Aries"
-    }
 
     init {
         Files.createDirectories(Paths.get(homeDirectory))
@@ -28,8 +25,10 @@ class WinNotepad : Notepad {
     }
 
     override fun deleteText() {
-        robot.control(KeyEvent.VK_A)
-        robot.type(KeyEvent.VK_BACK_SPACE)
+        robot.apply {
+            control(KeyEvent.VK_A)
+            type(KeyEvent.VK_BACK_SPACE)
+        }
     }
 
     override fun addNewLine() = robot.enter()

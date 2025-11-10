@@ -1,6 +1,7 @@
 package util.notepad
 
 import co.touchlab.kermit.Logger
+import util.audio.NativeTTS
 import util.extension.RobotUtils
 import util.extension.control
 import util.extension.enter
@@ -11,12 +12,9 @@ import java.awt.event.KeyEvent
 import java.io.File
 
 class LinuxNotepad : Notepad {
+    private val homeDirectory = System.getProperty("user.home") + File.separator + "Aries"
     private val robot = Robot()
     private var process: Process? = null
-
-    companion object {
-        val homeDirectory = System.getProperty("user.home") + File.separator + "Aries"
-    }
 
     override fun openNotepad() {
         process =
@@ -36,9 +34,7 @@ class LinuxNotepad : Notepad {
         }
     }
 
-    override fun addNewLine() {
-        robot.enter()
-    }
+    override fun addNewLine() = robot.enter()
 
     override fun saveFileAs(name: String) {
         robot.apply {
@@ -51,12 +47,10 @@ class LinuxNotepad : Notepad {
         }
     }
 
-    override fun openNewFile() {
-        robot.control(KeyEvent.VK_N)
-    }
+    override fun openNewFile() = robot.control(KeyEvent.VK_N)
 
     override fun closeNotepad() {
         robot.control(KeyEvent.VK_F4)
-        process?.waitFor()?.also { Logger.d("Exited Notepad++ with code: $it") }
+        process?.waitFor()?.also { Logger.d("Exited Notepad++ with code: $it") } ?: run { NativeTTS.tts("Notepad++ is not open") }
     }
 }

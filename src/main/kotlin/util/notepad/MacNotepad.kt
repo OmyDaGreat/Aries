@@ -22,40 +22,30 @@ class MacNotepad : Notepad {
     }
 
     override fun deleteText() {
-        robot.control(KeyEvent.VK_A)
-        robot.type(KeyEvent.VK_BACK_SPACE)
+        robot.apply {
+            control(KeyEvent.VK_A)
+            type(KeyEvent.VK_BACK_SPACE)
+        }
     }
 
-    override fun addNewLine() {
-        robot.enter()
-    }
+    override fun addNewLine() = robot.enter()
 
-    override fun saveFileAs(name: String) {
-        robot.command(KeyEvent.VK_S)
-    }
+    override fun saveFileAs(name: String) = robot.command(KeyEvent.VK_S)
 
     override fun openNewFile() {
-        try {
-            ProcessBuilder(
-                "osascript",
-                "-e",
-                """
-                tell application \"System Events\"
-                    click menu item \"New Note\" of menu 1 of menu bar item \"File\" of menu bar 1 of application \"Notes\"
-                end tell
-                """.trimIndent(),
-            ).start()
-                .waitFor()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        ProcessBuilder(
+            "osascript",
+            "-e",
+            """
+            tell application \"System Events\"
+                click menu item \"New Note\" of menu 1 of menu bar item \"File\" of menu bar 1 of application \"Notes\"
+            end tell
+            """.trimIndent(),
+        ).start()
+            .waitFor()
     }
 
     override fun closeNotepad() {
-        try {
-            ProcessBuilder("osascript", "-e", "tell application \"Notes\" to quit").start().waitFor()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+        ProcessBuilder("osascript", "-e", "tell application \"Notes\" to quit").start().waitFor()
     }
 }
