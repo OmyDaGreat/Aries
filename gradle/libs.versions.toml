@@ -1,7 +1,7 @@
 [versions]
 whisper = "1.7.1"
 kotlin = "2.2.21"
-commonsLang = "3.19.0"
+commonsLang = "3.20.0"
 slf4j = "2.0.17"
 jAdapterForNativeTTS = "0.12.1"
 coroutines = "1.10.2"
