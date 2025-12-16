@@ -1,6 +1,6 @@
 [versions]
 whisper = "1.7.1"
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 commonsLang = "3.20.0"
 slf4j = "2.0.17"
 jAdapterForNativeTTS = "0.12.1"
