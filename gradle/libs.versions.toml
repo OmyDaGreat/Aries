@@ -10,7 +10,7 @@ serializationJson = "1.9.0"
 datetimeJvm = "0.7.1-0.6.x-compat"
 kermit = "2.0.8"
 compose = "1.9.3"
-hot-reload = "1.0.0-rc04"
+hot-reload = "1.0.0"
 
 [libraries]
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
