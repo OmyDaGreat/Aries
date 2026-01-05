@@ -11,6 +11,7 @@ datetimeJvm = "0.7.1-0.6.x-compat"
 kermit = "2.0.8"
 compose = "1.9.3"
 hot-reload = "1.0.0"
+signal = "1.0.1"
 
 [libraries]
 commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
@@ -27,6 +28,7 @@ ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlin
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime-jvm", version.ref = "datetimeJvm" }
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
+emkt = { group = "xyz.malefic", name = "emkt", version.ref = "signal" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

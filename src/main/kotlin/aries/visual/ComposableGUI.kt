@@ -44,26 +44,20 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import aries.audio.LiveMic.Companion.maxWords
-import aries.visual.SharedState.selectedCountry
-import aries.visual.SharedState.selectedGender
-import aries.visual.SharedState.selectedLanguage
 import co.touchlab.kermit.Logger
 import io.github.jonelo.tts.engines.VoicePreferences
-import util.ResourcePath.getLocalResourcePath
 import util.audio.NativeTTS
-import util.audio.NativeTTS.Companion.loadVoicePreferences
 import util.audio.NativeTTS.Companion.saveVoicePreferences
 import util.extension.LocaleUtils
 import util.extension.ScrollOption
 import util.extension.ScrollableDropdownMenu
-import java.io.File
-import java.io.FileWriter
-
-object SharedState {
-    var selectedLanguage: String = ""
-    var selectedCountry: String = ""
-    var selectedGender: String = ""
-}
+import util.visual.COMMAND_INFO
+import util.visual.RobotActionDisplay
+import util.visual.SharedState.selectedCountry
+import util.visual.SharedState.selectedGender
+import util.visual.SharedState.selectedLanguage
+import util.visual.initializeVoicePreferences
+import util.visual.updateGUIFromPreferences
 
 @Composable
 fun ComposableGUI(
@@ -77,8 +71,7 @@ fun ComposableGUI(
         title = "Aries Settings",
         state = WindowState(width = 900.dp, height = 700.dp),
     ) {
-        writeVoicePreferencesToFile(getLocalResourcePath("voicePreferences.txt"))
-        loadVoicePreferences()
+        initializeVoicePreferences()
 
         updateGUIFromPreferences(
             setSelectedLanguage = { selectedLanguage = it },
@@ -154,6 +147,8 @@ fun ComposableGUI(
                         ) {
                             HeaderCard(headerElevation, cornerRadius, true)
                             Spacer(modifier = Modifier.height(spacing))
+                            RobotActionDisplay(cardElevation, cornerRadius)
+                            Spacer(modifier = Modifier.height(spacing))
                             SettingsCard(
                                 languages = languages,
                                 countries = countries,
@@ -173,6 +168,9 @@ fun ComposableGUI(
                         // Medium/Expanded layout - use available space efficiently
                         Column(modifier = Modifier.padding(padding).fillMaxSize()) {
                             HeaderCard(headerElevation, cornerRadius, false)
+                            Spacer(modifier = Modifier.height(spacing))
+
+                            RobotActionDisplay(cardElevation, cornerRadius)
                             Spacer(modifier = Modifier.height(spacing))
 
                             Row(
@@ -514,6 +512,7 @@ private fun CommandsCard(
                                             append(line)
                                         }
                                     }
+
                                     // Regular bullet point lines
                                     else -> {
                                         append(line)
@@ -533,73 +532,3 @@ private fun CommandsCard(
         }
     }
 }
-
-private fun writeVoicePreferencesToFile(filePath: String) {
-    val content =
-        """
-        language=en
-        country=US
-        gender=MALE
-        maxWords=40
-        """.trimIndent()
-    File(filePath).apply {
-        if (!exists()) {
-            createNewFile()
-            FileWriter(this).use { it.write(content) }
-        }
-    }
-}
-
-private fun updateGUIFromPreferences(
-    setSelectedLanguage: (String) -> Unit,
-    setSelectedCountry: (String) -> Unit,
-    setSelectedGender: (String) -> Unit,
-) {
-    val preferences = NativeTTS.voicePreferences
-    setSelectedLanguage(preferences.language)
-    setSelectedCountry(preferences.country)
-    setSelectedGender(preferences.gender.name)
-}
-
-private const val COMMAND_INFO =
-    """Hey Aries...
-• "write special [text]": Writes special characters.
-• "write [text]": Writes the specified text.
-• "search [query]": Searches Google for the specified query.
-• "ask gemini [query]": Queries gemini and processes the response.
-• "[query]": Queries gemini and processes the response.
-
-Keyboard Commands:
-• "control shift [text]": Types text with Control + Shift modifier.
-• "shift [text]": Types text with Shift modifier.
-• "control [text]": Types text with Control modifier.
-• "command [text]": Types text with Command modifier (on macOS).
-• "arrow [direction(s)]": Moves the arrow keys in the specified direction(s).
-• "cap": Presses the Caps Lock key.
-• "switch window [number]": Switches to the specified window.
-• "f [number]": Presses the specified function key.
-• "alt f [number]": Presses ALT + specified function key.
-• "windows shift [text]": Types text with Windows + Shift modifier.
-• "windows [text]": Types text with Windows modifier.
-• "command shift [text]": Types text with Command + Shift modifier.
-• "enter": Presses the enter key.
-• "tab": Presses the Tab key.
-
-Mouse Commands:
-• "left click": Performs a left mouse click.
-• "right click": Performs a right mouse click.
-• "left press": Presses the left mouse button.
-• "left release": Releases the left mouse button.
-• "right press": Presses the right mouse button.
-• "right release": Releases the right mouse button.
-• "middle click": Performs a middle mouse click.
-• "mouse [direction(s)]": Moves the mouse in the specified direction(s).
-• "scroll [direction(s)]": Scrolls the mouse wheel in the specified direction(s).
-
-Notepad-specific commands:
-• "open notepad": Opens the notepad.
-• "close notepad": Closes the notepad.
-• "open new": Opens a new file in notepad.
-• "delete everything": Deletes all text in notepad.
-• "save file [name]": Saves the file with the specified name.
-• "save file as [name]": Saves the file with the specified name (alternative phrasing)."""

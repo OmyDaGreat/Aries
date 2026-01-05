@@ -24,6 +24,7 @@ import util.extension.trueContains
 import util.extension.type
 import util.extension.windows
 import util.notepad.NotepadProcessor
+import util.visual.logAction
 import java.awt.Robot
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent.VK_CAPS_LOCK
@@ -40,17 +41,37 @@ fun handleMouse(input: String) {
 
 fun handleRightPress(input: String) {
     when {
-        input.trueContains("right press", "write press") -> Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
-        input.trueContains("right release", "write release") -> Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
-        input.trueContains("right click", "write click") -> Robot().rightClick()
+        input.trueContains("right press", "write press") -> {
+            logAction("Right Mouse Press")
+            Robot().mousePress(InputEvent.BUTTON3_DOWN_MASK)
+        }
+
+        input.trueContains("right release", "write release") -> {
+            logAction("Right Mouse Release")
+            Robot().mouseRelease(InputEvent.BUTTON3_DOWN_MASK)
+        }
+
+        input.trueContains("right click", "write click") -> {
+            Robot().rightClick()
+        }
     }
 }
 
 fun handleLeftPress(input: String) {
     when {
-        input.trueContains("left press") -> Robot().mousePress(InputEvent.BUTTON1_DOWN_MASK)
-        input.trueContains("left release") -> Robot().mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-        input.trueContains("left click") -> Robot().leftClick()
+        input.trueContains("left press") -> {
+            logAction("Left Mouse Press")
+            Robot().mousePress(InputEvent.BUTTON1_DOWN_MASK)
+        }
+
+        input.trueContains("left release") -> {
+            logAction("Left Mouse Release")
+            Robot().mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+        }
+
+        input.trueContains("left click") -> {
+            Robot().leftClick()
+        }
     }
 }
 
@@ -81,6 +102,7 @@ fun handleSearch(input: String) {
 }
 
 fun handleCap() {
+    logAction("Caps Lock")
     Robot().type(VK_CAPS_LOCK)
 }
 
@@ -95,6 +117,7 @@ fun handleTab() {
 }
 
 fun handleMiddleClick() {
+    logAction("Middle Click")
     Robot().apply {
         mousePress(InputEvent.BUTTON2_DOWN_MASK)
         mouseRelease(InputEvent.BUTTON2_DOWN_MASK)

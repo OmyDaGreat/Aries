@@ -3,6 +3,7 @@ package util.extension
 import co.touchlab.kermit.Logger
 import util.emu.Direction.Companion.fromString
 import util.extension.RobotUtils.special
+import util.visual.logAction
 import java.awt.MouseInfo.getPointerInfo
 import java.awt.Robot
 import java.awt.event.InputEvent.BUTTON1_DOWN_MASK
@@ -23,7 +24,6 @@ import java.awt.event.KeyEvent.VK_F6
 import java.awt.event.KeyEvent.VK_F7
 import java.awt.event.KeyEvent.VK_F8
 import java.awt.event.KeyEvent.VK_F9
-import java.awt.event.KeyEvent.VK_S
 import java.awt.event.KeyEvent.VK_TAB
 
 /**
@@ -33,6 +33,7 @@ import java.awt.event.KeyEvent.VK_TAB
  *   cursor. Each direction should be separated by a space.
  */
 fun Robot.mouseMoveString(direction: String) {
+    logAction("Mouse: $direction")
     direction.split(" ").mapNotNull { fromString(it) }.forEach { it.tri(getPointerInfo().location.x, getPointerInfo().location.y, this) }
 }
 
@@ -42,6 +43,7 @@ fun Robot.mouseMoveString(direction: String) {
  * @param keys A string where each character represents a key to be typed by the robot.
  */
 fun Robot.type(keys: String) {
+    logAction("Type: $keys")
     keys.forEach { c ->
         when {
             c == CHAR_UNDEFINED -> Logger.e($$"Warning: Key code not found for character '$c'")
@@ -63,16 +65,28 @@ fun Robot.type(keyCode: Int) {
 }
 
 /** Simulates a left mouse click. */
-fun Robot.leftClick() = click(BUTTON1_DOWN_MASK)
+fun Robot.leftClick() {
+    logAction("Left Click")
+    click(BUTTON1_DOWN_MASK)
+}
 
 /** Simulates a right mouse click. */
-fun Robot.rightClick() = click(BUTTON3_DOWN_MASK)
+fun Robot.rightClick() {
+    logAction("Right Click")
+    click(BUTTON3_DOWN_MASK)
+}
 
 /** Simulates pressing the ENTER key. */
-fun Robot.enter() = type(VK_ENTER)
+fun Robot.enter() {
+    logAction("Enter")
+    type(VK_ENTER)
+}
 
 /** Simulates pressing the TAB key. */
-fun Robot.tab() = type(VK_TAB)
+fun Robot.tab() {
+    logAction("Tab")
+    type(VK_TAB)
+}
 
 /**
  * Simulates pressing CONTROL + another key.
@@ -80,6 +94,8 @@ fun Robot.tab() = type(VK_TAB)
  * @param keyCode The integer code of the key to be pressed in combination with the CONTROL key.
  */
 fun Robot.control(keyCode: Int) {
+    val keyName = KeyEvent.getKeyText(keyCode)
+    logAction("Ctrl+$keyName")
     keyPress(VK_CONTROL)
     type(keyCode)
     keyRelease(VK_CONTROL)
@@ -91,6 +107,7 @@ fun Robot.control(keyCode: Int) {
  * @param action The function to be done in combination with the CONTROL key.
  */
 fun Robot.control(action: (Robot) -> Unit) {
+    logAction("Ctrl+...")
     keyPress(VK_CONTROL)
     action(this)
     keyRelease(VK_CONTROL)
@@ -98,6 +115,7 @@ fun Robot.control(action: (Robot) -> Unit) {
 
 fun Robot.f(i: Int?) {
     if (i == null) return
+    logAction("F$i")
     when (i) {
         1 -> type(VK_F1)
         2 -> type(VK_F2)
@@ -120,6 +138,8 @@ fun Robot.f(i: Int?) {
  * @param keyCode The integer code of the key to be pressed in combination with the COMMAND key.
  */
 fun Robot.command(keyCode: Int) {
+    val keyName = KeyEvent.getKeyText(keyCode)
+    logAction("Cmd+$keyName")
     keyPress(KeyEvent.VK_META)
     type(keyCode)
     keyRelease(KeyEvent.VK_META)
@@ -142,6 +162,8 @@ fun Robot.command(action: (Robot) -> Unit) {
  * @param keyCode The integer code of the key to be pressed in combination with the SHIFT key.
  */
 fun Robot.shift(keyCode: Int) {
+    val keyName = KeyEvent.getKeyText(keyCode)
+    logAction("Shift+$keyName")
     keyPress(KeyEvent.VK_SHIFT)
     type(keyCode)
     keyRelease(KeyEvent.VK_SHIFT)
@@ -153,6 +175,7 @@ fun Robot.shift(keyCode: Int) {
  * @param action The function to be done in combination with the SHIFT key.
  */
 fun Robot.shift(action: (Robot) -> Unit) {
+    logAction("Shift+...")
     keyPress(KeyEvent.VK_SHIFT)
     action(this)
     keyRelease(KeyEvent.VK_SHIFT)
@@ -186,6 +209,7 @@ fun Robot.alt(action: (Robot) -> Unit) {
  * @param direction A string specifying the scroll direction ("up" or "down").
  */
 fun Robot.scroll(direction: String) {
+    logAction("Scroll: $direction")
     direction.split(" ").forEach { dir ->
         when (dir.lowercase()) {
             "up" -> mouseWheel(-1)
@@ -201,6 +225,7 @@ fun Robot.scroll(direction: String) {
  *   cursor. Each direction should be separated by a space.
  */
 fun Robot.arrow(directions: String) {
+    logAction("Arrow: $directions")
     directions.split(" ").forEach { direction ->
         when (direction.lowercase()) {
             "up" -> type(KeyEvent.VK_UP)
@@ -211,9 +236,6 @@ fun Robot.arrow(directions: String) {
         }
     }
 }
-
-/** Simulates saving something by pressing CONTROL + S. */
-fun Robot.save() = control(VK_S)
 
 /**
  * Helper function to simulate mouse clicks.
