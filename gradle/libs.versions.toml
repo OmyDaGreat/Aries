@@ -9,7 +9,7 @@ ktor = "3.3.3"
 serializationJson = "1.9.0"
 datetimeJvm = "0.7.1-0.6.x-compat"
 kermit = "2.0.8"
-compose = "1.9.3"
+compose = "1.10.0"
 hot-reload = "1.0.0"
 signal = "1.0.1"
 
