@@ -1,13 +1,13 @@
 package util.ai
 
 import aries.audio.LiveMic
-import aries.visual.SharedState.selectedCountry
-import aries.visual.SharedState.selectedLanguage
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import util.audio.NativeTTS
 import util.extension.ScrollOption
 import util.extension.remove
+import util.visual.SharedState.selectedCountry
+import util.visual.SharedState.selectedLanguage
 
 /**
  * Sends a request to Gemini and handles the response.
