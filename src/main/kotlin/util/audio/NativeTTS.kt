@@ -18,6 +18,7 @@ import java.io.FileWriter
  */
 class NativeTTS {
     companion object {
+        val log = Logger.withTag("NativeTTS")
         val voicePreferences = VoicePreferences()
 
         /**
@@ -28,7 +29,7 @@ class NativeTTS {
          */
         @JvmStatic
         fun tts(text: String) {
-            Logger.d("TTS") { text }
+            log.d { text }
             try {
                 val speechEngine = SpeechEngineNative.getInstance()
                 val voice = speechEngine.findVoiceByPreferences(voicePreferences) ?: speechEngine.availableVoices.first()
@@ -44,7 +45,7 @@ class NativeTTS {
                         e.cause?.message?.contains("speech dispatcher", ignoreCase = true) == true
 
                 if (isSpdSayError) {
-                    Logger.e("TTS", e) { "speech dispatcher error" }
+                    log.e(e) { "speech dispatcher error" }
                     ScrollOption.requestScrollableMessageDialog(
                         "TTS Error",
                         "Speech Dispatcher is not installed or not running.\nPlease install it (e.g., 'sudo apt install speech-dispatcher') and try again.",

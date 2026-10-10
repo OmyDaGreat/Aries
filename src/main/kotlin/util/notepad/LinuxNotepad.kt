@@ -51,6 +51,7 @@ class LinuxNotepad : Notepad {
 
     override fun closeNotepad() {
         robot.control(KeyEvent.VK_F4)
-        process?.waitFor()?.also { Logger.d("Exited Notepad++ with code: $it") } ?: run { NativeTTS.tts("Notepad++ is not open") }
+        process?.waitFor()?.also { Logger.d(tag = "Notepad") { "Exited Notepad++ with code: $it" } }
+            ?: run { NativeTTS.tts("Notepad++ is not open") }
     }
 }

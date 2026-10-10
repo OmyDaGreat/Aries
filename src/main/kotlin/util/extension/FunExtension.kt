@@ -11,7 +11,7 @@ package util.extension
  * @param other The second function to be executed.
  * @return A new function that executes both the receiver and the `other` function in sequence.
  */
-infix fun (() -> Unit).then(other: () -> Unit) =
+infix fun (() -> Unit).then(other: () -> Unit): () -> Unit =
     {
         this()
         other()

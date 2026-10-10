@@ -19,17 +19,19 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.decodeToImageBitmap
 import util.ResourcePath.getLocalResourcePath
 import util.extension.ICON
 import util.extension.downloadFile
 import java.io.FileInputStream
 
-@OptIn(ExperimentalResourceApi::class)
+val log = Logger.withTag("Aries")
+
 val trayIcon by lazy {
     BitmapPainter(
-        FileInputStream(runBlocking { downloadFile(ICON, getLocalResourcePath("aries.png")) }).readAllBytes().decodeToImageBitmap(),
+        FileInputStream(runBlocking { downloadFile(ICON, getLocalResourcePath("aries.png"), Logger.withTag("Tray")) })
+            .readAllBytes()
+            .decodeToImageBitmap(),
     )
 }
 
@@ -40,7 +42,7 @@ class AriesApplication {
     fun startRecognition() {
         if (!recognitionActive.value) {
             applicationScope.launch {
-                Logger.d("Starting recognition")
+                Logger.d(tag = "LiveMic") { "Starting recognition" }
                 LiveMic.startRecognition()
                 recognitionActive.value = true
             }
@@ -48,20 +50,20 @@ class AriesApplication {
     }
 
     fun shutdown() {
-        Logger.d("Shutting down application")
+        log.d { "Shutting down application" }
         applicationScope.cancel()
     }
 
     fun run() {
         Logger.setMinSeverity(Verbose)
-        Logger.d("Starting app")
+        log.d { "Starting app" }
 
         startRecognition()
 
         application {
             val gui = remember { mutableStateOf(true) }
 
-            Logger.d("Starting tray")
+            log.d { "Starting tray" }
             Tray(icon = trayIcon) {
                 Item("Toggle GUI", onClick = { gui.value = !gui.value })
                 Item("Exit", onClick = {
@@ -71,37 +73,38 @@ class AriesApplication {
             }
 
             if (gui.value) {
-                Logger.d("Opening GUI")
+                log.d { "Opening GUI" }
                 val isDarkTheme = remember { mutableStateOf(true) }
-                
+
                 MaterialTheme(
-                    colors = if (isDarkTheme.value) {
-                        darkColors(
-                            primary = Color(0xFF64B5F6), // Light blue for dark theme
-                            primaryVariant = Color(0xFF42A5F5),
-                            secondary = Color(0xFF26C6DA), // Cyan accent
-                            secondaryVariant = Color(0xFF00ACC1),
-                            background = Color(0xFF121212),
-                            surface = Color(0xFF1E1E1E),
-                            onPrimary = Color(0xFF000000),
-                            onSecondary = Color(0xFF000000),
-                            onBackground = Color(0xFFE1E1E1),
-                            onSurface = Color(0xFFE1E1E1),
-                        )
-                    } else {
-                        lightColors(
-                            primary = Color(0xFF2196F3), // Modern blue
-                            primaryVariant = Color(0xFF1976D2),
-                            secondary = Color(0xFF00BCD4), // Cyan accent
-                            secondaryVariant = Color(0xFF0097A7),
-                            background = Color(0xFFF5F5F5),
-                            surface = Color(0xFFFFFFFF),
-                            onPrimary = Color.White,
-                            onSecondary = Color.White,
-                            onBackground = Color(0xFF212121),
-                            onSurface = Color(0xFF212121),
-                        )
-                    }
+                    colors =
+                        if (isDarkTheme.value) {
+                            darkColors(
+                                primary = Color(0xFF64B5F6), // Light blue for dark theme
+                                primaryVariant = Color(0xFF42A5F5),
+                                secondary = Color(0xFF26C6DA), // Cyan accent
+                                secondaryVariant = Color(0xFF00ACC1),
+                                background = Color(0xFF121212),
+                                surface = Color(0xFF1E1E1E),
+                                onPrimary = Color(0xFF000000),
+                                onSecondary = Color(0xFF000000),
+                                onBackground = Color(0xFFE1E1E1),
+                                onSurface = Color(0xFFE1E1E1),
+                            )
+                        } else {
+                            lightColors(
+                                primary = Color(0xFF2196F3), // Modern blue
+                                primaryVariant = Color(0xFF1976D2),
+                                secondary = Color(0xFF00BCD4), // Cyan accent
+                                secondaryVariant = Color(0xFF0097A7),
+                                background = Color(0xFFF5F5F5),
+                                surface = Color(0xFFFFFFFF),
+                                onPrimary = Color.White,
+                                onSecondary = Color.White,
+                                onBackground = Color(0xFF212121),
+                                onSurface = Color(0xFF212121),
+                            )
+                        },
                 ) {
                     ComposableGUI(onCloseRequest = { gui.value = false }, icon = trayIcon)
                 }

@@ -21,9 +21,7 @@ fun String.trueContainsSingle(string: String): Boolean {
     val originalWords = this.trim().split("\\s+".toRegex())
     val inputWords = string.trim().split("\\s+".toRegex())
 
-    if (inputWords.size > originalWords.size) return false
-
-    return inputWords.indices.all { originalWords[it].equals(inputWords[it], ignoreCase = true) }
+    return inputWords.size <= originalWords.size && inputWords.indices.all { originalWords[it].equals(inputWords[it], ignoreCase = true) }
 }
 
 /**

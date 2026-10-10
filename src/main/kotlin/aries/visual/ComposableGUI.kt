@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
-import aries.audio.LiveMic.Companion.maxWords
+import aries.audio.LiveMic.maxWords
 import co.touchlab.kermit.Logger
 import io.github.jonelo.tts.engines.VoicePreferences
 import util.audio.NativeTTS
@@ -59,12 +59,14 @@ import util.visual.SharedState.selectedLanguage
 import util.visual.initializeVoicePreferences
 import util.visual.updateGUIFromPreferences
 
+val log = Logger.withTag("ComposableGUI")
+
 @Composable
 fun ComposableGUI(
     onCloseRequest: () -> Unit,
     icon: BitmapPainter,
 ) {
-    Logger.d("ComposableGUI called")
+    log.d { "ComposableGUI called" }
     Window(
         onCloseRequest = onCloseRequest,
         icon = icon,
@@ -293,7 +295,7 @@ private fun SettingsCard(
                 label = "Language",
                 onItemSelected = { displayName ->
                     val languageCode = LocaleUtils.extractLanguageCode(displayName)
-                    Logger.d("Selected language set to: $languageCode")
+                    log.d { "Selected language set to: $languageCode" }
                     selectedLanguage = languageCode
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -307,7 +309,7 @@ private fun SettingsCard(
                 label = "Country",
                 onItemSelected = { displayName ->
                     val countryCode = LocaleUtils.extractCountryCode(displayName)
-                    Logger.d("Selected country set to: $countryCode")
+                    log.d { "Selected country set to: $countryCode" }
                     selectedCountry = countryCode
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -322,7 +324,7 @@ private fun SettingsCard(
                 searchEnabled = false,
                 onItemSelected = { displayName ->
                     val genderCode = genders.find { it.first == displayName }?.second ?: displayName
-                    Logger.d("Selected gender set to: $genderCode")
+                    log.d { "Selected gender set to: $genderCode" }
                     selectedGender = genderCode
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -341,7 +343,7 @@ private fun SettingsCard(
                     TextField(
                         value = maxWordsText,
                         onValueChange = { newNum ->
-                            Logger.d("New max words: $newNum")
+                            log.d { "New max words: $newNum" }
                             val newValue = newNum.toIntOrNull()?.coerceIn(1..100000) ?: maxWords
                             maxWordsText = newValue.toString()
                             maxWords = newValue
@@ -366,9 +368,9 @@ private fun SettingsCard(
                             NativeTTS.voiceCountry(selectedCountry)
                             NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
                             saveVoicePreferences()
-                            Logger.i("Selected language: $selectedLanguage")
-                            Logger.i("Selected country: $selectedCountry")
-                            Logger.i("Selected gender: $selectedGender")
+                            log.i { "Selected language: $selectedLanguage" }
+                            log.i { "Selected country: $selectedCountry" }
+                            log.i { "Selected gender: $selectedGender" }
                         },
                         modifier = Modifier.fillMaxWidth().height(52.dp),
                         colors =
@@ -401,7 +403,7 @@ private fun SettingsCard(
                     TextField(
                         value = maxWordsText,
                         onValueChange = { newNum ->
-                            Logger.d("New max words: $newNum")
+                            log.d { "New max words: $newNum" }
                             val newValue = newNum.toIntOrNull()?.coerceIn(1..100000) ?: maxWords
                             maxWordsText = newValue.toString()
                             maxWords = newValue
@@ -426,9 +428,9 @@ private fun SettingsCard(
                             NativeTTS.voiceCountry(selectedCountry)
                             NativeTTS.voiceGender(VoicePreferences.Gender.valueOf(selectedGender))
                             saveVoicePreferences()
-                            Logger.i("Selected language: $selectedLanguage")
-                            Logger.i("Selected country: $selectedCountry")
-                            Logger.i("Selected gender: $selectedGender")
+                            log.i { "Selected language: $selectedLanguage" }
+                            log.i { "Selected country: $selectedCountry" }
+                            log.i { "Selected gender: $selectedGender" }
                         },
                         modifier = Modifier.weight(1f).height(56.dp),
                         colors =

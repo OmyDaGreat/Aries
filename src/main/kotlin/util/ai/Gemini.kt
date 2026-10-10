@@ -22,20 +22,12 @@ private val json = Json { ignoreUnknownKeys = true }
  * @return The generated text response
  */
 suspend fun generateContent(prompt: String): String {
-    Logger.d("Generating content for prompt: $prompt")
+    Logger.d(tag = "Gemini") { "Generating content for prompt: $prompt" }
 
-    val request =
-        GeminiRequest(
-            contents =
-                listOf(
-                    Content(parts = listOf(Part(text = prompt))),
-                ),
-        )
+    val request = GeminiRequest(contents = listOf(Content(parts = listOf(Part(text = prompt)))))
 
     val response =
-        client.post(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Keys["gemini"]}",
-        ) {
+        client.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Keys["gemini"]}") {
             contentType(ContentType.Application.Json)
             setBody(json.encodeToString(GeminiRequest.serializer(), request))
         }

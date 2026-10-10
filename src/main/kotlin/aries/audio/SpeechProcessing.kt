@@ -1,6 +1,6 @@
 package aries.audio
 
-import aries.audio.LiveMic.Companion.whisperInstance
+import aries.audio.LiveMic.whisperInstance
 import co.touchlab.kermit.Logger
 import util.extension.then
 import util.extension.trueContains
@@ -82,13 +82,13 @@ private fun handleRecording(
 ) {
     if (buffer.isSilence(1000)) {
         if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 6) {
-            Logger.d("Silence for 6 seconds, running onSilence.")
+            Logger.d(tag = "SpeechProcessing") { "Silence for 6 seconds, running onSilence." }
             onSilence()
             line.open(format)
             line.start()
         }
     } else {
-        Logger.d("Noise detected, resetting silence timer.")
+        Logger.d(tag = "SpeechProcessing") { "Noise detected, resetting silence timer." }
         setSilence(Instant.now())
     }
 }

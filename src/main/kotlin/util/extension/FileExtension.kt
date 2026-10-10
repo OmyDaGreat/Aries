@@ -22,15 +22,16 @@ const val ICON =
 suspend fun downloadFile(
     fileURL: String,
     destinationPath: String,
+    log: Logger,
 ): File {
     val file = File(destinationPath)
     file.parentFile?.mkdirs()
     if (file.exists()) {
-        Logger.d("File already exists.")
+        log.d("File already exists.")
         return file
     }
 
-    Logger.d("Downloading file ${file.name}.")
+    log.d("Downloading file ${file.name}.")
     HttpClient(CIO) {
         install(HttpTimeout) {
             requestTimeoutMillis = 120000 // 2 minutes
@@ -38,7 +39,7 @@ suspend fun downloadFile(
     }.use { client ->
         val fileBytes: ByteArray = client.get(fileURL).readRawBytes()
         file.writeBytes(fileBytes)
-        Logger.d("File downloaded successfully.")
+        log.d("File downloaded successfully.")
     }
     return file
 }

@@ -13,6 +13,7 @@ import java.nio.file.Path
  * Replaces the Picovoice Leopard implementation with OpenAI's Whisper.
  */
 object WhisperEngine {
+    private val log = Logger.withTag("Whisper")
     private var isInitialized = false
     private var isClosed = false
     private lateinit var whisper: WhisperJNI
@@ -25,7 +26,7 @@ object WhisperEngine {
     suspend fun initialize() {
         if (isInitialized) return
 
-        Logger.d("Initializing Whisper engine.")
+        log.d { "Initializing Whisper engine." }
 
         try {
             // Download Whisper model if not exists
@@ -33,11 +34,12 @@ object WhisperEngine {
                 downloadFile(
                     "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.en.bin",
                     getLocalResourcePath("whisper-tiny.en.bin"),
+                    log,
                 ).toPath()
 
             // Initialize WhisperJNI
             WhisperJNI.loadLibrary()
-            WhisperJNI.setLibraryLogger { }
+            WhisperJNI.setLibraryLogger { log.d { it } }
             whisper = WhisperJNI()
 
             // Create context
@@ -47,9 +49,9 @@ object WhisperEngine {
                 }
 
             isInitialized = true
-            Logger.d("Whisper engine initialized successfully.")
+            log.d { "Whisper engine initialized successfully." }
         } catch (e: Exception) {
-            Logger.e("Failed to initialize Whisper engine", e)
+            log.e(e) { "Failed to initialize Whisper engine" }
             throw e
         }
     }
@@ -63,7 +65,7 @@ object WhisperEngine {
      */
     fun process(audioData: ShortArray): String {
         if (!isInitialized || isClosed) {
-            Logger.w("Whisper engine not initialized or already closed.")
+            log.w { "Whisper engine not initialized or already closed." }
             return ""
         }
 
@@ -77,7 +79,7 @@ object WhisperEngine {
             // Process audio with Whisper
             val result = whisper.full(ctx, params, floatAudio, floatAudio.size)
             if (result != 0) {
-                Logger.e("Whisper transcription failed with code: $result")
+                log.e { "Whisper transcription failed with code: $result" }
                 return ""
             }
 
@@ -95,9 +97,10 @@ object WhisperEngine {
                 }
             }
 
+            log.d { "Final transcript: ${transcript.toString().trim()}" }
             transcript.toString().trim()
         } catch (e: Exception) {
-            Logger.e("Error during Whisper transcription", e)
+            log.e(e) { "Error during Whisper transcription" }
             ""
         }
     }
@@ -117,9 +120,9 @@ object WhisperEngine {
         try {
             whisper.free(ctx)
             isClosed = true
-            Logger.d("Whisper engine closed.")
+            log.d { "Whisper engine closed." }
         } catch (e: Exception) {
-            Logger.e("Error closing Whisper engine", e)
+            log.e(e) { "Error closing Whisper engine" }
         }
     }
 
@@ -144,8 +147,23 @@ object WhisperEngine {
 
         fun delete() {
             // Instance deletion is handled by the singleton engine
-            Logger.d("Whisper instance delete called (handled by singleton)")
+            log.d { "Whisper instance delete called (handled by singleton)" }
         }
+
+        /**
+         * Extension function to maintain compatibility with existing Leopard usage patterns.
+         */
+        fun convertAudioToText(buffer: ShortArray?): String =
+            try {
+                if (buffer != null) {
+                    process(buffer).transcriptString
+                } else {
+                    ""
+                }
+            } catch (e: Exception) {
+                log.e(e) { "Error converting audio to text" }
+                ""
+            }
     }
 
     /**
@@ -155,18 +173,3 @@ object WhisperEngine {
         val transcriptString: String,
     )
 }
-
-/**
- * Extension function to maintain compatibility with existing Leopard usage patterns.
- */
-fun WhisperEngine.WhisperInstance.convertAudioToText(buffer: ShortArray?): String =
-    try {
-        if (buffer != null) {
-            process(buffer).transcriptString
-        } else {
-            ""
-        }
-    } catch (e: Exception) {
-        Logger.e("Error converting audio to text", e)
-        ""
-    }

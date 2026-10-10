@@ -5,40 +5,45 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import util.ai.generateContent
 import util.audio.NativeTTS
 import kotlin.time.Clock
 import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
+
+private val log = Logger.withTag("Alarm")
 
 /**
  * Sets an alarm for the specified time.
  *
  * @param time The time string to set the alarm for.
  */
-@OptIn(DelicateCoroutinesApi::class, ExperimentalTime::class)
+@OptIn(DelicateCoroutinesApi::class)
 fun setAlarm(time: String) =
     GlobalScope.launch {
         val validationPrompt =
-            "Convert the given time string to ISO-8601 format. If just a time was given, use today's date with the given time (unless the time has passed, in which case you should use tomorrow). Make sure only to print the string in ISO-8601 format with nothing before or after it: $time"
+            "Convert the given time string to ISO-8601 format. If just a time was given, use today (${
+                Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+            })'s date with the given time (unless the time has passed, in which case you should use tomorrow). Make sure only to print the string in ISO-8601 format with nothing before or after it: $time"
         val validationResponse = generateContent(validationPrompt).trim()
         val delayDuration: Duration?
         try {
             delayDuration = Instant.parse(validationResponse) - Clock.System.now()
         } catch (_: Exception) {
-            Logger.d("The given time string is invalid.")
+            log.d { "The given time string is invalid." }
             NativeTTS.tts("The given time string is invalid.")
             return@launch
         }
 
         if (delayDuration.inWholeMilliseconds > 0) {
-            Logger.d("Setting alarm for $time")
+            log.d { "Setting alarm for $time" }
             NativeTTS.tts("Setting alarm for $time")
-            delay(delayDuration.inWholeMilliseconds)
+            delay(delayDuration)
             NativeTTS.tts("Alarm ringing for $time")
         } else {
-            Logger.d("The specified time has already passed.")
+            log.d { "The specified time has already passed." }
             NativeTTS.tts("The specified time has already passed.")
         }
     }
