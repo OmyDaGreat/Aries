@@ -29,6 +29,7 @@ object WhisperEngine {
         log.d { "Initializing Whisper engine." }
 
         try {
+            isClosed = false
             // Download Whisper model if not exists
             modelPath =
                 downloadFile(
@@ -119,6 +120,7 @@ object WhisperEngine {
 
         try {
             whisper.free(ctx)
+            isInitialized = false
             isClosed = true
             log.d { "Whisper engine closed." }
         } catch (e: Exception) {
@@ -143,11 +145,6 @@ object WhisperEngine {
         fun process(audioData: ShortArray): TranscriptResult {
             val transcript = WhisperEngine.process(audioData)
             return TranscriptResult(transcript)
-        }
-
-        fun delete() {
-            // Instance deletion is handled by the singleton engine
-            log.d { "Whisper instance delete called (handled by singleton)" }
         }
 
         /**

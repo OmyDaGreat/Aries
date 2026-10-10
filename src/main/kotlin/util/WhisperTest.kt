@@ -33,7 +33,7 @@ fun main() {
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                whisper.delete()
+                WhisperEngine.close()
             }
         } catch (e: Exception) {
             e.printStackTrace()

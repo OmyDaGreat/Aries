@@ -7,9 +7,11 @@ import util.audio.Recorder
 import util.process.process
 import java.awt.Desktop
 import java.net.URI
+import java.util.concurrent.atomic.AtomicBoolean
 
 object LiveMic {
     lateinit var whisperInstance: WhisperEngine.WhisperInstance
+    private val recognitionRunning = AtomicBoolean(false)
 
     @JvmField var maxWords = 40
 
@@ -28,13 +30,14 @@ object LiveMic {
      * is not already initialized.
      */
     fun startRecognition() {
-        if (!::whisperInstance.isInitialized) {
-            runBlocking { initializeWhisper() }
-        }
+        if (!recognitionRunning.compareAndSet(false, true)) return
         var recorder: Recorder? = null
-        Logger.i(tag = "Aries") { "Aries is ready." }
-        NativeTTS.tts("Aries is ready.")
-        runCatching {
+        try {
+            if (!::whisperInstance.isInitialized) {
+                runBlocking { initializeWhisper() }
+            }
+            Logger.i(tag = "Aries") { "Aries is ready." }
+            NativeTTS.tts("Aries is ready.")
             processAudio {
                 onKeywordDetected = {
                     NativeTTS.tts("Yes?")
@@ -50,11 +53,23 @@ object LiveMic {
                     process(transcript.transcriptString.replaceFirst("yes", "", ignoreCase = true).trim())
                 }
                 isRecording = { recorder != null }
+                isRunning = recognitionRunning::get
             }
-        }.also {
-            whisperInstance.delete()
-            startRecognition()
+        } finally {
+            recorder?.let {
+                it.end()
+                it.join()
+            }
+            if (::whisperInstance.isInitialized) {
+                WhisperEngine.close()
+            }
+            recognitionRunning.set(false)
         }
+    }
+
+    fun stopRecognition() {
+        if (!recognitionRunning.getAndSet(false)) return
+        stopAudioProcessing()
     }
 }
 

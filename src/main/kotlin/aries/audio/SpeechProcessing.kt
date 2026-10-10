@@ -27,6 +27,13 @@ class AudioProcessingConfig {
     var onKeywordDetected: () -> Unit = {}
     var onSilence: () -> Unit = {}
     var isRecording: () -> Boolean = { false }
+    var isRunning: () -> Boolean = { true }
+}
+
+@Volatile private var activeLine: TargetDataLine? = null
+
+fun stopAudioProcessing() {
+    activeLine?.close()
 }
 
 /**
@@ -44,20 +51,27 @@ fun processAudio(block: AudioProcessingConfig.() -> Unit) {
         val whisper = whisperInstance
         val line = AudioSystem.getLine(info) as TargetDataLine
         val format = AudioFormat(PCM_SIGNED, 16000F, 16, 1, 2, 16000F, false)
-        line.open(format)
-        line.start()
-        val buffer = ShortArray(33332)
-        val byteBuffer = ByteArray(buffer.size * 2)
-        var silenceFrames: Instant? = Instant.now()
+        activeLine = line
+        try {
+            if (!isRunning()) return
+            line.open(format)
+            line.start()
+            val buffer = ShortArray(33332)
+            val byteBuffer = ByteArray(buffer.size * 2)
+            var silenceFrames: Instant? = Instant.now()
 
-        while (true) {
-            if (isRecording()) {
-                handleRecording(buffer, silenceFrames, onSilence, line, format) {
-                    silenceFrames = it
+            while (isRunning()) {
+                if (isRecording()) {
+                    handleRecording(buffer, silenceFrames, onSilence, line, format, isRunning) {
+                        silenceFrames = it
+                    }
+                } else {
+                    handleNonRecording(byteBuffer, buffer, line, whisper, onKeywordDetected then { silenceFrames = Instant.now() })
                 }
-            } else {
-                handleNonRecording(byteBuffer, buffer, line, whisper, onKeywordDetected then { silenceFrames = Instant.now() })
             }
+        } finally {
+            if (activeLine === line) activeLine = null
+            if (line.isOpen) line.close()
         }
     }
 }
@@ -78,14 +92,18 @@ private fun handleRecording(
     onSilence: () -> Unit,
     line: TargetDataLine,
     format: AudioFormat,
+    isRunning: () -> Boolean,
     setSilence: (Instant) -> Unit,
 ) {
+    if (!isRunning()) return
     if (buffer.isSilence(1000)) {
         if (Duration.between(silenceFrames ?: Instant.now(), Instant.now()).toSeconds() >= 6) {
             Logger.d(tag = "SpeechProcessing") { "Silence for 6 seconds, running onSilence." }
             onSilence()
-            line.open(format)
-            line.start()
+            if (isRunning()) {
+                line.open(format)
+                line.start()
+            }
         }
     } else {
         Logger.d(tag = "SpeechProcessing") { "Noise detected, resetting silence timer." }

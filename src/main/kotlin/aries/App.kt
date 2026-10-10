@@ -51,6 +51,7 @@ class AriesApplication {
 
     fun shutdown() {
         log.d { "Shutting down application" }
+        LiveMic.stopRecognition()
         applicationScope.cancel()
     }
 
